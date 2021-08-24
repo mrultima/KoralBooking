@@ -1,51 +1,52 @@
 <div fxLayout="row wrap" class="hotelInfoPad">
   <div fxFlex="70">
-    <h1 style="margin: 0px">MyHotel</h1>
+    <h1 style="margin: 0px">{{ HotelInfo.HOTELNAME }}</h1>
     <div class="hotel-detail-info-stars">
-      <mat-icon>star</mat-icon><mat-icon>star</mat-icon
-      ><mat-icon>star</mat-icon>
+      <ng-container *ngFor="let star of [].constructor(HotelInfo.Stars)">
+        <mat-icon>stars</mat-icon>
+      </ng-container>
     </div>
 
-    <div class="hotel-detail-info-addres">Faralya 1 / Mugla, Turkey</div>
+    <div class="hotel-detail-info-addres">{{ HotelInfo.ADDRESS }}</div>
   </div>
   <div fxFlex="30">
-    <div
-      class="showMap ng-star-inserted"
-      style="
+    <div class="showMap ng-star-inserted" style="
         width: 100%;
         height: auto;
         border: solid 4px #fdf4cc;
         position: relative;
-      "
-    >
-      <img
-        src="https://erspublic.blob.core.windows.net/test/16e63eaa-17ae-1906-8552-e2932b0e8000.png"
-        style="width: inherit; height: 100%"
-      /><span class="map-detail-city ng-star-inserted" style="top: 44px">
-        Mugla, Turkey Haritada Göster </span
-      ><!---->
+      ">
+      <img src="https://erspublic.blob.core.windows.net/test/16e63eaa-17ae-1906-8552-e2932b0e8000.png"
+        style="width: inherit; height: 100%" /><span class="map-detail-city ng-star-inserted" style="top: 44px">
+        Mugla, Turkey Haritada Göster </span>
+        
+        <!-- <agm-map [latitude]="HotelInfo.Latitude" [longitude]="HotelInfo.longitude">
+          <agm-marker [latitude]="HotelInfo.Latitude" [longitude]="HotelInfo.longitude"></agm-marker>
+        </agm-map> -->
+      <!---->
     </div>
   </div>
 
+  
   <div fxFlex="100" class="hotel-contact">
     <div>
-      <a target="_blank" href="mailto:e.cetinkaya@talyabilisim.com.tr"
+      <a target="_blank" href="mailto:{{HotelInfo.EMAIL}}"
         ><mat-icon>email</mat-icon>
-        <span>e.cetinkaya@talyabilisim.com.tr</span>
+        <span>{{HotelInfo.EMAIL}}</span>
       </a>
     </div>
 
     <div>
-      <a href="tel:90 252 642 1140"
+      <a href="tel:{{HotelInfo.PHONE}}"
         ><mat-icon>phone</mat-icon>
-        <span>90 252 642 1140</span>
+        <span>{{HotelInfo.PHONE}}</span>
       </a>
     </div>
 
     <div>
-      <a target="_blank" href="myhotel.com" class="ng-star-inserted"
+      <a target="_blank" href="{{HotelInfo.Web}}" class="ng-star-inserted"
         ><mat-icon>link</mat-icon>
-        <span>myhotel.com</span>
+        <span>{{HotelInfo.Web}}</span>
       </a>
     </div>
   </div>
@@ -63,9 +64,8 @@
   </div>
 
   <div fxFlex="100">
-    <p>
-      Kaş Antalya bölgesi Çukurbağ Yarımadasındaki <strong>MyHotel</strong> Kaş
-      ilçesindeki oteller arasında en iyi konaklama deneyimi sunmaktadır.
+    <p [innerHTML]="HotelInfo.Description">
+      
     </p>
   </div>
 </div>
