@@ -1,11 +1,8 @@
-<img style="width:100%;" src="https://erspublic.blob.core.windows.net/test/1706687f-9329-1892-8aab-db53b37f1000.jpg">
+<img style="width:100%;"  [src]="selectedPhoto">
 <div class="hotel-image-gallery">
 <ul>
-    <li><img  src="https://erspublic.blob.core.windows.net/test/t_1734cd7f-32c1-4740-8f26-290af2350000.jpg"></li>
-    <li><img  src="https://erspublic.blob.core.windows.net/test/t_1734cd7f-32c1-4740-8f26-290af2350000.jpg"></li>
-    <li><img  src="https://erspublic.blob.core.windows.net/test/t_1734cd7f-32c1-4740-8f26-290af2350000.jpg"></li>
-    <li><img  src="https://erspublic.blob.core.windows.net/test/t_1734cd7f-32c1-4740-8f26-290af2350000.jpg"></li>
-    <li><img  src="https://erspublic.blob.core.windows.net/test/t_1734cd7f-32c1-4740-8f26-290af2350000.jpg"></li>
-
+    
+    <li *ngFor="let i of photos" ><img (click)="selectPhoto(i)"  [src]='i.URL'></li>
+   
 </ul>
 </div>
