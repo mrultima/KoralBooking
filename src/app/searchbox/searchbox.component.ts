@@ -27,7 +27,7 @@ export class SearchboxComponent implements OnInit {
     {
       ADULT: new FormControl(2),
       CHECKIN: new FormControl(new Date()),
-      CHECKOUT: new FormControl(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1)),
+      CHECKOUT: new FormControl(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + this.minLos.value)),
       DAYS: new FormControl(1),
       CHILDAGES: new FormControl(''),
       COUNTRYCODE: new FormControl(''),
@@ -64,6 +64,32 @@ export class SearchboxComponent implements OnInit {
           this.searchFormGroup.get('CHECKOUT')?.setValue(
             moment(this.searchFormGroup.get('CHECKIN')?.value).add(days, 'days').toDate()   // inc by days
           );
+        }
+      }
+    );
+
+    this.searchFormGroup.get('CHECKIN')?.valueChanges.pipe(
+      distinctUntilChanged()
+    ).subscribe(
+      {
+        next: (days) => {
+
+          const cIn = this.searchFormGroup.get('CHECKIN')?.value  
+          const cOut = this.searchFormGroup.get('CHECKOUT')?.value
+          var cInArr = parseInt(moment(cIn).format('DD')) + parseInt(moment(cIn).format('MM')) * 30 + parseInt(moment(cIn).format('YYYY')) * 365;       
+          var cOutArr = parseInt(moment(cOut).format('DD')) + parseInt(moment(cOut).format('MM')) * 30 + parseInt(moment(cOut).format('YYYY')) * 365;            
+            
+          
+          this.searchFormGroup.get('CHECKOUT')?.setValue(
+            moment(this.searchFormGroup.get('CHECKIN')?.value).add(this.minLos.value , "day").toDate()   // inc by days
+          );
+          if(!cIn|| cOutArr < cInArr ) {
+            this.searchFormGroup.get('CHECKOUT')?.setValue(moment(cIn).add(+this.minLos.value , 'day').toISOString());
+          } else {
+            this.searchFormGroup.get('CHECKOUT')?.setValue(cOut);
+          }   
+          
+                   
         }
       }
     );
