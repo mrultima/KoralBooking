@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../api.service';
-import { HotelItem } from '../types';
+import { HotelConfig, HotelItem } from '../types';
 
 @Component({
   selector: 'app-hotelinfo',
@@ -9,12 +10,15 @@ import { HotelItem } from '../types';
 })
 export class HotelinfoComponent implements OnInit {
 
-  hotelInfo: any=[];
+  hotelInfo$ = new BehaviorSubject<HotelConfig | null>(null);
 
   constructor(public apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.hotelConfig$.subscribe((info) => {this.hotelInfo = info})
+    this.apiService.hotelConfig$.subscribe(info => {
+      if(info){
+        this.hotelInfo$.next(info)
+      }});
   }
 
 }

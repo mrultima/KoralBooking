@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" class="hotelInfoPad">
   <div fxFlex="70">
-    <h1 style="margin: 0px">{{hotelInfo.HOTELNAME}}</h1>
+    <h1 style="margin: 0px">{{(hotelInfo$ | async).?HOTELNAME}}</h1>
     <div class="hotel-detail-info-stars">
       <mat-icon>star</mat-icon>
       <P>{{hotelInfo.STARS}}</P>
