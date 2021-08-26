@@ -29,7 +29,7 @@ export class ApiService {
       Action: 'Execute',
       Object: 'SP_HOTEL_BOOKINGPARAMS',
       Parameters: {
-        SUBDOMAIN: 'dev-hotel'
+        SUBDOMAIN: 'mango'
       }
     }).pipe(
       map((response: any) => {
