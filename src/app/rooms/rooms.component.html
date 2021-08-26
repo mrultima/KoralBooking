@@ -1,4 +1,13 @@
-<div *ngIf="rooms != ''">
+<ng-container *ngIf="roomsByGroup.length>0">
+  <ng-container *ngFor="let item of roomsByGroup">
+    
+      {{item[0]?.RoomType}}
+      <ng-container *ngFor="let room of item">
+        <div>{{room?.BoardType}}</div>
+      </ng-container>
+  </ng-container>
+</ng-container>
+<div *ngIf="rooms.length>0">
   <div fxLayout="row wrap" class="hotelItem m10">
     <div
       fxFlex="25"
