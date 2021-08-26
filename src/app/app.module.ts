@@ -33,6 +33,7 @@ import { MatBadgeModule } from "@angular/material/badge";
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MatBadgeModule,
     MatSidenavModule,
     HttpClientModule,
+    MatTabsModule
    
   ],
   providers: [],

@@ -1,10 +1,13 @@
-<div *ngIf="rooms!=''">
-  <div fxLayout="row wrap" class="hotelItem m10" >
-    <div fxFlex="25" fxFlex.xs="100" fxFlex.md="100" style="position: relative" class="hotel-image">
-      <img
-        class="w100 hotelphoto"
-        [src]='rooms[0].RoomImageURL'
-      />
+<div *ngIf="rooms != ''">
+  <div fxLayout="row wrap" class="hotelItem m10">
+    <div
+      fxFlex="25"
+      fxFlex.xs="100"
+      fxFlex.md="100"
+      style="position: relative"
+      class="hotel-image"
+    >
+      <img class="w100 hotelphoto" [src]="rooms[0].RoomImageURL" />
       <div class="room-type-info-image-bottom-cont">
         <div>
           Max <i class="fas fa-male"></i><i class="fas fa-male"></i
@@ -14,10 +17,9 @@
     </div>
     <div fxFlex="75" fxFlex.xs="100" fxFlex.md="100">
       <div class="rooms-area">
-        <button (click)="search()">ARA BAKİM</button>
-        <h2 class="m0">{{rooms[0].RoomType}}</h2>
+        <h2 class="m0">{{ rooms[0].RoomType }}</h2>
         <p>
-          {{rooms[0].RoomInfo}}
+          {{ rooms[0].RoomInfo }}
         </p>
 
         <div class="room-amenities">
@@ -43,82 +45,81 @@
         </div>
       </div>
     </div>
-  </div>
 
+    <mat-tab-group class="hotelItem w100">
+      <ng-container *ngFor="let item of [1, 2, 3]">
+        <mat-tab label="First">
+          <div fxLayout="row wrap" class="align-center" style="padding: 15px 0px;">
+            <div class="roomItem" fxFlex="40" fxFlex.xs="50" fxFlex.md="48">
+              <div class="room-properties">
+                <div>
+                  <button
+                    style="border: none"
+                    color="primary"
+                    mat-stroked-button
+                  >
+                    <mat-icon>info</mat-icon>
+                  </button>
+                </div>
 
-  <ng-container *ngFor="let item of [1,2,3]">
+                <div class="infoItem">non-refundable</div>
+              </div>
+            </div>
 
-  <div fxLayout="row wrap"  class="roomPrice align-center">
-    <div class="roomItem" fxFlex="40" fxFlex.xs="50" fxFlex.md="48">
-      <div class="room-properties">
-        <div>
-          <button
-            style="border: none; display: contents"
-            color="primary"
-            mat-stroked-button
-          >
-            <mat-icon>info</mat-icon>
-          </button>
-        </div>
+            <div class="roomItem" fxFlex="18 " fxFlex.xs="50" fxFlex.md="38">
+              <div class="room-price">
+                <div class="default-price">
+                  <span class="price" style="text-decoration: line-through"
+                    >900</span
+                  >
+                  <div class="price-inline">
+                    <span style="text-decoration: line-through">.00</span
+                    ><span style="text-decoration: line-through">EUR</span>
+                  </div>
+                </div>
 
-        <div class="infoItem">
-          <mat-icon>local_dining</mat-icon>Oda ve Kahvaltı
-        </div>
+                <div class="default-price finalPrice">
+                  <span class="price">810</span>
+                  <div class="price-inline">
+                    <span>.00</span><span>EUR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div class="infoItem">
-          <mat-icon>credit_card</mat-icon>
-          non-refundable
-        </div>
+            <div class="roomItem" fxFlex="10" fxFlex.xs="100" fxFlex.md="9">
+              <div class="price-percent">%10</div>
+            </div>
 
-        
-      </div>
-    </div>
+            <div class="roomItem" fxFlex="14" fxFlex.xs="50" fxFlex.md="48">
+              <mat-form-field appearance="outline" class="w100 roomCount">
+                <mat-label> Oda Sayısı </mat-label>
+                <mat-select [value]="0">
+                  <mat-option
+                    [value]="i"
+                    *ngFor="let count of [1, 2, 3, 4, 5, 6]; index as i"
+                  >
+                    {{ i + 1 }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-    <div  class="roomItem" fxFlex="15 "fxFlex.xs="50" fxFlex.md="38">
-      <div class="room-price">
-        <div class="default-price">
-          <span class="price" style="text-decoration: line-through">900</span>
-          <div class="price-inline">
-            <span style="text-decoration: line-through">.00</span
-            ><span style="text-decoration: line-through">EUR</span>
+            <div
+              class="roomItem"
+              fxFlex="12"
+              fxFlex.xs="50"
+              fxFlex.md="48"
+              style="margin: auto; text-align: center"
+            >
+              <button mat-raised-button color="accent">
+                Satın Al
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div class="default-price finalPrice">
-          <span class="price">810</span>
-          <div class="price-inline"><span>.00</span><span>EUR</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div  class="roomItem" fxFlex="10" fxFlex.xs="100" fxFlex.md="9">
-      <div class="price-percent">%10</div>
-    </div>
-
-    <div  class="roomItem" fxFlex="10" fxFlex.xs="50" fxFlex.md="48">
-      <mat-form-field appearance="outline" class="w100 roomCount">
-        <mat-label> Oda Sayısı </mat-label>
-        <mat-select [value]="0">
-          <mat-option
-            [value]="i"
-            *ngFor="let count of [1, 2, 3, 4, 5, 6]; index as i"
-          >
-            {{ i + 1 }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div  class="roomItem" fxFlex="19" fxFlex.xs="50" fxFlex.md="48" style="margin: auto; text-align: center">
-      <button mat-raised-button color="accent" style="width:100%;">
-        Satın Al
-        <mat-icon>keyboard_arrow_right</mat-icon>
-      </button>
-    </div>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
   </div>
-  </ng-container>
 </div>
-
-
-
-
