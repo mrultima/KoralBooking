@@ -58,7 +58,7 @@
         <mat-form-field class="w100">
           <mat-label> Çocuk Sayısı </mat-label>
           <mat-icon matPrefix>face</mat-icon>
-          <mat-select formControlName="CHILD">
+          <mat-select formControlName="CHILDAGES">
             <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxChild);let i = index">
               <mat-option [value]="i">{{ i }}</mat-option>
             </ng-container>
