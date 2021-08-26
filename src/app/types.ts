@@ -70,6 +70,7 @@ export interface HotelConfig {
     MinDaysToCheckIn: null;
     MinLOS: null;
     MaxAdult: number;
+    MaxChild:number;
     MaxPax: null;
     ThemeNo: null;
     UserInterfaceMaxChildAge: number;
