@@ -27,24 +27,8 @@ export class SearchboxComponent implements OnInit, OnDestroy {
   adultCount = this.hotelConfig$.getValue()?.MaxAdult;
   childCount = this.hotelConfig$.getValue()?.MaxChild; 
 
-  searchFormGroup = new FormGroup(
-    {
-      ADULT: new FormControl(2),
-      CHECKIN: new FormControl(new Date()),
-      CHECKOUT: new FormControl(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + this.minLos.value)),
-      DAYS: new FormControl(1),
-      CHILDAGES: new FormControl(0),
-      COUNTRYCODE: new FormControl(''),
-      CURRENCY: new FormControl(''),
-      HOTELID: new FormControl(null),
-      IPADDRESS: new FormControl(''),
-      LANGUAGE: new FormControl(''),
-      PORTALID: new FormControl(1),
-      PORTALSELLERID: new FormControl(null),
-      PROMOCODE: new FormControl(''),
-      SESSION: new FormControl(null),
-    }
-  )
+  searchFormGroup:FormGroup = this.api.searchFormGroup;
+  
 
   constructor(public api: ApiService) {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
@@ -133,13 +117,7 @@ export class SearchboxComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    console.log(this.searchFormGroup.value);
-    this.api.getRooms(this.searchFormGroup.value).pipe(
-      takeUntil(this.isDestroyed)
-      ).subscribe((response) => {
-      this.api.rooms$.next(response);
-    }
-    );
+    this.api.onSearch();
   }
 
   myFilter = (d: Date): boolean => {
