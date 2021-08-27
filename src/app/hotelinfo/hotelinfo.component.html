@@ -1,14 +1,16 @@
 <div fxLayout="row wrap" class="hotelInfoPad">
   <div fxFlex="70">
-    <h1 style="margin: 0px">{{(hotelInfo$ | async).?HOTELNAME}}</h1>
-    <div class="hotel-detail-info-stars">
-      <mat-icon>star</mat-icon>
-      <P>{{hotelInfo.STARS}}</P>
+    <h1 style="margin: 0px">{{(hotelInfo$ | async)?.HOTELNAME}}</h1>
+    <div  class="hotel-detail-info-stars">
+      <ng-container *ngIf="(hotelInfo$ | async)?.Stars">
+        <mat-icon *ngFor="let star of [].constructor((hotelInfo$ | async)?.Stars)">stars</mat-icon>
+      </ng-container>
     </div>
 
-    <div class="hotel-detail-info-addres">{{hotelInfo.ADDRESS}}</div>
+    <div class="hotel-detail-info-addres">{{(hotelInfo$ | async)?.ADDRESS}}</div>
   </div>
   <div fxFlex="30">
+    
     <div
       class="showMap ng-star-inserted"
       style="
@@ -19,6 +21,7 @@
       "
     >
       <img
+      (click)="showMap()"
         src="https://erspublic.blob.core.windows.net/test/16e63eaa-17ae-1906-8552-e2932b0e8000.png"
         style="width: inherit; height: 100%"
       /><span class="map-detail-city ng-star-inserted" style="top: 44px">
@@ -29,23 +32,23 @@
 
   <div fxFlex="100" class="hotel-contact">
     <div>
-      <a target="_blank" href="mailto:e.cetinkaya@talyabilisim.com.tr"
+      <a target="_blank" href="mailto:{{(hotelInfo$ | async)?.EMAIL}}"
         ><mat-icon>email</mat-icon>
-        <span>{{hotelInfo.EMAIL}}</span>
+        <span>{{(hotelInfo$ | async)?.EMAIL}}</span>
       </a>
     </div>
 
     <div>
-      <a href="tel:90 252 642 1140"
+      <a href="tel:{{(hotelInfo$ | async)?.Phone}}"
         ><mat-icon>phone</mat-icon>
-        <span>{{hotelInfo.Phone}}</span>
+        <span>{{(hotelInfo$ | async)?.Phone}}</span>
       </a>
     </div>
 
     <div>
-      <a target="_blank" href="myhotel.com" class="ng-star-inserted"
+      <a target="_blank" href="{{(hotelInfo$ | async)?.Web}}" class="ng-star-inserted"
         ><mat-icon>link</mat-icon>
-        <span>{{hotelInfo.Web}}</span>
+        <span>{{(hotelInfo$ | async)?.Web}}</span>
       </a>
     </div>
   </div>
@@ -58,11 +61,11 @@
 
     <div class="item">
       <mat-icon>done_all</mat-icon
-      ><span _ngcontent-xup-c189="" class="ng-star-inserted">Otelde Ödeme</span>
+      ><span _ngcontent-xup-c189="" class="ng-star-inserted">Min Ödeme: %{{(hotelInfo$ | async)?.DownPaymentPercent}}</span>
     </div>
   </div>
 
-  <div fxFlex="100">    
-      {{hotelInfo.Description}}    
+  <div fxFlex="100" [innerHTML]="(hotelInfo$ | async)?.Description">    
+         
   </div>
 </div>

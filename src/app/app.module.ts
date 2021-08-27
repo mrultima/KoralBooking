@@ -33,7 +33,15 @@ import { MatBadgeModule } from "@angular/material/badge";
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { YandexMapComponent } from './yandex-map/yandex-map.component';
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { AngularYandexMapsModule, YaConfig, YA_CONFIG } from 'angular8-yandex-maps';
 
+
+const mapConfig: YaConfig = {
+  apikey: 'pdct.1.1.20210826T094816Z.38a0996dbc78ac17.41b3a82bfec8250e2c0a1a474905ff08070601ff',
+  lang: 'en_US',
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +57,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     HotelinfoComponent,
     HotelphotoComponent,
     FacilitysComponent,
+    YandexMapComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -72,9 +82,20 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MatBadgeModule,
     MatSidenavModule,
     HttpClientModule,
+    MatDialogModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
+    
+  
    
   ],
-  providers: [],
+  entryComponents: [YandexMapComponent],
+  providers: [{
+    provide: YA_CONFIG,
+    useValue: {
+      apikey: 'pdct.1.1.20210826T094816Z.38a0996dbc78ac17.41b3a82bfec8250e2c0a1a474905ff08070601ff',
+      lang: 'en_US',
+    },
+  },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

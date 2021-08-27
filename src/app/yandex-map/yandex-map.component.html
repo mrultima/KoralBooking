@@ -1,0 +1,16 @@
+<div class="container">
+   
+      <h2>{{this.data.objects[0].Name}} </h2>
+      
+<div class="map-container"><ya-map [center]="[this.data.initialCoordinates[0], this.data.initialCoordinates[1]]" [zoom]="12">
+    <ya-placemark [geometry]="[this.data.objects[0].coordinates[0], this.data.objects[0].coordinates[1]]"></ya-placemark>
+   
+  </ya-map></div>
+    
+<div class="">
+ <button (click)="closeMap()"class="map-button" mat-flat-button color="warn">Kapat</button>
+</div>
+   
+    
+  </div>
+ 

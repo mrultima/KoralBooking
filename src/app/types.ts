@@ -415,8 +415,8 @@ export interface HotelItem {
     HotelName: string;
     HotelStar: number;
     LanguageCode: string;
-    Latitude: number;
-    Longitude: number;
+    Latitude: string;
+    Longitude: string;
     Person: Person[];
     RateType: string;
     RoomType: string;
