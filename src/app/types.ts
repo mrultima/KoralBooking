@@ -1,4 +1,9 @@
-
+export interface Amenitys {
+    PropertName: string;
+    CatgoryName: string;
+    Icon: string;
+    NotFree: boolean
+  }
 
 export interface HotelConfig {
     HOTELID: number;
@@ -110,6 +115,7 @@ export interface HotelConfig {
     Stars: number;
     Description: string;
     Amenitys: string;
+    _Amenitys: Amenitys[];
     Currencies: string;
     Languages: string;
     DefaultLanguage: string;
