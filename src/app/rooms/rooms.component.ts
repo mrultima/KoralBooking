@@ -12,8 +12,12 @@ import { Room, Rooms } from '../types';
 export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
 
   rooms: Room[]=[];
+  roomsGroup:any[] = []
   roomsByGroup:any[] = [];
+  roomsCancelByGroup:any[] = [];
+  roomsBoardByGroup:any[] = [];
   rooms$ = new BehaviorSubject<Rooms | null>(null);
+  
 
   isDestroyed = new Subject();
   constructor(public apiService: ApiService) {
@@ -30,9 +34,11 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
   }
 
   async ngOnInit(){
-    this.apiService.rooms$.subscribe((info) => {
-    this._groupBy(info);
-    })
+    this.apiService.rooms$.subscribe(async (info) => {
+    this.roomsByGroup = await this._groupBy(info,"RoomTypeId");
+    this.roomsCancelByGroup = await this._groupBy(info,"CancelPolicy");
+    this.roomsBoardByGroup = await this._groupBy(info,"BoardType");
+    })   
     await timer(500).toPromise();
     this.apiService.rooms$.pipe(takeUntil(this.isDestroyed)).subscribe(info=>{
       if(info){
@@ -54,15 +60,30 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
     
   }
 
-  _groupBy(data:Room[]){
+  async _groupBy(data:Room[], key:any){
+    let room:any = []
     const source = from(data);
-    const example = source.pipe(
-      groupBy(room => room.RoomTypeId),
+    const roomType = source.pipe(
+      groupBy((room:any) => room[key]),
       // return each item in group as array
       mergeMap(group => group.pipe(toArray()))
     );
+    
+    // const cancelPol = source.pipe(
+    //   groupBy(room => room.CancelPolicy),
+    //   mergeMap(group => group.pipe(toArray()))
+    // );
+    // const boardType = source.pipe(
+    //   groupBy(room => room.CancelPolicy),
+    //   mergeMap(group => group.pipe(toArray()))
+    // );
 
-    const subscribe = example.subscribe(val => {this.roomsByGroup.push(val)
-    });
+    const subscribe = roomType.subscribe(val => room.push(val))
+    console.log("r",room)
+    // const subscribeCancel = cancelPol.subscribe(val => {this.roomsCancelByGroup.push(val)
+    // });
+    // const subscribeBoard = boardType.subscribe(val => {this.roomsBoardByGroup.push(val)
+    // });
+    return room
   }
 }
