@@ -24,6 +24,7 @@
     "@angular/router": "~11.2.4",
     "angular8-yandex-maps": "^12.1.7",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

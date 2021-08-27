@@ -1,21 +1,40 @@
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Tesis Özellikleri</mat-panel-title>
-    </mat-expansion-panel-header>
+<div class="hotel-detail-info-amenitys" *ngIf="!hidedetail">
+  <mat-accordion>
 
-    <div class="facilitys">
-      <h4>Etkinlikler</h4>
-      <div fxLayout="row wrap" fxLayoutGap="10px">
-        <ng-container *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]">
-          <div fxFlex="20" fxFlex.xs="100" fxFlex.md="50">
-            <div class="hotel-detail-info-amenity-row">
-              <i class="fas fa-globe"></i>
-              <span>At Binme</span><span style="margin-left: 5px">*</span>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    <ng-container *ngIf="facilityData?.HOTEL_FACILITY_INVISIBILITY">
+
+      <mat-expansion-panel *ngIf="facilityData._Amenitys != null" [expanded]="true">
+        <mat-expansion-panel-header>
+          <h3 class="hotel-detail-info-subTitle">Teknik Özellikler</h3>
+        </mat-expansion-panel-header>
+        <div class="hotel-detail-info-amenity-container">
+          <ng-container *ngIf="typeOf(facilityData._Amenitys[0]); else notStringArr">
+            <ng-container *ngFor="let item of (facilityData._Amenitys)">
+              <div class="hotel-detail-info-amenity-row" ngStyle.lt-md="grid-column: span 4"
+                [style.gridColumn]="'span 12'">
+                <i [class]="item"></i>
+                <span>{{item}}</span>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #notStringArr>
+            <ng-container *ngFor="let item of (facilityData?._Amenitys | keyvalue)">
+              <h4>{{item.key == 'null' || item.key == 'undefined' ? 'Diğer' : item.key}}</h4>
+              <ng-container *ngFor="let data of $any(item.value)">
+                <div class="hotel-detail-info-amenity-row" ngStyle.lt-md="grid-column: span 4"
+                  [style.gridColumn]="'span 12'">
+                  <i [class]="data.Icon"></i>
+                  <span>{{data.PropertName}}</span>
+                  <span *ngIf="data.NotFree" style="margin-left: 5px;">*</span>
+                </div>
+              </ng-container>           
+            </ng-container>
+          </ng-template>
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
+
+
+  </mat-accordion>
+</div>

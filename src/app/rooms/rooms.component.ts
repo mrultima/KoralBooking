@@ -44,7 +44,7 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
       if(info){
         this.rooms$.next(info)
         this.rooms$.getValue()?.forEach(room => this.rooms.push(room))
-        console.log(this.rooms$.value)
+        
         for(let i= 0 ; i < this.rooms.length ; i++)
         if(this.rooms[i]){
           if(this.rooms[i]?.RoomImageURL == null){

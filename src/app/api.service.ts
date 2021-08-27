@@ -6,6 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { map, share, shareReplay, takeUntil } from 'rxjs/operators';
 import { HotelConfig, Rooms, SearchParams } from './types';
+import * as _ from 'lodash';
+
 
 
 
@@ -16,6 +18,7 @@ import { HotelConfig, Rooms, SearchParams } from './types';
 export class ApiService {
   hotelConfig$ = this.getHotelConfig().pipe(shareReplay());
   rooms$ = new BehaviorSubject<Rooms>([]);
+  hotelFacilities = new BehaviorSubject<HotelConfig | null >(null);
 
   searchFormGroup = new FormGroup(
     {
@@ -49,7 +52,7 @@ export class ApiService {
       Action: 'Execute',
       Object: 'SP_HOTEL_BOOKINGPARAMS',
       Parameters: {
-        SUBDOMAIN: 'dev-hotel'
+        SUBDOMAIN: 'mango'
       }
     }).pipe(
       map((response: any) => {
@@ -58,6 +61,20 @@ export class ApiService {
       })
     )
   }
+  // getFacilityConfig(): Observable<HotelConfig> {
+  //   return this.apiReq({
+  //     Action: 'Execute',
+  //     Object: 'SP_HOTEL_BOOKINGPARAMS',
+  //     Parameters: {
+  //       SUBDOMAIN: 'mango'
+  //     }
+  //   }).pipe(
+  //     map((response: any) => {
+  //       response[0][0].Amenitys = response[1];
+  //       return response[0];
+  //     })
+  //   )
+  // }
   getRooms(params: SearchParams): Observable<Rooms> {
     return this.apiReq({
       Action: 'Execute',
@@ -69,15 +86,50 @@ export class ApiService {
         return response[0];
       })
     )
+
   }
 
 
   onSearch(): void {
-    console.log(this.searchFormGroup.value);
+    
     this.getRooms(this.searchFormGroup.value)
       .subscribe((response) => {
       this.rooms$.next(response);
     }
     );
   }
+
+
+  async minimalGetHotelConfig(isReturn?: boolean, subdomain?: string  ) {
+    let response : any =  await this.apiReq({
+      Action: 'Execute',
+      Object: 'SP_HOTEL_BOOKINGPARAMS',
+      Parameters: {
+        SUBDOMAIN: 'mango',
+        
+      }
+    }).toPromise();
+    if (isReturn) {
+      return response;
+    }
+console.log(response, "response")
+    if (0 in response && 0 in response[0] && response[0][0].Amenitys ) {
+      console.log("ilk if")
+    
+        console.log("ikinci if")
+        response[0][0]._Amenitys = null;
+        let amen;
+        if (response[0][0].Amenitys.startsWith('[')) {
+          amen = JSON.parse(response[0][0].Amenitys);
+          response[0][0]._Amenitys = _.groupBy(amen, 'CatgoryName') as any;
+        } else {
+          amen = _.compact(_.uniq(response[0][0].Amenitys.split(',')));
+          response[0][0]._Amenitys = amen;
+        }     
+    }
+    return response[0][0];
+  }
+
+  
+  
 }
