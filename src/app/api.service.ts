@@ -71,6 +71,7 @@ export class ApiService {
     )
   }
 
+}
   onSearch(): void {
     console.log(this.searchFormGroup.value);
     this.getRooms(this.searchFormGroup.value)
