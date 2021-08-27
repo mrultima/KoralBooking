@@ -36,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { YandexMapComponent } from './yandex-map/yandex-map.component';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { AngularYandexMapsModule, YaConfig, YA_CONFIG } from 'angular8-yandex-maps';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 const mapConfig: YaConfig = {
@@ -86,6 +87,7 @@ const mapConfig: YaConfig = {
     AngularYandexMapsModule.forRoot(mapConfig),
     
   
+    MatTabsModule
    
   ],
   entryComponents: [YandexMapComponent],

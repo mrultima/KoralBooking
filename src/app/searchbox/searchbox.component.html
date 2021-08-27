@@ -7,7 +7,7 @@
         matInput
         [min]="minDate"
         [max]="maxDate"
-        [matDatepicker]="checkIn"
+        [matDatepicker]="checkIn"        
       />
       <mat-datepicker-toggle matSuffix [for]="checkIn"></mat-datepicker-toggle>
       <mat-datepicker #checkIn></mat-datepicker>
@@ -40,15 +40,15 @@
     </mat-form-field>
   </div>
 
-  <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="48">
+  <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="48">  
     <div fxLayout="row wrap">
       <div fxFlex="50" fxFlex.xs="100" fxLayoutGap="20px">
         <mat-form-field class="w100">
-          <mat-label> Adult </mat-label>
+          <mat-label> Yetişkin </mat-label>
           <mat-icon matPrefix>person</mat-icon>
           <mat-select formControlName="ADULT">
-            <ng-container *ngFor="let i of [1,2,3,4,5,6,7,8,9]">
-              <mat-option [value]="i">{{ i }}</mat-option>
+            <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxAdult); let i = index">
+              <mat-option [value]="i+1">{{ i+1 }}</mat-option>
             </ng-container>
           </mat-select>
         </mat-form-field>
@@ -56,10 +56,10 @@
 
       <div fxFlex="50" fxFlex.xs="100">
         <mat-form-field class="w100">
-          <mat-label> Child </mat-label>
+          <mat-label> Çocuk Sayısı </mat-label>
           <mat-icon matPrefix>face</mat-icon>
           <mat-select formControlName="CHILDAGES">
-            <ng-container *ngFor="let i of [0,1,2,3,4]">
+            <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxChild);let i = index">
               <mat-option [value]="i">{{ i }}</mat-option>
             </ng-container>
           </mat-select>
