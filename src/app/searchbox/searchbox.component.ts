@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 
 
@@ -33,7 +33,7 @@ export class SearchboxComponent implements OnInit, OnDestroy {
   constructor(public api: ApiService) {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 20, 0, 1);
+    this.minDate = new Date();
     this.maxDate = new Date(currentYear + 1, 11, 31);
     this.api.hotelConfig$.pipe(takeUntil(this.isDestroyed)).subscribe(info=>{
       if(info){
@@ -80,7 +80,7 @@ export class SearchboxComponent implements OnInit, OnDestroy {
           const cIn = this.searchFormGroup.get('CHECKIN')?.value  
           const cOut = this.searchFormGroup.get('CHECKOUT')?.value
           var cInArr = parseInt(moment(cIn).format('DD')) + parseInt(moment(cIn).format('MM')) * 30 + parseInt(moment(cIn).format('YYYY')) * 365;       
-          var cOutArr = parseInt(moment(cOut).format('DD')) + parseInt(moment(cOut).format('MM')) * 30 + parseInt(moment(cOut).format('YYYY')) * 365;            
+          var cOutArr = parseInt(moment(cOut).format('DD')) + parseInt(moment(cOut).format('MM')) * 30 + parseInt(moment(cOut).format('YYYY')) * 365 - this.minLos.value;            
              
           this.searchFormGroup.get('CHECKOUT')?.setValue(
             moment(this.searchFormGroup.get('CHECKIN')?.value).add(this.minLos.value , "day").toDate()   // inc by days

@@ -36,7 +36,7 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
   async ngOnInit(){
     this.apiService.rooms$.subscribe(async (info) => {
     this.roomsByGroup = await this._groupBy(info,"RoomTypeId");
-    this.roomsCancelByGroup = await this._groupBy(info,"CancelPolicy");
+    this.roomsCancelByGroup = await this._groupBy(info,"RateType");
     this.roomsBoardByGroup = await this._groupBy(info,"BoardType");
     })   
     await timer(500).toPromise();

@@ -22,13 +22,13 @@
         <div class="rooms-area">
           <h2 class="m0">{{ roomsByGroup[i][i]?.RoomType }}</h2>
           <p>
-            {{ roomsByGroup[i][i]?.RoomInfo }}
+            {{roomsByGroup[i][i]?.RoomInfo}}
           </p>
           <div class="room-amenities">
-            <i class="fab fa-keycdn" matTooltip="Wifi"></i>
-            <i class="fab fa-keycdn" matTooltip="Wifi"></i>
-            <i class="fab fa-keycdn" matTooltip="Wifi"></i>
-            <i class="fab fa-keycdn" matTooltip="Wifi"></i>
+            <i class="fab fa-keycdn" matTooltip="Wifi" *ngIf="roomsByGroup[i][i]?.Wifi"></i>
+            <i class="fab fa-keycdn" matTooltip="Balcony" *ngIf="roomsByGroup[i][i]?.Balcony"></i>
+            <i class="fab fa-keycdn" matTooltip="HairDryer" *ngIf="roomsByGroup[i][i]?.HairDryer"></i>
+            <i class="fab fa-keycdn" matTooltip="Bath" *ngIf="roomsByGroup[i][i]?.PrivateBath"></i>
 
             <div style="
               color: #000;
@@ -56,7 +56,7 @@
                         <mat-icon>info</mat-icon>
                       </button>
                     </div>
-                    <div class="infoItem">{{roomsCancelByGroup[j][j]?.CancelPolicy}}</div>
+                    <div class="infoItem">{{roomsCancelByGroup[j][j]?.BoardType}} {{roomsCancelByGroup[j][j]?.RateType}} {{roomsCancelByGroup[j][j]?.RateCode}} {{roomsCancelByGroup[j][j]?.BedOptions}}</div>
                   </div>
                 </div>
                 
@@ -66,15 +66,20 @@
                       <span class="price"
                         style="text-decoration: line-through">{{roomsBoardByGroup[k][j]?.Price}}</span>
                       <div class="price-inline">
-                        <span style="text-decoration: line-through">.00</span><span
-                          style="text-decoration: line-through">EUR</span>
+                        <span style="text-decoration: line-through">.00</span><span *ngIf="roomsBoardByGroup[k][j]?.Currency;else default"
+                          style="text-decoration: line-through">{{roomsBoardByGroup[k][j]?.Currency}}</span>
+                          <ng-template #default
+                          style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template>                          
                       </div>
                     </div>
 
                     <div class="default-price finalPrice">
                       <span class="price">{{roomsBoardByGroup[k][j]?.Price}}</span>
                       <div class="price-inline">
-                        <span>.00</span><span>EUR</span>
+                        <span>.00</span><span style="text-decoration: line-through">.00</span><span *ngIf="roomsBoardByGroup[k][j]?.Currency;else default"
+                        style="text-decoration: line-through">{{roomsBoardByGroup[k][j]?.Currency}}</span>
+                        <ng-template #default
+                        style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template> 
                       </div>
                     </div>
                   </div>
