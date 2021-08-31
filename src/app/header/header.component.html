@@ -3,7 +3,7 @@
     <div class="container">
       <div class="headerArea">
         <div class="logo">
-          <a href="" style="font-size: 20px; font-weight: 500">Myhotel</a>
+          <a href="" style="font-size: 20px; font-weight: 500">{{(this.apiService.hotelConfig$ | async)?.HOTELNAME}}</a>
         </div>
         <div class="menuButton">
           <div class="menuButtonItem">
@@ -46,7 +46,7 @@
             <button
               mat-raised-button
               class="basketButton"
-              matBadge="2"
+              matBadge=""
               matBadgePosition="after"
               matBadgeColor="accent"
             >
@@ -61,7 +61,7 @@
   <ng-container *ngIf="isMobile">
     <div class="headerArea">
       <div class="logo">
-        <a href="" style="font-size: 20px; font-weight: 500">Myhotel</a>
+        <a href="" style="font-size: 20px; font-weight: 500">{{(this.apiService.hotelConfig$ | async)?.HOTELNAME}}</a>
       </div>
       <div class="menuButton">
         <div class="menuButtonItem" style="border: none">

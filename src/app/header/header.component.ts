@@ -1,5 +1,8 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { ApiService } from "../api.service";
+import { HotelConfig } from "../types";
 
 @Component({
   selector: "app-header",
@@ -23,7 +26,10 @@ export class HeaderComponent implements OnInit {
     { value: "GBP", viewValue: "GBP" },
   ];
 
-  constructor(breakpointObserver: BreakpointObserver) {
+  constructor(
+    breakpointObserver: BreakpointObserver,
+    public apiService : ApiService,
+    ) {
     breakpointObserver
       .observe(["(max-width: 959px)", "(max-width: 599px)"])
       .subscribe((value) => {
@@ -38,8 +44,7 @@ export class HeaderComponent implements OnInit {
         (<HTMLInputElement>document.querySelector(".sidenav")).style.top="0px";
       } else {
         (<HTMLInputElement>document.querySelector(".sidenav")).style.top="50px";
-      }
-      
-    };
+      }      
+    };    
   }
 }

@@ -24,8 +24,8 @@
       (click)="showMap()"
         src="https://erspublic.blob.core.windows.net/test/16e63eaa-17ae-1906-8552-e2932b0e8000.png"
         style="width: inherit; height: 100%"
-      /><span class="map-detail-city ng-star-inserted" style="top: 44px">
-        Mugla, Turkey Haritada Göster </span
+      /><span class="map-detail-city ng-star-inserted" style="top: 66px">
+        {{(this.hotelInfo$ | async)?.HOTELNAME}} Haritada Göster </span
       ><!---->
     </div>
   </div>
