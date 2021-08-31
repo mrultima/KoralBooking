@@ -7,6 +7,7 @@
   </ng-container>
 </ng-container> -->
 <div *ngIf="rooms.length>0">
+  <button (click)="search()">ara</button>
   <ng-container *ngFor="let room of [].constructor(roomsByGroup.length);index as i">
     <div fxLayout="row wrap" class="hotelItem m10">
       <div fxFlex="25" fxFlex.xs="100" fxFlex.md="100" style="position: relative" class="hotel-image">
@@ -46,7 +47,7 @@
 
       <mat-tab-group class="hotelItem w100">
         <ng-container *ngFor="let room of [].constructor(roomsBoardByGroup.length);index as k">
-          <mat-tab label="{{roomsBoardByGroup[k][k]?.BoardType}}">
+          <mat-tab label="{{roomsByGroup[i][k]?.BoardType}}">
             <ng-container *ngFor="let room of [].constructor(roomsCancelByGroup.length);index as j">
               <div fxLayout="row wrap" class="align-center" style="padding: 15px 0px;">
                 <div class="roomItem" fxFlex="40" fxFlex.xs="50" fxFlex.md="48">
@@ -56,7 +57,7 @@
                         <mat-icon>info</mat-icon>
                       </button>
                     </div>
-                    <div class="infoItem">{{roomsCancelByGroup[j][j]?.BoardType}} {{roomsCancelByGroup[j][j]?.RateType}} {{roomsCancelByGroup[j][j]?.RateCode}} {{roomsCancelByGroup[j][j]?.BedOptions}}</div>
+                    <div class="infoItem">{{roomsByGroup[i][i]?.BoardType}} {{roomsByGroup[i][i]?.RateType}} {{roomsByGroup[i][i]?.RateCode}} {{roomsByGroup[i][i]?.BedOptions}}</div>
                   </div>
                 </div>
                 
@@ -64,20 +65,20 @@
                   <div class="room-price">
                     <div class="default-price">
                       <span class="price"
-                        style="text-decoration: line-through">{{roomsBoardByGroup[k][j]?.Price}}</span>
+                        style="text-decoration: line-through">{{roomsByGroup[i][k]?.Price}}</span>
                       <div class="price-inline">
-                        <span style="text-decoration: line-through">.00</span><span *ngIf="roomsBoardByGroup[k][j]?.Currency;else default"
-                          style="text-decoration: line-through">{{roomsBoardByGroup[k][j]?.Currency}}</span>
+                        <span style="text-decoration: line-through">.00</span><span *ngIf="roomsByGroup[i][k]?.Currency;else default"
+                          style="text-decoration: line-through">{{roomsByGroup[i][k]?.Currency}}</span>
                           <ng-template #default
                           style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template>                          
                       </div>
                     </div>
 
                     <div class="default-price finalPrice">
-                      <span class="price">{{roomsBoardByGroup[k][j]?.Price}}</span>
+                      <span class="price">{{roomsByGroup[i][k]?.Price}}</span>
                       <div class="price-inline">
-                        <span>.00</span><span style="text-decoration: line-through">.00</span><span *ngIf="roomsBoardByGroup[k][j]?.Currency;else default"
-                        style="text-decoration: line-through">{{roomsBoardByGroup[k][j]?.Currency}}</span>
+                        <span>.00</span><span style="text-decoration: line-through">.00</span><span *ngIf="roomsByGroup[i][k]?.Currency;else default"
+                        style="text-decoration: line-through">{{roomsByGroup[i][k]?.Currency}}</span>
                         <ng-template #default
                         style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template> 
                       </div>

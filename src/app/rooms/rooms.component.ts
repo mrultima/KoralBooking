@@ -53,11 +53,10 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
         }        
       }
     })
-    this.apiService.onSearch();  
   }
 
   search(){
-    
+    console.log(this.roomsByGroup)
   }
 
   async _groupBy(data:Room[], key:any){
@@ -79,7 +78,6 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
     // );
 
     const subscribe = roomType.subscribe(val => room.push(val))
-    console.log("r",room)
     // const subscribeCancel = cancelPol.subscribe(val => {this.roomsCancelByGroup.push(val)
     // });
     // const subscribeBoard = boardType.subscribe(val => {this.roomsBoardByGroup.push(val)

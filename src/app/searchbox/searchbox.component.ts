@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 
@@ -17,37 +17,54 @@ import { HotelConfig } from '../types';
 export class SearchboxComponent implements OnInit, OnDestroy {
   mock60 = Array(60);
   hotelConfig$ = new BehaviorSubject<HotelConfig | null>(null);
+  hotelConfig : HotelConfig
 
   isDestroyed = new Subject();
+  searchFormGroup:FormGroup;
   
   minDate: Date;
   maxDate: Date;
-  minLos = new BehaviorSubject(this.hotelConfig$.getValue()?.MinLOS || 1);
+  minLos = new BehaviorSubject(2);
   minDayFilter = new BehaviorSubject(moment().format('YYYY-MM-DD'));
   adultCount = this.hotelConfig$.getValue()?.MaxAdult;
-  childCount = this.hotelConfig$.getValue()?.MaxChild; 
-
-  searchFormGroup:FormGroup = this.api.searchFormGroup;
-  
+  childCount = this.hotelConfig$.getValue()?.MaxChild;   
 
   constructor(public api: ApiService) {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
-    this.maxDate = new Date(currentYear + 1, 11, 31);
-    this.api.hotelConfig$.pipe(takeUntil(this.isDestroyed)).subscribe(info=>{
-      if(info){
-        this.hotelConfig$.next(info)
-        this.minLos.next(info.MinLOS || 1);
-      }
-    })
+    this.maxDate = new Date(currentYear + 1, 11, 31);    
   }
   ngOnDestroy(): void {    
       this.isDestroyed.next();
       this.isDestroyed.complete();   
   }
 
-  ngOnInit(): void {   
+  async ngOnInit(){
+    this.api.hotelConfig$.pipe(takeUntil(this.isDestroyed)).subscribe(info=>{
+      if(info){
+        this.hotelConfig$.next(info)
+      }
+    })
+    this.hotelConfig = await this.api.hotelConfig$.toPromise()
+    this.searchFormGroup = new FormGroup(
+      {
+        ADULT: new FormControl(2),
+        CHECKIN: new FormControl(new Date()),
+        CHECKOUT: new FormControl(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.hotelConfig?.MinLOS  || 4))),
+        DAYS: new FormControl(this.hotelConfig?.MinLOS || 4),
+        CHILDAGES: new FormControl(0),
+        COUNTRYCODE: new FormControl(''),
+        CURRENCY: new FormControl(''),
+        HOTELID: new FormControl(null),
+        IPADDRESS: new FormControl(''),
+        LANGUAGE: new FormControl(''),
+        PORTALID: new FormControl(1),
+        PORTALSELLERID: new FormControl(null),
+        PROMOCODE: new FormControl(''),
+        SESSION: new FormControl(null),
+      }
+    )
 
     this.api.hotelConfig$.pipe(takeUntil(this.isDestroyed)).subscribe({
       next: (config) => {
@@ -117,7 +134,7 @@ export class SearchboxComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    this.api.onSearch();
+    this.api.onSearch(this.searchFormGroup.value);
   }
 
   myFilter = (d: Date): boolean => {
