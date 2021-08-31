@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutGap="5px" [formGroup]="searchFormGroup">
+<div fxLayout="row wrap" fxLayoutGap="5px" *ngIf="searchFormGroup" [formGroup]="searchFormGroup">
   <div fxFlex="15" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Giriş</mat-label>

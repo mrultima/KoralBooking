@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, share, shareReplay, takeUntil } from 'rxjs/operators';
 import { HotelConfig, Rooms, SearchParams } from './types';
 import * as _ from 'lodash';
+import { async } from '@angular/core/testing';
 
 
 
@@ -19,29 +20,16 @@ export class ApiService {
   hotelConfig$ = this.getHotelConfig().pipe(shareReplay());
   rooms$ = new BehaviorSubject<Rooms>([]);
   hotelFacilities = new BehaviorSubject<HotelConfig | null >(null);
-
-  searchFormGroup = new FormGroup(
-    {
-      ADULT: new FormControl(2),
-      CHECKIN: new FormControl(new Date()),
-      CHECKOUT: new FormControl(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)),
-      DAYS: new FormControl(1),
-      CHILDAGES: new FormControl(0),
-      COUNTRYCODE: new FormControl(''),
-      CURRENCY: new FormControl(''),
-      HOTELID: new FormControl(null),
-      IPADDRESS: new FormControl(''),
-      LANGUAGE: new FormControl(''),
-      PORTALID: new FormControl(1),
-      PORTALSELLERID: new FormControl(null),
-      PROMOCODE: new FormControl(''),
-      SESSION: new FormControl(null),
-    }
-  )
+  hotelInfo$ = new BehaviorSubject<HotelConfig | null >(null);  
 
   constructor(
     public http: HttpClient
-  ) { }
+  ) {
+    this.hotelConfig$.subscribe(info => { 
+      if(info){
+      this.hotelInfo$.next(info)
+    }})
+   }
 
   apiReq(body: any): Observable<any> {
     return this.http.post('https://4001.hoteladvisor.net', body)
@@ -52,7 +40,7 @@ export class ApiService {
       Action: 'Execute',
       Object: 'SP_HOTEL_BOOKINGPARAMS',
       Parameters: {
-        SUBDOMAIN: 'dev-hotel'
+        SUBDOMAIN: 'mango'
       }
     }).pipe(
       map((response: any) => {
@@ -90,9 +78,8 @@ export class ApiService {
   }
 
 
-  onSearch(): void {
-    
-    this.getRooms(this.searchFormGroup.value)
+  onSearch(val:any): void {    
+    this.getRooms(val)
       .subscribe((response) => {
       this.rooms$.next(response);
     }
