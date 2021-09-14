@@ -158,11 +158,11 @@ export class RoomsComponent implements OnInit,OnDestroy,AfterViewInit {
   }
 
   search(){
-    console.log(this.room)
+    this.roomList$.subscribe(x => console.log(x,"roomlar"))
   }
 
   async onSelectRoom(){
-    console.log()
+    console.log(this.roomList$, "roomList")
   }
 
   async _groupBy(data:Room[], key:any){

@@ -1,4 +1,5 @@
 <app-header></app-header>
+<router-outlet></router-outlet>
 <div class="container">
   <div class="content">
     <div
@@ -12,13 +13,7 @@
       <div fxFlex="50" fxFlex.xs="100">
         <app-hotelinfo></app-hotelinfo>
       </div>
-    </div>
-
-    <div fxLayout="row" fxLayoutAlign="space-between" class="mt-15">
-      <div fxFlex="100">
-        <app-facilitys></app-facilitys>
-      </div>
-    </div>
+    </div>    
 
     <div
       fxLayout="row"
@@ -47,8 +42,13 @@
         <app-basket></app-basket>
       </div>
     </div>
+    <div fxLayout="row" fxLayoutAlign="space-between" class="mt-15">
+      <div fxFlex="100">
+        <app-facilitys></app-facilitys>
+      </div>
+    </div>
   </div>
 </div>
 <app-footer></app-footer>
-<pre><p>HotelConfig$</p>{{apiService.hotelConfig$|async|json}}</pre>
-<pre><p>Rooms$</p>{{apiService.rooms$|async|json}}</pre>
+<!-- <pre><p>HotelConfig$</p>{{apiService.hotelConfig$|async|json}}</pre>
+<pre><p>Rooms$</p>{{apiService.rooms$|async|json}}</pre> -->
