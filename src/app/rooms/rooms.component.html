@@ -30,10 +30,10 @@
             {{room[1][i]?.description}}
           </p>
           <div class="room-amenities">
-            <i class="fab fa-keycdn" matTooltip="Wifi" *ngIf="room[1][i]?.wifi"></i>
-            <i class="fab fa-keycdn" matTooltip="Balcony" *ngIf="room[1][i]?.balcony"></i>
-            <i class="fab fa-keycdn" matTooltip="HairDryer" *ngIf="room[1][i]?.hairDryer"></i>
-            <i class="fab fa-keycdn" matTooltip="Bath" *ngIf="room[1][i]?.privateBath"></i>
+            <i class="fas fa-wifi" matTooltip="Wifi" *ngIf="room[1][i]?.wifi"></i>
+            <i class="fas fa-door-open" matTooltip="Balcony" *ngIf="room[1][i]?.balcony"></i>
+            <i class="fas fa-wind" matTooltip="HairDryer" *ngIf="room[1][i]?.hairDryer"></i>
+            <i class="fas fa-bath" matTooltip="Bath" *ngIf="room[1][i]?.privateBath"></i>
 
             <div style="
               color: #000;
@@ -49,9 +49,9 @@
       </div>
 
       <mat-tab-group class="hotelItem w100">
-        <ng-container *ngFor="let room of [].constructor(room[1][i]?.boardTypes.length);index as k">
-          <mat-tab label="{{roomsByGroup[i][k]?.BoardType}}">
-            <ng-container *ngFor="let room of [].constructor(roomsCancelByGroup.length);index as j">
+        <ng-container *ngFor="let board of [].constructor(room[1][i]?.boardTypes.length);index as k">
+          <mat-tab label="{{room[1][i]?.boardTypes[k].name}}">
+            <ng-container *ngFor="let board of [].constructor(room[1][i]?.boardTypes[k].rateTypes.length);index as j">
               <div fxLayout="row wrap" class="align-center" style="padding: 15px 0px;">
                 <div class="roomItem" fxFlex="40" fxFlex.xs="50" fxFlex.md="48">
                   <div class="room-properties">
@@ -60,7 +60,7 @@
                         <mat-icon>info</mat-icon>
                       </button>
                     </div>
-                    <div class="infoItem">{{roomsByGroup[i][k]?.BoardType}} {{roomsByGroup[i][k]?.RateType}} {{roomsByGroup[i][k]?.RoomType}}</div>
+                    <div class="infoItem">{{room[1][i]?.boardTypes[k].name}} {{room[1][i]?.boardTypes[k].rateTypes[j].name}} {{room[1][i]?.name}}</div>
                   </div>
                 </div>
                 
@@ -68,20 +68,20 @@
                   <div class="room-price">
                     <div class="default-price">
                       <span class="price"
-                        style="text-decoration: line-through">{{roomsByGroup[i][k]?.Price}}</span>
+                        style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].netPrice}}</span>
                       <div class="price-inline">
-                        <span style="text-decoration: line-through">.00</span><span *ngIf="roomsByGroup[i][k]?.Currency;else default"
-                          style="text-decoration: line-through">{{roomsByGroup[i][k]?.Currency}}</span>
+                        <span style="text-decoration: line-through">.00</span><span *ngIf="room[1][i]?.boardTypes[k].rateTypes[j].currency;else default"
+                          style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].currency}}</span>
                           <ng-template #default
                           style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template>                          
                       </div>
                     </div>
 
                     <div class="default-price finalPrice">
-                      <span class="price">{{roomsByGroup[i][k]?.Price}}</span>
+                      <span class="price">{{room[1][i]?.boardTypes[k].rateTypes[j].netPrice}}</span>
                       <div class="price-inline">
-                        <span>.00</span><span style="text-decoration: line-through">.00</span><span *ngIf="roomsByGroup[i][k]?.Currency;else default"
-                        style="text-decoration: line-through">{{roomsByGroup[i][k]?.Currency}}</span>
+                        <span>.00</span><span style="text-decoration: line-through">.00</span><span *ngIf="room[1][i]?.boardTypes[k].rateTypes[j].currency;else default"
+                        style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].currency}}</span>
                         <ng-template #default
                         style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template> 
                       </div>
