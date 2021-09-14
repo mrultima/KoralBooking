@@ -21,7 +21,7 @@
     <div fxFlex="25" fxFlex.xs="50">
       <div class="extrasAdult">
         <mat-form-field appearance="outline" class="w100 roomCount">
-          <mat-label>Yetişkin</mat-label>
+          <mat-label>{{ 'LBL_ADULT' | translate | async }}</mat-label>
           <mat-select value="1">
             <mat-option
               [value]="i + 1"
@@ -37,7 +37,7 @@
           mat-raised-button
           color="accent"
         >
-          Uygula
+        {{ 'BTN_APPLY' | translate | async }}
         </button>
       </div>
     </div>

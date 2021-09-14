@@ -6,8 +6,8 @@
       class="hotel-basket-panel-payment-percent-items"
     >
       <mat-button-toggle-group color="primary">
-        <mat-button-toggle value="1">Tamamı</mat-button-toggle>
-        <mat-button-toggle value="2">Kapora</mat-button-toggle>
+        <mat-button-toggle value="1">{{ 'LBL_BASKET_FULLAMOUNT' | translate | async }}</mat-button-toggle>  <!-- Tamamı -->
+        <mat-button-toggle value="2">{{ 'LBL_BASKET_PERCENTPAYMENT' | translate | async }}</mat-button-toggle>  <!-- Kapora -->
       </mat-button-toggle-group>
     </div>
 
@@ -21,7 +21,7 @@
         mat-flat-button
         style="background: transparent; border: unset; cursor: default"
       >
-        Ödenecek Tutar
+        {{ 'LBL_BASKET_PAYMENTAMOUNT' | translate | async }}  <!-- Ödenecek Tutar -->
       </button>
       810.00 EUR
     </div>
@@ -29,14 +29,14 @@
 </ng-template>
 
 <div class="basket-payment hotelItem m10">
-    <h2>Ödeme Bilgileri</h2>
+    <h2>{{ 'HEADER_PAYMENT_INFO' | translate | async }}</h2>  <!-- Ödeme Bilgileri -->
   <mat-accordion>
     <ng-container>
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
             <i class="far fa-credit-card"></i>
-            Kredi Kartı
+            {{ '#d_2creditcard#' | translate | async }}  <!-- Kredi Kartı  -->
           </mat-panel-title>
           <mat-panel-description>
             <mat-icon class="check_icon">check_circle_outline</mat-icon>
@@ -50,14 +50,14 @@
         <div fxLayout="row wrap">
             <div fxFlex="80">
                 <mat-form-field class="w100">
-                    <mat-label>Ad Soyad</mat-label>
+                    <mat-label>{{ 'LBL_CONTACT_INFO' | translate | async }}</mat-label>  <!-- Ad Soyad  -->
                     <input matInput />
                   </mat-form-field>
             </div>
 
             <div fxFlex="80">
                 <mat-form-field class="w100 mat-input-background">
-                    <mat-label>Kart Numarası</mat-label>
+                    <mat-label>{{ 'LBL_CC_NUMBER' | translate | async }}</mat-label>  <!-- Kart numarası  -->
                     <input matInput />
                   </mat-form-field>
             </div>
@@ -67,7 +67,7 @@
 
                 <div fxFlex="32">
                     <mat-form-field appearance="fill" class="w100">
-                        <mat-label>Ay</mat-label>
+                        <mat-label>{{ 'LBL_CC_MONTH' | translate | async }}</mat-label>  <!-- Ay  -->
                         <mat-select>
                           <mat-option *ngFor="let month of [1,2,3,4,5,6,7,8,9,10,11,12]" [value]="month">
                             {{month}}
@@ -78,7 +78,7 @@
     
                 <div fxFlex="32">
                     <mat-form-field appearance="fill" class="w100">
-                        <mat-label>Yıl</mat-label>
+                        <mat-label>{{ 'LBL_CC_YEAR' | translate | async }}</mat-label>  <!-- Yıl  -->
                         <mat-select>
                           <mat-option *ngFor="let year of [2021,2022,2023,2024,2025,2026,2027]" [value]="year">
                             {{year}}
@@ -110,8 +110,8 @@
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <i class="fas fa-comments-dollar"></i> Havale
-          </mat-panel-title>
+            <i class="fas fa-comments-dollar"></i> {{ '#d_2wiretransfer#' | translate | async }}  <!-- Havale  -->
+          </mat-panel-title> 
           <mat-panel-description>
             <mat-panel-description>
               <mat-icon class="check_icon">check_circle_outline</mat-icon>

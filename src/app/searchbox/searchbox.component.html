@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutGap="5px" *ngIf="searchFormGroup" [formGroup]="searchFormGroup">
   <div fxFlex="15" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Giriş</mat-label>
+      <mat-label>{{ 'LBL_CHECKIN' | translate | async }}</mat-label>  <!-- Giriş  -->
       <input
         formControlName="CHECKIN"
         matInput
@@ -15,7 +15,7 @@
   </div>
   <div fxFlex="10" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field>
-      <mat-label> Gece </mat-label>
+      <mat-label> {{ 'LBL_NIGHT' | translate | async }}</mat-label>  <!-- Gece  -->
       <i matPrefix class="far fa-moon"></i>
       <mat-select formControlName="DAYS">
         <ng-container *ngFor="let _ of mock60; index as i">
@@ -27,7 +27,7 @@
 
   <div fxFlex="15" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Çıkış</mat-label>
+      <mat-label>{{ 'LBL_CHECKOUT' | translate | async }}</mat-label>  <!-- Çıkış  -->
       <input
       formControlName="CHECKOUT"
       matInput
@@ -44,7 +44,7 @@
     <div fxLayout="row wrap">
       <div fxFlex="50" fxFlex.xs="100" fxLayoutGap="20px">
         <mat-form-field class="w100">
-          <mat-label> Yetişkin </mat-label>
+          <mat-label>{{ 'LBL_ADULT' | translate | async }}</mat-label>  <!-- Yetişkin  -->
           <mat-icon matPrefix>person</mat-icon>
           <mat-select formControlName="ADULT">
             <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxAdult); let i = index">
@@ -56,7 +56,7 @@
 
       <div fxFlex="50" fxFlex.xs="100">
         <mat-form-field class="w100">
-          <mat-label> Çocuk Sayısı </mat-label>
+          <mat-label>{{ 'LBL_CHILD_COUNT' | translate | async }}</mat-label>  <!-- Çocuk Sayısı  -->
           <mat-icon matPrefix>face</mat-icon>
           <mat-select formControlName="CHILDAGES">
             <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxChild);let i = index">
@@ -71,7 +71,7 @@
   <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="24">
     <mat-form-field>
       <mat-icon matPrefix>card_giftcard</mat-icon>
-      <mat-label> Promosyon </mat-label>
+      <mat-label>{{ 'LBL_PROMOTION' | translate | async }} </mat-label>  <!-- Promosyon  -->
       <input formControlName="PROMOCODE" matInput type="text" />
     </mat-form-field>
   </div>
@@ -85,7 +85,7 @@
         color="accent"
       >
         <mat-icon>search</mat-icon>
-        Oda Ara
+        {{ 'BTN_ROOMSEARCH' | translate | async }}  <!-- Oda Ara  -->
       </button>
     </div>
   </div>
