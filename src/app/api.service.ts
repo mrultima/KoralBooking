@@ -7,7 +7,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, share, shareReplay, takeUntil } from 'rxjs/operators';
 import { HotelConfig, Rooms, SearchParams } from './types';
 import * as _ from 'lodash';
-import { async } from '@angular/core/testing';
 
 
 @Injectable({
@@ -39,7 +38,7 @@ export class ApiService {
       Action: 'Execute',
       Object: 'SP_HOTEL_BOOKINGPARAMS',
       Parameters: {
-        SUBDOMAIN: 'mango'
+        SUBDOMAIN: 'adapalas'
       }
     }).pipe(
       map((response: any) => {
@@ -98,11 +97,7 @@ export class ApiService {
     if (isReturn) {
       return response;
     }
-    console.log(response, "response")
-    if (0 in response && 0 in response[0] && response[0][0].Amenitys) {
-      console.log("ilk if")
-
-      console.log("ikinci if")
+    if (0 in response && 0 in response[0] && response[0][0].Amenitys) {     
       response[0][0]._Amenitys = null;
       let amen;
       if (response[0][0].Amenitys.startsWith('[')) {
