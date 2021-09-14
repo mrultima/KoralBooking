@@ -306,6 +306,15 @@ export interface HotelPhoto {
     SORTID: number;
 }
 
+export interface Day {
+    Date: string;
+    Price: string;
+    NetPrice: string;
+    Discount: string;
+    Availability: number;
+    ShowRoomCount?: number;
+  }
+
 
 export interface Room {
     OfferNo?: number;
@@ -347,7 +356,8 @@ export interface Room {
     Wifi?: boolean;
     Balcony?: boolean;
     HairDryer?: boolean;
-    PromotionCode?: string;
+    PromotionCode?: string;    
+    _Days: Day[];
     Days?: string;
     PaymentInformation?: string;
     PriceContract?: number;

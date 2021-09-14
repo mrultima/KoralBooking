@@ -31,14 +31,14 @@
           <div class="menuButtonItem checkIn">
             <a [routerLink]="['/Online']">
               <i class="fas fa-user-check"></i>
-              <span> Check-in</span>
+              <span>{{'ONL_CHECKINBUTTON' | translate | async}}</span>
             </a>
           </div>
 
           <div class="menuButtonItem">
             <a class="login-router-link" [routerLink]="['/Login']">
               <mat-icon>account_circle</mat-icon>
-              <span>Giriş</span>
+              <span>{{'BTN_LOGIN' | translate | async}}</span>
             </a>
           </div>
 
@@ -68,7 +68,7 @@
           <button
             mat-raised-button
             class="basketButton"
-            matBadge="2"
+            matBadge=""
             matBadgePosition="after"
             matBadgeColor="accent"
           >
@@ -87,7 +87,19 @@
 
   <mat-drawer-container class="sidenav" autosize>
     <mat-drawer #drawer class="sidenav-sidenav" mode="side">
-      <div>asasa</div>
+      <div class="menuButtonItem checkIn">
+        <a [routerLink]="['/Online']">
+          <i class="fas fa-user-check"></i>
+          <span>{{'ONL_CHECKINBUTTON' | translate | async}}</span>
+        </a>
+      </div>
+
+      <div class="menuButtonItem">
+        <a class="login-router-link" [routerLink]="['/Login']">
+          <mat-icon>account_circle</mat-icon>
+          <span>{{'BTN_LOGIN' | translate | async}}</span>
+        </a>
+      </div>
     </mat-drawer>
   </mat-drawer-container>
 </header>

@@ -23,7 +23,6 @@ export class FacilitysComponent implements OnInit {
     if(resp){
       this.facilityData = resp
     }
-    console.log(resp,  "resp")
 
 
     // this.apiService.hotelConfig$.subscribe(facility => {

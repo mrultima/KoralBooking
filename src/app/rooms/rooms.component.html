@@ -1,3 +1,7 @@
+<!-- <div style="white-space: pre;">
+  {{roomList$ | async | json}}
+</div> -->
+
 <!-- <ng-container *ngIf="roomsByGroup.length>0">
   <ng-container *ngFor="let item of roomsByGroup">    
       {{item[0]?.RoomType}}
@@ -8,28 +12,28 @@
 </ng-container> -->
 <div *ngIf="rooms.length>0">
   <button (click)="search()">ara</button>
-  <ng-container *ngFor="let room of [].constructor(roomsByGroup.length);index as i">
+  <ng-container *ngFor="let rooms of [].constructor(room.length);index as i">
     <div fxLayout="row wrap" class="hotelItem m10">
       <div fxFlex="25" fxFlex.xs="100" fxFlex.md="100" style="position: relative" class="hotel-image">
-        <img class="w100 hotelphoto" [src]="roomsByGroup[i][i]?.RoomImageURL" />
+        <img class="w100 hotelphoto" [src]="room[1][i]?.image"/>
         <div class="room-type-info-image-bottom-cont">
           <div>
-            Max <i *ngFor="let adult of [].constructor(roomsByGroup[i][i].RoomMaxAdult); index as i"
+            Max <i *ngFor="let adult of [].constructor(room[1][i]?.maxAdult); index as i"
               class="fas fa-male"></i>
           </div>
         </div>
       </div>
       <div fxFlex="75" fxFlex.xs="100" fxFlex.md="100">
         <div class="rooms-area">
-          <h2 class="m0">{{ roomsByGroup[i][i]?.RoomType }}</h2>
+          <h2 class="m0">{{ room[1][i]?.name }}</h2>
           <p>
-            {{roomsByGroup[i][i]?.RoomInfo}}
+            {{room[1][i]?.description}}
           </p>
           <div class="room-amenities">
-            <i class="fab fa-keycdn" matTooltip="Wifi" *ngIf="roomsByGroup[i][i]?.Wifi"></i>
-            <i class="fab fa-keycdn" matTooltip="Balcony" *ngIf="roomsByGroup[i][i]?.Balcony"></i>
-            <i class="fab fa-keycdn" matTooltip="HairDryer" *ngIf="roomsByGroup[i][i]?.HairDryer"></i>
-            <i class="fab fa-keycdn" matTooltip="Bath" *ngIf="roomsByGroup[i][i]?.PrivateBath"></i>
+            <i class="fab fa-keycdn" matTooltip="Wifi" *ngIf="room[1][i]?.wifi"></i>
+            <i class="fab fa-keycdn" matTooltip="Balcony" *ngIf="room[1][i]?.balcony"></i>
+            <i class="fab fa-keycdn" matTooltip="HairDryer" *ngIf="room[1][i]?.hairDryer"></i>
+            <i class="fab fa-keycdn" matTooltip="Bath" *ngIf="room[1][i]?.privateBath"></i>
 
             <div style="
               color: #000;
@@ -38,15 +42,14 @@
               font-size: 14px;
               cursor: pointer;
             ">
-              <i class="fas fa-search-plus"></i><span style="text-decoration: underline; padding-left: 5px">Devamını
-                Göster</span>
+              <i class="fas fa-search-plus"></i><span style="text-decoration: underline; padding-left: 5px">{{'LBL_CONTINUESHOW' | translate | async}}</span>
             </div>
           </div>
         </div>
       </div>
 
       <mat-tab-group class="hotelItem w100">
-        <ng-container *ngFor="let room of [].constructor(roomsBoardByGroup.length);index as k">
+        <ng-container *ngFor="let room of [].constructor(room[1][i]?.boardTypes.length);index as k">
           <mat-tab label="{{roomsByGroup[i][k]?.BoardType}}">
             <ng-container *ngFor="let room of [].constructor(roomsCancelByGroup.length);index as j">
               <div fxLayout="row wrap" class="align-center" style="padding: 15px 0px;">
@@ -57,7 +60,7 @@
                         <mat-icon>info</mat-icon>
                       </button>
                     </div>
-                    <div class="infoItem">{{roomsByGroup[i][i]?.BoardType}} {{roomsByGroup[i][i]?.RateType}} {{roomsByGroup[i][i]?.RateCode}} {{roomsByGroup[i][i]?.BedOptions}}</div>
+                    <div class="infoItem">{{roomsByGroup[i][k]?.BoardType}} {{roomsByGroup[i][k]?.RateType}} {{roomsByGroup[i][k]?.RoomType}}</div>
                   </div>
                 </div>
                 
@@ -93,7 +96,7 @@
 
                 <div class="roomItem" fxFlex="14" fxFlex.xs="50" fxFlex.md="48">
                   <mat-form-field appearance="outline" class="w100 roomCount">
-                    <mat-label> Oda Sayısı </mat-label>
+                    <mat-label>{{'LBL_ROOMCOUNT' | translate | async}}</mat-label>
                     <mat-select [value]="0">
                       <mat-option [value]="i" *ngFor="let count of [1, 2, 3, 4, 5, 6]; index as i">
                         {{ i + 1 }}
@@ -104,8 +107,8 @@
 
                 <div class="roomItem" fxFlex="12" fxFlex.xs="50" fxFlex.md="48"
                   style="margin: auto; text-align: center">
-                  <button mat-raised-button color="accent">
-                    Satın Al
+                  <button mat-raised-button color="accent" (click)="onSelectRoom()">
+                    {{'BTN_BUY' | translate | async}}
                     <mat-icon>keyboard_arrow_right</mat-icon>
                   </button>
                 </div>

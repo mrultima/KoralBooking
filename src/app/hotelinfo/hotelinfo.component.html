@@ -25,7 +25,7 @@
         src="https://erspublic.blob.core.windows.net/test/16e63eaa-17ae-1906-8552-e2932b0e8000.png"
         style="width: inherit; height: 100%"
       /><span class="map-detail-city ng-star-inserted" style="top: 66px">
-        {{(this.hotelInfo$ | async)?.HOTELNAME}} Haritada Göster </span
+        {{(this.hotelInfo$ | async)?.HOTELNAME}} {{'LBL_SHOW_MAP' | translate | async}}</span
       ><!---->
     </div>
   </div>
@@ -54,14 +54,21 @@
   </div>
 
   <div fxFlex="100" class="hotel-detail-info-defaulte-facility">
-    <div class="item">
+    <div *ngIf="(hotelInfo$ | async).PayAtHotel === true" class="item">
       <mat-icon>done_all</mat-icon
-      ><span _ngcontent-xup-c189="" class="ng-star-inserted">Otelde Ödeme</span>
+      ><span _ngcontent-xup-c189="" class="ng-star-inserted">{{'LBL_PAYAT_HOTEL' | translate | async}}</span>
     </div>
-
-    <div class="item">
+    <div *ngIf="(hotelInfo$ | async).MinLOS">
+      <mat-icon>done_all</mat-icon>
+      {{'LBL_MIN_LOS' | translate :[{minLos: (hotelInfo$ | async).MinLOS}] | async}}
+    </div>
+    <div *ngIf="(hotelInfo$ | async).MinDaysToCheckIn">
+      <mat-icon>done_all</mat-icon>
+      {{'LBL_MINDAYS_TO_CHECKIN' | translate :[{minDaysToCin: (hotelInfo$ | async).MinDaysToCheckIn}] | async}}
+    </div>
+    <div *ngIf="(hotelInfo$ | async).DownPaymentPercent" class="item">
       <mat-icon>done_all</mat-icon
-      ><span _ngcontent-xup-c189="" class="ng-star-inserted">Min Ödeme: %{{(hotelInfo$ | async)?.DownPaymentPercent}}</span>
+      ><span _ngcontent-xup-c189="" class="ng-star-inserted">{{'LBL_DOWN_PAYMENT_PERCENT' | translate :[{percent: (hotelInfo$ | async)?.DownPaymentPercent}]|async}}</span>
     </div>
   </div>
 
