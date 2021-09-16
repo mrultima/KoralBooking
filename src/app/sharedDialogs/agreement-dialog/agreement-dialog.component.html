@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>
+  <span style="display: flex;justify-content: space-between">
+    <!-- span>{{data.header}} </span -->
+      <button mat-button (click)="onNoClick()">
+        <mat-icon color="warn">clear</mat-icon>
+      </button>
+  </span>
+</h1>
+<div mat-dialog-content [innerHTML]="data.content" >
+</div>

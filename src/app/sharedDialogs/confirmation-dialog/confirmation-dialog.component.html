@@ -1,0 +1,25 @@
+<div style="position: relative;display: flex;flex-wrap: nowrap;">
+  <mat-icon *ngIf="icon" style="margin-top:4px;">{{icon}}</mat-icon>
+  <p mat-dialog-title class="confirmation-dialog-title" style="display: flex;margin-left: 10px">
+    <ng-container *ngIf="message.indexOf('<') > -1; else notHtml">
+      <div [innerHTML]="message | safe"></div>
+    </ng-container>
+    <ng-template #notHtml>
+      {{message | translate | async}}
+    </ng-template>
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <ng-container *ngIf="buttonMode === 2">
+    <button (click)="dialogRef.close(false)" mat-flat-button color="accent">{{buttonMessages[0] | translate | async}} <i
+        *ngIf="buttonIcon[0]" [attr.class]="buttonIcon[0]"></i></button>
+    <button cdkFocusInitial (click)="dialogRef.close(true)" mat-flat-button
+      color="warn">{{buttonMessages[1] | translate | async}} <i *ngIf="buttonIcon[1]" [attr.class]="buttonIcon[1]"></i>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="buttonMode === 1">
+    <button cdkFocusInitial (click)="dialogRef.close(true)" mat-flat-button
+      color="warn">{{buttonMessages[0] | translate | async}}</button>
+  </ng-container>
+</div>

@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { Currency, Language } from '../models/langauge';
 import { ApiService } from '../api.service';
 import { HttpClient } from '@angular/common/http';
+import { ExchangeRateService } from './exchange-rate.service';
+import { LoginResponseModel } from '../models/shared-models';
 
 
 
@@ -24,15 +26,42 @@ export interface AppConfig {
 })
 export class AppService {
 
-
+    loginUser = new BehaviorSubject<LoginResponseModel>(null);
+    selectSellerId = new BehaviorSubject<number>(null);
     appConfig = {};
-
     homePageRoute: BehaviorSubject<string> = new BehaviorSubject('/');
     hotelID = 0;
     subDomain = null;
     openBasketAuto = false;
 
+    constructor(
+        private translate: TranslateService,
+        private api: ApiService,
+        private http: HttpClient,
+        private exchangeRateService: ExchangeRateService,
+    ) {
+    }
 
+    convertFormTo(value, from: string, to: string) {
+        const rates = this.exchangeRateService.rates;
+        const portalcurrency = this.defCurrency;
+        let rateTo = null;
+        let rateFrom = null;
+        if (rates && rates.length > 0) {
+          rateFrom = rates[0].filter(r => {
+            return r.TO === from;
+          });
+          rateTo = rates[0].filter(r => {
+            return r.TO === to;
+          });
+        }
+        let rate = 1;
+        if (rateFrom != null && rateFrom.length > 0 && rateTo != null && rateTo.length > 0) {
+          rate = rateFrom[0].BUYRATE / rateTo[0].BUYRATE;
+        }
+        return +(rate != null ? (value / rate).toFixed(2) : value.toFixed(2));
+    
+      }
 
 
     language = new BehaviorSubject('');
@@ -62,14 +91,6 @@ export class AppService {
         SUBDOMAINNAME: (subdomainName?: string) => string;
         SUBDOMAINURL: (subdomainName?: string) => string;
     } = null;
-
-    constructor(
-        private translate: TranslateService,
-        private api: ApiService,
-        private http: HttpClient,
-    ) {
-    }
-
 
     getDate(date: any, format = 'YYYY-MM-DD HH:mm') {
         if (date) {
@@ -239,6 +260,48 @@ export class AppService {
         if (result != null && result[0].length) {
             return result[0];
         }
+    }
+
+    convert(value) {
+        const rates = this.exchangeRateService.rates;
+        const portalcurrency = this.defCurrency;
+        let rateTo = null;
+        let rateFrom = null;
+        if (rates && rates.length > 0) {
+          rateFrom = rates[0].filter(r => {
+            return r.TO === portalcurrency;
+          });
+          rateTo = rates[0].filter(r => {
+            return r.TO === this.currency.getValue();
+          });
+        }
+        let rate = 1;
+        if (rateFrom != null && rateFrom.length > 0 && rateTo != null && rateTo.length > 0) {
+          rate = rateFrom[0].BUYRATE / rateTo[0].BUYRATE;
+        }
+        return rate != null ? (value / rate).toFixed(2) : value.toFixed(2);
+    
+    }
+
+    getRate(selectCur) {
+        const rates = this.exchangeRateService.rates;
+        const portalcurrency = this.defCurrency;
+        let rateTo = null;
+        let rateFrom = null;
+        if (rates && rates.length > 0) {
+          rateFrom = rates[0].filter(r => {
+            return r.TO === portalcurrency;
+          });
+          rateTo = rates[0].filter(r => {
+            return r.TO === selectCur;
+          });
+        }
+        let rate = 1;
+        if (rateFrom != null && rateFrom.length > 0 && rateTo != null && rateTo.length > 0) {
+          rate = rateFrom[0].BUYRATE / rateTo[0].BUYRATE;
+        }
+        return 1 / rate;
+    
     }
 
     // async extraServiceDialog(useDate, mode: 'HOTEL' | 'TOUR' | 'TRANSFER' | 'FLIGHT' | 'TICKET', hotelId = 0, relatedUid?, marketId?: number) {

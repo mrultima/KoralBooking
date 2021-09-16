@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>
+  <span style="display: flex;justify-content: space-between">
+    <span class="warn-title">{{ data.type | translate | async}}</span>
+    <button mat-button (click)="onNoClick()">
+      <mat-icon color="warn">clear</mat-icon>
+    </button>
+  </span>
+</h1>
+<div mat-dialog-content>
+  <span style="display: flex;" *ngFor="let msg of data.message">{{msg | translate | async}}</span>
+  <div class="alertDescription" *ngIf="data?.description">{{data.description | translate | async}}</div>
+</div>

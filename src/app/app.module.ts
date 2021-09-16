@@ -1,7 +1,6 @@
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
 import { AppRoutingModule , routingComponents } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SearchboxComponent } from "./searchbox/searchbox.component";
@@ -31,15 +30,17 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { FacilitysComponent } from "./facilitys/facilitys.component";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { YandexMapComponent } from './yandex-map/yandex-map.component';
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatDialogModule } from "@angular/material/dialog";
 import { AngularYandexMapsModule, YaConfig, YA_CONFIG } from 'angular8-yandex-maps';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AppStarterService } from "./services/app-starter.service";
 import { TranslatePipe } from "./services/translate.pipe";
-import { LoginComponent } from './login/login.component';
+import {MatProgressSpinnerHarness} from '@angular/material/progress-spinner/testing';
+import { SafePipe } from "./services/safe.pipe";
+
 
 const mapConfig: YaConfig = {
   apikey: 'pdct.1.1.20210826T094816Z.38a0996dbc78ac17.41b3a82bfec8250e2c0a1a474905ff08070601ff',
@@ -62,8 +63,8 @@ const mapConfig: YaConfig = {
     FacilitysComponent,
     YandexMapComponent,
     TranslatePipe,
+    SafePipe,
     routingComponents
-
   ],
   imports: [
     BrowserModule,
@@ -89,8 +90,8 @@ const mapConfig: YaConfig = {
     HttpClientModule,
     MatDialogModule,
     AngularYandexMapsModule.forRoot(mapConfig),
-    MatTabsModule
-
+    MatTabsModule,
+    MatProgressSpinnerHarness,
   ],
   entryComponents: [YandexMapComponent],
   providers: [

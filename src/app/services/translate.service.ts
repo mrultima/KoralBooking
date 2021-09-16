@@ -117,7 +117,10 @@ export class TranslateService {
         } else {
           return this.data[key] || staticValue || key;
         }
-      }
-    
+    }
+
+    getKey(str: string): string {
+        return this.data[str] || str;
+    }   
 
 }
