@@ -1,0 +1,47 @@
+@import "../../shared/mq";
+
+.sorting-content {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  align-items: center;
+  background-color: #fff;
+
+  label {
+    font-weight: 500;
+  }
+
+
+  .sortby-item-container {
+    display: flex;
+
+
+    & > :not(:last-child) {
+      border-right: solid 1px #eee;
+    }
+
+    .sortby-item {
+      min-width: 100px;
+      text-align: center;
+    }
+
+
+  }
+
+}
+
+@include mq(lt-md) {
+  .sortby-item {
+    flex-direction: row;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+  }
+  .sortby-item-mobile {
+    flex-direction: row;
+    width: 100%;
+    text-align: left;
+    border-bottom: solid 1px #eee;
+  }
+}
+

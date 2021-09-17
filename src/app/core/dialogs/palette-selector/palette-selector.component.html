@@ -1,0 +1,51 @@
+<div cdkDrag
+     cdkDragRootElement=".cdk-overlay-pane"
+     cdkDragHandle>
+  <div style="height: 30vh; max-height: 700px; overflow: auto;">
+    <ta-core-color-picker [selectedHex]="focusMap | async" (colorChanges)="onColorSet($event)"></ta-core-color-picker>
+  </div>
+
+  <div style="display:flex;margin-top: 10px;">
+    <ng-container [ngTemplateOutlet]="scheme"
+                  [ngTemplateOutletContext]="{val: {id:'primary',  text: 'Primary', sText: 'P', color: primary }}"></ng-container>
+    <ng-container [ngTemplateOutlet]="scheme"
+                  [ngTemplateOutletContext]="{val: {id:'accent',  text: 'Accent', sText: 'A', color: accent }}"></ng-container>
+  </div>
+  <div style="display:flex;margin-top: 20px;">
+    <button style="flex: 2;" mat-raised-button color="primary" (click)="onSave()">Save</button>
+    <button style="flex: 1;" mat-button color="warn" (click)="onClose()">Close</button>
+    <button style="flex: 1;" mat-button color="warn" (click)="init(true)">Reset</button>
+  </div>
+</div>
+
+<ng-template #scheme let-val="val">
+  <div matRipple class="scheme-container" [class.active]="val.id === (focus | async)" (click)="focus.next(val.id)">
+    <p class="scheme-container__title">{{val?.text}}</p>
+    <div class="scheme-container__content">
+      <div class="scheme-container__content__large" [ngStyle]="{
+        'background-color': val?.color?.default?.hex,
+        'color': val?.color?.default?.contrast
+      }">
+        <p class="strong">{{val?.color?.default?.hex}}</p>
+        <span class="strong">{{val?.sText}}</span>
+        <!--        <button mat-flat-button>RESET</button>-->
+      </div>
+      <ul>
+        <li class="scheme-container__content__small" [ngStyle]="{
+          'background-color': val?.color?.lighter?.hex,
+         'color': val?.color?.lighter?.contrast
+        }">
+          <p>{{val?.sText}} -- Light</p>
+          <p class="strong">{{val?.color?.lighter?.hex}}</p>
+        </li>
+        <li class="scheme-container__content__small" [ngStyle]="{
+          'background-color': val?.color?.darker?.hex,
+         'color': val?.color?.darker?.contrast
+        }">
+          <p>{{val?.sText}} -- Dark</p>
+          <p class="strong">{{val?.color?.darker?.hex}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,14 @@
+<!-- Search Yapılınca sadece fiyat gibi bir content çiziliyorsa-->
+<ng-container *ngIf="spinnerService.showSpinner  && spinnerService.spinnerType == 1"> 
+  <mat-card class="loading-spinner">
+    <mat-card-content>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+
+<!-- Sayfa çiziliyorsa -->
+<!-- ng-container *ngIf="spinnerService.showSpinner  && spinnerService.spinnerType == 2">
+    <mat-progress-spinner mode="indeterminate" class="loading-spinner" [color]="color"  [value]="Loading"></mat-progress-spinner>
+</ng-container -->
+    

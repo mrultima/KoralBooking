@@ -1,0 +1,21 @@
+<div class="light-box-container">
+  <div class="big-image-container">
+    <button mat-icon-button>
+      <mat-icon (click)="onCloseButton()" [matTooltip]="'LBL_CLOSE' | translate | async">close</mat-icon>
+    </button>
+    <div *ngIf="data.images.length >= 2" class="navigation-arrows">
+      <mat-icon style="justify-content: flex-start" (click)="prevImage()" ondblclick="return false"
+                onmousedown="return false;">
+        keyboard_arrow_left
+      </mat-icon>
+      <mat-icon style="justify-content: flex-end" (click)="nextImage()" ondblclick="return false"
+                onmousedown="return false;">
+        keyboard_arrow_right
+      </mat-icon>
+    </div>
+    <img class="bg-img" [src]="bigImageUrl | async" />
+    <img class="top-img" #currentImg (error)="onImageError()" (load)="updatePanelSize(currentImg)" [src]="bigImageUrl | async"
+         ondblclick="return false"
+         onmousedown="return false;"/>
+  </div>
+</div>

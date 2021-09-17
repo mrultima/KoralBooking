@@ -1,0 +1,152 @@
+@import '../../shared/variables';
+
+.carousel-inner {
+  .carousel-item {
+    .item {
+      opacity                     : 0;
+      transition-duration         : .6s;
+      transition-property         : opacity;
+      -webkit-backface-visibility : hidden;
+      backface-visibility         : hidden;
+      transition                  : -webkit-transform .6s ease-in-out;
+      transition                  : transform .6s ease-in-out;
+      transition                  : transform .6s ease-in-out, -webkit-transform .6s ease-in-out;
+      max-width                   : 1920px;
+      overflow                    : hidden;
+      margin-right                : auto;
+      margin-left                 : auto;
+      background                  : transparent;
+    }
+
+    .active {
+      transform           : translate3d(0, 0, 0);
+      opacity             : 1;
+      z-index             : 1;
+      transition-duration : .6s;
+      transition-property : opacity;
+    }
+  }
+
+  .imageCover {
+    .item {
+      max-width : unset;
+    }
+  }
+
+  .topTitle {
+    bottom    : unset;
+    top       : 40px;
+    color     : #fff;
+    font-size : 30px;
+  }
+}
+
+.carousel-control{width: 5% !important;}
+.carousel-control.left{z-index: 9999;}
+.carousel-control.right{z-index: 9999;}
+
+// .slider-contaier {
+//     position: relative;
+//     display: flex;
+//     .slider-items{
+//         position: relative;
+//         width: 100%;
+//         overflow: hidden;
+//         .slider-item-image {
+//             position: relative;
+//             display:none;
+//             -webkit-box-align: center;
+//             -ms-flex-align: center;
+//             align-items: center;
+//             width: 100%;
+//             transition: -webkit-transform .6s ease;
+//             transition: transform .6s ease;
+//             transition: transform .6s ease,-webkit-transform .6s ease;
+//             -webkit-backface-visibility: hidden;
+//             backface-visibility: hidden;
+//             -webkit-perspective: 1000px;
+//             perspective: 1000px;
+//             height: 500px;
+//             img {
+//                 width: inherit;
+//                 height: inherit;
+//             }
+//         }
+//         .active{
+//             display:block;
+//         }
+//     }
+//     .slider-indicators{
+//         position: absolute;
+//         right: 0;
+//         bottom: 10px;
+//         left: 0;
+//         z-index: 15;
+//         display: -webkit-box;
+//         display: -ms-flexbox;
+//         display: flex;
+//         -webkit-box-pack: center;
+//         -ms-flex-pack: center;
+//         justify-content: center;
+//         padding-left: 0;
+//         margin-right: 15%;
+//         margin-left: 15%;
+//         list-style: none;
+//         li {
+//             position: relative;
+//             -webkit-box-flex: 0;
+//             -ms-flex: 0 1 auto;
+//             flex: 0 1 auto;
+//             width: 30px;
+//             height: 3px;
+//             margin-right: 3px;
+//             margin-left: 3px;
+//             text-indent: -999px;
+//             background-color: rgba(255,255,255,.5);
+//         }
+//         li .acvtive{
+//             background-color:#fff;
+//         }
+
+//     }
+//     .slider-control-prev{
+//     position: absolute;
+//     left:0;
+//     top: 0;
+//     bottom: 0;
+//     display: -webkit-box;
+//     display: -ms-flexbox;
+//     display: flex;
+//     -webkit-box-align: center;
+//     -ms-flex-align: center;
+//     align-items: center;
+//     -webkit-box-pack: center;
+//     -ms-flex-pack: center;
+//     justify-content: center;
+//     width: 15%;
+//     color: #fff;
+//     text-align: center;
+//     opacity: .5;
+//     }
+//     .slider-control-next{
+//         position: absolute;
+//         right: 0;
+//         top: 0;
+//         bottom: 0;
+//         display: -webkit-box;
+//         display: -ms-flexbox;
+//         display: flex;
+//         -webkit-box-align: center;
+//         -ms-flex-align: center;
+//         align-items: center;
+//         -webkit-box-pack: center;
+//         -ms-flex-pack: center;
+//         justify-content: center;
+//         width: 15%;
+//         color: #fff;
+//         text-align: center;
+//         opacity: .5;
+
+//     }
+// }
+

@@ -1,0 +1,52 @@
+<div #mainElement="cdkOverlayOrigin" cdkOverlayOrigin>
+  <mat-form-field class="child-selector" [appearance]="appearance || (appService.appearance | async)" style="width: 100%;">
+    <mat-icon matPrefix>face</mat-icon>
+    <mat-label>
+      {{'LBL_CHILD_COUNT' | translate | async}}
+    </mat-label>
+    <mat-select [formControl]="childCountFC">
+      <mat-option *ngFor="let item of createMockArray(maxChild+1); index as i" [value]="i">{{i}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<ng-container *ngIf="!isPanel" [ngTemplateOutlet]="base"></ng-container>
+
+<ng-template cdk-connected-overlay [cdkConnectedOverlayOrigin]="mainElement"
+             [cdkConnectedOverlayOpen]="isPanelOpen | async" (backdropClick)="onBackdropClick()"
+             cdkConnectedOverlayBackdropClass="no-background-color" [cdkConnectedOverlayHasBackdrop]="true"
+             [cdkConnectedOverlayWidth]="panelWidth$ | async">
+  <ng-container [ngTemplateOutlet]="base"></ng-container>
+
+  <div style="display: flex;justify-content: flex-end;">
+    <button type="button" (click)="onBackdropClick()" mat-raised-button color="primary">Set</button>
+  </div>
+</ng-template>
+
+
+<ng-template #base>
+
+  <div [formGroup]="formGroup" *ngIf="childCountFC.value" [class.mat-elevation-z3]="isPanel" style="width: 100%;">
+    <div class="children-panel remove-empty-spaces-from-fields" #panel formArrayName="children">
+      <ng-container *ngFor="let asd of formGroup.get('children')['controls']; index as c">
+        <ng-container *ngIf="mode === 'select'">
+          <mat-form-field [appearance]="appService.appearance | async" style="width: 100%; min-width: 0;">
+            <mat-label>{{'LBL_INDEX_CHILD' | translate: [{index: c + 1}] | async}}</mat-label>
+            <mat-select [formControlName]="c" (selectionChange)="onSelectionChange()">
+              <mat-option *ngFor="let i of createArrayRange(maxChildAge + 1)" [value]="(i) + ''">{{i}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="mode === 'datepicker'">
+          <ta-core-datepicker [formControlName]="c"
+                          (valueChanges)="onSelectionChange()"
+                          [hint]="(hints | async).hasOwnProperty(c) && (hints | async)[c] ? ('LBL_INDEX_CHILD_AGE' | translate: [{index:c + 1},{age: (hints | async)[c]}] | async): ''"
+                          [label]="'LBL_INDEX_CHILD' | translate: [{index: c + 1}] | async"
+                          [filter]="arrowfilter"
+                          [mode]="appService.appearance | async"></ta-core-datepicker>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+</ng-template>

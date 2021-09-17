@@ -1,0 +1,10 @@
+<mat-form-field class="country-autocomplete" [appearance]="appService.appearance | async" [color]="color">
+  <mat-label *ngIf="notLabel">{{ 'LBL_COUNTRY' | translate | async }}</mat-label>
+  <!--  <input matInput type="text" [matAutocomplete]="auto" [(ngModel)]="proxyValue" [formControl]="country" /> -->
+  <input matInput type="text" [matAutocomplete]="auto" [formControl]="country" />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelectionChanged($event)">
+    <mat-option *ngFor="let option of filteredValues | async" [value]="option">
+      {{option.NAME}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

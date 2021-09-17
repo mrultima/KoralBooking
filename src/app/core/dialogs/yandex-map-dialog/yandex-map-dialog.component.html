@@ -1,0 +1,12 @@
+<h1 mat-dialog-title> {{'LBL_MAP' | translate | async}} </h1>
+
+
+<div mat-dialog-content>
+    <app-yandex-map [data]="data.objects" [initialFocusCoordinates]="data.initialCoordinates"></app-yandex-map>
+</div>
+
+<div mat-dialog-actions style="justify-content: flex-end">
+  <button mat-raised-button color="warn"
+          mat-dialog-close
+          cdkFocusInitial>{{ 'BTN_CLOSE' | translate | async}}</button>
+</div>

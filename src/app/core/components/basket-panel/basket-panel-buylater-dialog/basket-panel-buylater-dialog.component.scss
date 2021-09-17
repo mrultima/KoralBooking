@@ -1,0 +1,14 @@
+@import "../../../shared/variables";
+@import "../../../shared/mq";
+
+.basket-buy-later-dialog-container {
+  max-width : 310px;
+
+  .buy-later-actions {
+    grid-template-areas : "cancel submit";
+
+    @include mq(lt-md) {
+      grid-template-areas : "cancel" "submit";
+    }
+  }
+}

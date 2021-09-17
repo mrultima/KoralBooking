@@ -1,0 +1,246 @@
+<button mat-stroked-button color="warn" style="margin: 10px 0; width: 100%" (click)="clearFilter()">
+  <mat-icon>clear</mat-icon>
+  {{'BTN_CLEAR_FILTER' | translate | async}}
+</button>
+
+<mat-accordion class="filter-container" multi="true">
+  <ng-container *ngFor="let filter of filterConfig">
+
+    <ng-container [ngSwitch]="filter.type.name">
+
+      <!-- onlyProperty Checked-->
+      <ng-container *ngSwitchCase="'onlyProperty'">
+        <div class="onlyProperty">
+          <mat-checkbox (change)="onChange('onlyProperty')" [disabled]="isDisabled"
+                        [(ngModel)]="filter.displayCheck">{{ filter.displayName | translate | async}}</mat-checkbox>
+        </div>
+      </ng-container>
+
+
+      <!--Search-->
+      <ng-container *ngSwitchCase="'search'">
+        <div class="search-input">
+          <mat-form-field [class]="filter.type.class != '' ? filter.type.class : ''" appearance="outline" color="accent"
+                          style="width: 100%;">
+            <mat-label>{{ filter.displayName | translate | async}}</mat-label> <!--'LBL_SEARCH' -->
+            <input [disabled]="isDisabled" type="text" (keyup)="onChange('search')" matInput
+                   [(ngModel)]="searchValues[filter.name]">
+          </mat-form-field>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="filter.hasOwnProperty('hidden') ? !filter.hidden: true">
+
+        <mat-expansion-panel [expanded]="filter.hasOwnProperty('expanded') ? filter.expanded: true">
+          <!--[expanded]="filter.expanded" -->
+          <mat-expansion-panel-header expandedHeight="48px" collapsedHeight="48px">
+            <mat-panel-title>
+              {{filter.displayName | translate | async}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <!--dynamicOption-->
+          <div style="display: flex;flex-direction: column;" *ngSwitchCase="'dynamicOption'">
+            <ng-container *ngFor="let item of dynamicValues[filter.name] | keyvalue">
+              <mat-checkbox [disabled]="isDisabled" (change)="onChange('dynamic')"
+                            [(ngModel)]="dynamicValues[filter.name][item.key]">
+                <ng-container *ngIf="item.key.startsWith('d_'); else notTranslate">
+                  {{item.key | translate | async}}
+                </ng-container>
+                <ng-template #notTranslate>{{item.key}}</ng-template>
+              </mat-checkbox>
+            </ng-container>
+          </div>
+
+          <!-- iconButton  -->
+          <div style="    display: grid;grid-template-columns: repeat(3, 1fr);grid-gap: 5px;"
+               *ngSwitchCase="'iconButton'">
+            <ng-container *ngFor="let item of IconValues[filter.name] | keyvalue">
+              <button [disabled]="isDisabled" mat-stroked-button (click)="onChange('iconButton', filter.name, item.key)"
+                      style="  margin-bottom: 5px;
+                font-size: 30px;
+                line-height: 30px; 
+                padding: 15px;
+                max-width: 64px;
+                max-height: 64px;" [color]="item.value ? 'accent': ''">
+                <i [class]="item.key" [matTooltip]="item.key | translate | async" [matTooltipPosition]="'below'"></i>
+              </button>
+            </ng-container>
+          </div>
+
+          <!--flightDepartStops-->
+          <div style="display: flex;flex-direction: column;" *ngSwitchCase="'flightDepartStops'">
+            <ng-container *ngFor="let item of departValues[filter.name] | keyvalue">
+              <mat-checkbox [disabled]="isDisabled" (change)="onChange('dynamic')"
+                            [(ngModel)]="departValues[filter.name][item.key]">
+                <ng-container *ngIf="item.key == 0; else nonNonStop">
+                  {{'LBL_NON_STOP' | translate | async}}
+                </ng-container>
+                <ng-template #nonNonStop>
+                  {{'LBL_NTH_STOP' | translate:[{NTH: item.key}] | async}}
+                </ng-template>
+              </mat-checkbox>
+            </ng-container>
+          </div>
+
+          <!--flightAirport-->
+          <div style="display: flex;flex-direction: column;" *ngSwitchCase="'flightAirport'">
+            <ng-container *ngFor="let item of dynamicValues[filter.name] | keyvalue">
+              <mat-checkbox [disabled]="isDisabled" (change)="onChange('dynamic')"
+                            [(ngModel)]="dynamicValues[filter.name][item.key]">
+                {{item.key}}
+              </mat-checkbox>
+            </ng-container>
+          </div>
+
+          <!--staticOption-->
+          <div [class]="filter.name" style="display: flex;flex-direction: column;" *ngSwitchCase="'staticOption'">
+            <ng-container *ngIf="objLength(staticValues[filter.name]) > 0">
+              <ng-container *ngFor="let item of filter.type.staticValues; index as i">
+                <mat-checkbox [disabled]="isDisabled" (change)="onChange('static')"
+                              [(ngModel)]="staticValues[filter.name][item]">
+                  <ng-container *ngIf="filter.type.icon && filter.type.icon.length > 0; else notIcon">
+                    <ng-container *ngIf="!filter.type.badget; else notBaget">
+                      <ng-container *ngIf="isArray(filter.type.icon); else notArrayIcon">
+                        <mat-icon>{{filter.type.icon[i]}}</mat-icon>
+                      </ng-container>
+                      <ng-template #notArrayIcon>
+                        <ng-container *ngIf="filter.type.allRowDraweIconCount != null; else notIconCount">
+                          <ng-container *ngFor="let icons of forArray(item);index as j">
+                            <span class="rateBottonActive" style="height: 24px;">
+                              <mat-icon>{{filter.type.icon}}</mat-icon>
+                            </span>
+                            <!-- burada tam istediğim olmadı sonra bakıcaz-->
+                            <ng-container
+                              *ngIf="icons === forArray(item).length && (filter.type.allRowDraweIconCount - icons) != 0">
+                              <ng-container *ngFor="let ekstra of filter.type.allRowDraweIconCount">
+                                <ng-container *ngFor="let ek of forArray(ekstra)">
+                                  <span class="rateBottonPassive">
+                                    <mat-icon>{{filter.type.icon}}</mat-icon>
+                                  </span>
+                                </ng-container>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                        <ng-template #notIconCount>
+                          <ng-container *ngFor="let icon of forArray(item)">
+                            <mat-icon>{{filter.type.icon}}</mat-icon>
+                          </ng-container>
+                        </ng-template>
+
+                      </ng-template>
+                    </ng-container>
+                    <ng-template #notBaget>
+                      <mat-icon [matBadge]="item" matBadgeColor="primary">{{filter.type.icon}}</mat-icon>
+                    </ng-template>
+
+                  </ng-container>
+                  <ng-template #notIcon>
+                    {{item}}
+                  </ng-template>
+
+                </mat-checkbox>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <!--stars-->
+          <div [class]="filter.name" style="display: flex;flex-direction: column;" *ngSwitchCase="'stars'">
+            <ng-container *ngIf="objLength(staticValues[filter.name]) > 0">
+              <ng-container *ngFor="let item of filter.type.staticValues; index as i">
+                <mat-checkbox [disabled]="isDisabled" (change)="onChange('static')"
+                              [(ngModel)]="staticValues[filter.name][item]">
+                  <ng-container *ngIf="filter.type.icon && filter.type.icon.length > 0; else notIcon">
+                    <ng-container *ngIf="!filter.type.badget; else notBaget">
+                      <ng-container *ngIf="isArray(filter.type.icon); else notArrayIcon">
+                        <mat-icon>{{filter.type.icon[i]}}</mat-icon>
+                      </ng-container>
+                      <ng-template #notArrayIcon>
+                        <ng-container *ngIf="filter.type.allRowDraweIconCount != null; else notIconCount">
+                          <ng-container *ngFor="let icons of forArray(item);index as j">
+                            <span class="rateBottonActive" style="height: 24px;">
+                              <mat-icon>{{filter.type.icon}}</mat-icon>
+                            </span>
+                            <!-- burada tam istediğim olmadı sonra bakıcaz-->
+                            <ng-container
+                              *ngIf="icons === forArray(item).length && (filter.type.allRowDraweIconCount - icons) != 0">
+                              <ng-container *ngFor="let ekstra of filter.type.allRowDraweIconCount">
+                                <ng-container *ngFor="let ek of forArray(ekstra)">
+                                  <span class="rateBottonPassive">
+                                    <mat-icon>{{filter.type.icon}}</mat-icon>
+                                  </span>
+                                </ng-container>
+                              </ng-container>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                        <ng-template #notIconCount>
+                          <ng-container *ngIf="item == 0; else other">
+                              <mat-icon>star_border</mat-icon>
+                          </ng-container>
+                          <ng-template #other>
+                              <ng-container *ngFor="let icon of forArray(item)">
+                                  <mat-icon>{{filter.type.icon}}</mat-icon>
+                                </ng-container>
+                          </ng-template>
+                        </ng-template>
+
+                      </ng-template>
+                    </ng-container>
+                    <ng-template #notBaget>
+                      <mat-icon [matBadge]="item" matBadgeColor="primary">{{filter.type.icon}}</mat-icon>
+                    </ng-template>
+
+                  </ng-container>
+                  <ng-template #notIcon>
+                    {{item}}
+                  </ng-template>
+
+                </mat-checkbox>
+              </ng-container>
+            </ng-container>
+          </div>
+
+
+          <!--range-->
+          <ng-container *ngSwitchCase="'range'">
+            <ng-container *ngIf="rangeValues[filter.name]">
+              <nouislider [disabled]="isDisabled" class="small-slider"
+                          style="margin-right: 1rem; margin-top: 3rem; margin-left: 1rem;"
+                          (change)="onChange('range')" [connect]="true" [tooltips]="[ true, true ]"
+                          [min]="rangeValues[filter.name].min" [max]="rangeValues[filter.name].max"
+                          [step]="rangeValues[filter.name].step"
+                          [(ngModel)]="rangeValues[filter.name].start"></nouislider>
+            </ng-container>
+          </ng-container>
+
+          <!--time-->
+          <ng-container *ngSwitchCase="'time'">
+            <ng-container *ngIf="rangeValues[filter.name]">
+              <nouislider [disabled]="isDisabled" class="small-slider"
+                          style="margin-right: 1rem; margin-top: 3rem; margin-left: 1rem;"
+                          (change)="onChange('range')" [connect]="true" [tooltips]="[ true, true ]"
+                          [min]="rangeValues[filter.name].min" [max]="rangeValues[filter.name].max"
+                          [step]="rangeValues[filter.name].step" [config]="timeRangeConfig"
+                          [(ngModel)]="rangeValues[filter.name].start"></nouislider>
+            </ng-container>
+          </ng-container>
+
+          <!--date-->
+          <ng-container *ngSwitchCase="'date'">
+            <ng-container *ngIf="rangeValues[filter.name]">
+              <nouislider [disabled]="isDisabled" class="small-slider"
+                          style="margin-right: 1rem; margin-top: 3rem; margin-left: 1rem;"
+                          (change)="onChange('range')" [connect]="true" [tooltips]="[ true, true ]"
+                          [min]="rangeValues[filter.name].min" [max]="rangeValues[filter.name].max"
+                          [step]="rangeValues[filter.name].step"
+                          [(ngModel)]="rangeValues[filter.name].start"></nouislider>
+            </ng-container>
+          </ng-container>
+
+        </mat-expansion-panel>
+
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</mat-accordion>

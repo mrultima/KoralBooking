@@ -1,0 +1,119 @@
+<div class="basket-panel-container mat-elevation-z3">
+  <!-- <div class="continueShopping" *ngIf="!hideContinueShoppingButton">
+    <button mat-stroked-button (click)="continueShopping();"
+            style="width: 100%;">{{ 'BTN_CONTINUE_RESERVATION' | translate | async }}</button>
+  </div> -->
+
+  <!--<div class="continueShopping" *ngIf="isExtraServiceExist">
+      <button mat-stroked-button (click)="goExtraService();"
+        style="width: 100%;">{{'BTN_ADD_EXTRASERVICE' | translate | async}}</button>
+    </div>-->
+  <div [class]="'buylater-message '+ (buylaterMessage | async).class" *ngIf="buylaterMessage | async">
+    {{(buylaterMessage | async).message | translate | async}}
+  </div>
+  <div class="hotel-basket-panel-buy-later">
+    <ng-container *ngIf="!convertCompleteBtn && !isMobile">
+      <button [style.gridColumn]="buylaterButton && !hideBuylaterButton ? 'span 2' : 'span 1'" mat-raised-button
+              color="accent"
+              (click)="sendToBasket()" class="complete-btn">{{'BTN_CONTINUE_RESERVATION' | translate | async}}</button>
+    </ng-container>
+    <button class="basketBuyLaterBtn" *ngIf="buylaterButton && !hideBuylaterButton" mat-raised-button color="accent"
+            (click)="onBuyLater(basket?.isPreReservation)">
+      <ng-container *ngIf="basket?.isPreReservation === false">{{'BTN_BUY_LATER' | translate | async}}</ng-container>
+      <ng-container *ngIf="basket?.isPreReservation === true">{{'BTN_CREATE_PRERESERVATION' | translate | async}}</ng-container>
+    </button>
+    <button mat-stroked-button color="warn" (click)="onBasketClear()" class="hotel-basket-panel-clear-all">
+      {{'BTN_CLEAR_BASKET' | translate | async}}
+    </button>
+  </div>
+
+  <mat-accordion [multi]="!(basketItemCount > 2  && isMobile)">
+    <ng-template #panelItemContainer>
+    </ng-template>
+  </mat-accordion>
+
+  <div class="hotel-basket-panel-content" *ngIf="(basket.Items.HotelItems ? basket.Items.HotelItems.length : 0) > 0">
+    <div class="hotel-basket-panel-price-container">
+
+      <div class="hotel-basket-panel-price-content"  *ngIf="basket?.Server?.PromotionAmount">
+        <div class="hotel-basket-panel-price-info">{{'LBL_TOTAL_GENERAL' | translate | async}}</div>
+        <div class="hotel-basket-panel-price hotel-advisor-h2" style="color: red;text-decoration: line-through; font-size: 20px;">
+          {{numeral(basket?.Server?.PriceContract).format('0,0.00')}}  {{appService.currency | async}}</div>
+      </div>
+      <div class="hotel-basket-panel-price-content"  *ngIf="basket?.Server?.UsedBonus">
+        <div class="hotel-basket-panel-price-info">{{'LBL_BONUSAMOUNT' | translate | async}}</div>
+        <div class="hotel-basket-panel-price hotel-advisor-h2" style="color: red;text-decoration: line-through; font-size: 20px;">
+          {{numeral(basket?.Server?.UsedBonus).format('0,0.00')}}  {{appService.currency | async}}</div>
+      </div>
+      <div class="hotel-basket-panel-price-content">
+        <div class="hotel-basket-panel-price-info">
+          <ng-container *ngIf="basket?.Server?.PromotionAmount;else notDisc">
+            {{'LBL_TOTAL_DISCOUNT' | translate | async}}
+          </ng-container>
+          <ng-template #notDisc>
+            {{'LBL_TOTAL_GENERAL' | translate | async}}
+          </ng-template>
+        </div>
+        <div class="hotel-basket-panel-price hotel-advisor-h2">
+          {{numeral(basket?.Server?.FinalPrice - ( basket?.Server?.UsedBonus || 0)).format('0,0.00')}}
+          {{appService.currency | async}}</div>
+      </div>
+
+    
+
+
+      <!--<div class="hotel-basket-panel-money-content">-->
+      <!--<div class="hotel-basket-panel-money-info">Tesisin Para Birimi</div>-->
+      <!--<div class="hotel-basket-panel-money hotel-advisor-h4">€ 300</div>-->
+      <!--</div>-->
+
+
+      <div class="hotel-basket-panel-promotion-content" *ngIf="basket?.Server?.PromotionAmount">
+        <div class="hotel-basket-panel-promotion-info">{{'LBL_PROMOTION' | translate | async}}</div>
+
+        <div class="hotel-basket-panel-promotion hotel-advisor-h4">{{basket?.Server?.PromotionAmount}}
+          {{appService.currency | async}}</div>
+      </div>
+
+      <div class="hotel-basket-panel-promotion-content"
+           *ngIf="(appService.isB2Blogin | async) && appService.showCommission">
+        <div class="hotel-basket-panel-promotion-info">{{'LBL_COMMISSION' | translate | async}}</div>
+        <div class="hotel-basket-panel-promotion hotel-advisor-h4">
+          {{numeral(basket?.Server?.FinalCommissionDelta).format('0,0.00')}}
+          {{appService.currency | async}}</div>
+      </div>
+
+      <div class="hotel-basket-panel-promotion-content" *ngIf="basket?.Server?.BankCommission">
+        <div class="hotel-basket-panel-promotion-info">{{'LBL_BANK_COMMISSION' | translate | async}}</div>
+        <div class="hotel-basket-panel-promotion hotel-advisor-h4">
+          {{numeral(basket?.Server?.BankCommission).format('0,0.00')}}
+          {{appService.currency | async}}</div>
+      </div>
+
+      <ng-container *ngIf="!hideReservationActions">
+        <div class="hotel-basket-panel-price-properties" *ngIf="kdvLabel">{{'BASKET_KDV_SERVICE_MSG' | translate | async}}</div>
+        <div class="hotel-basket-panel-price-properties" *ngIf="smsLabel">* {{'BASKET_RESERVATION_INFO_MSG' | translate | async}}</div>
+
+        <!--<div class="hotel-basket-panel-kvkk-privacy" *ngIf="!hideAgreementSection">-->
+        <!--<mat-checkbox></mat-checkbox>-->
+        <!--<a (click)="getAgreement(0)">Kişisel verilerin korunumu, ön bilgilendirme ve uzak mesafeli satış sözleşmesini-->
+        <!--okudum ve-->
+        <!--onaylıyorum.</a>-->
+        <!--</div>-->
+
+        <ng-container *ngIf="!convertCompleteBtn && !isMobile">
+          <button style="width: 100%;" mat-raised-button
+                  color="accent"
+                  (click)="sendToBasket()" class="complete-btn">{{'BTN_CONTINUE_RESERVATION' | translate | async}}</button>
+        </ng-container>
+        <!-- <div class="hotel-basket-panel-complete-btn" *ngIf="!convertCompleteBtn">
+          <button mat-raised-button (click)="sendToBasket()">{{'BTN_CONTINUE_RESERVATION' | translate | async}}</button>
+        </div>
+        -->
+        <!--<div class="hotel-basket-panel-complete-btn" *ngIf="convertCompleteBtn">-->
+        <!--<button mat-raised-button (click)="method()">Rezervasyonu Tamamla</button>-->
+        <!--</div>-->
+      </ng-container>
+    </div>
+  </div>
+</div>

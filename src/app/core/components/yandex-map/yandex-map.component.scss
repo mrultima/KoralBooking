@@ -1,0 +1,34 @@
+::ng-deep #map {
+  .ymaps-2-1-74-balloon__layout {
+    display        : flex !important;
+    flex-direction : column !important;
+
+    .ymaps-2-1-74-balloon__close {
+      margin-bottom : unset !important;
+    }
+
+    .ymaps-2-1-74-balloon__content {
+      margin-right : unset !important;
+      padding      : 10px !important;
+
+      & > ymaps {
+        height   : 100% !important;
+        overflow : unset !important;
+
+        .ymaps-2-1-74-balloon-content__header {
+          display        : flex !important;
+          flex-direction : column !important;
+          margin         : unset !important;
+
+          > img {
+            margin : 15px 0;
+          }
+
+          > span {
+            align-self : center !important;
+          }
+        }
+      }
+    }
+  }
+}

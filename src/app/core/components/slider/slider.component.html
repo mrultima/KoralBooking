@@ -1,0 +1,34 @@
+<!-- *ngIf="!isMobile; else defaultImage" -->
+<carousel [(activeSlide)]="activeSlideIndex">
+  <slide *ngFor="let sld of slides; let index=index"
+    [class]="this.searchBoxPosition === 4 && this.isMobile === false ? 'imageCover' :''">
+    <ng-container *ngIf="sld.RouterLink == null || sld.RouterLink == '';else linkClick">
+      <img [src]="sld.Url" alt="image slide" [style.height]="sliderHeight"
+        [style.object-fit]="this.searchBoxPosition === 4 && this.isMobile === false ? 'cover' :''"
+        style="display: block; width: 100%;">
+      <div *ngIf="this.isMobile === false"
+        [class]="this.searchBoxPosition >= 2 ? 'carousel-caption topTitle' : 'carousel-caption'">
+        <!--            <h4>{{sld.Title}}</h4>-->
+        <p [innerHTML]="sld.Content | safe"></p>
+      </div>
+    </ng-container>
+    <ng-template #linkClick>
+      <a [href]="sld.RouterLink">
+        <img [src]="sld.Url" alt="image slide" [style.height]="sliderHeight"
+          [style.object-fit]="this.searchBoxPosition === 4 && this.isMobile === false ? 'cover' :''"
+          style="display: block; width: 100%;">
+        <div *ngIf="this.isMobile === false"
+          [class]="this.searchBoxPosition >= 2 ? 'carousel-caption topTitle' : 'carousel-caption'">
+          <!--                <h4>{{sld.Title}}</h4>-->
+          <p [innerHTML]="sld.Content | safe"></p>
+        </div>
+      </a>
+    </ng-template>
+  </slide>
+</carousel>
+
+<!-- <ng-template #defaultImage>
+  <img
+    [src]="(portalService.portalConfig$ | async).BANNERIMAGEMOBILE || (portalService.portalConfig$ | async).BANNERIMAGE"
+    style="max-height: 110vh; min-height: 100vh;" />
+</ng-template> -->

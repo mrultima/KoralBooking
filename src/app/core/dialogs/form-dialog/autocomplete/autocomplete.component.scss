@@ -1,0 +1,158 @@
+@import '../../../shared/mq';
+
+:host {
+  display   : block;
+  width     : 100%;
+  min-width : 0;
+}
+
+::ng-deep .flight-autocomplete-origin {
+  font-size : 16px; //20px;
+  width     : 100%;
+
+  @include mq(lt-md) {
+    // Must be fixed on legacy.
+    //margin: 0 0 23px 0;
+
+    margin-bottom : 0px;
+    padding       : 6px 0;
+  }
+
+  .mat-form-field-underline {
+    //background-color: #fff;
+
+    @include mq(lt-md) {
+      bottom : 0;
+    }
+  }
+
+  .mat-form-field-prefix {
+    top          : 4px;
+    margin-right : 5px;
+
+    mat-icon {
+      font-size : 24px;
+    }
+  }
+
+  &.outline {
+    .mat-form-field-subscript-wrapper {
+      top : 63px;
+      @include mq(lt-md) {
+        top : 35px;
+      }
+    }
+
+    &.multi {
+      .mat-form-field-subscript-wrapper {
+        top : 40px !important;
+      }
+    }
+  }
+
+  &.legacy {
+    .mat-form-field-subscript-wrapper {
+      top : 88px;
+
+      @include mq(lt-md) {
+        top : 43px;
+      }
+    }
+
+    &.multi {
+      .mat-form-field-subscript-wrapper {
+        top : 73px !important;
+      }
+    }
+  }
+
+}
+
+::ng-deep .small-flight-field {
+  .mat-form-field-infix {
+    //padding-top: 15px;
+    border-top : 13px solid transparent;
+  }
+
+  .mat-form-field-label-wrapper {
+    top : -16px;
+  }
+
+  .mat-form-field-wrapper {
+    // padding-bottom: 0;
+    margin : 0;
+
+    @include mq(lt-md) {
+      padding-bottom : 0;
+      margin         : 15px 0 0 0;
+    }
+  }
+}
+
+::ng-deep .small-flight-field-outline {
+  .mat-form-field-infix {
+    padding-top : 15px;
+    border-top  : 13px solid transparent;
+  }
+
+  .mat-form-field-label-wrapper {
+    top : -16px;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom : 0;
+    margin         : 0;
+  }
+}
+
+::ng-deep .autocomplete-hints-legacy-multi {
+  @include mq(lt-md) {
+    margin-top : 20px;
+  }
+}
+
+::ng-deep .small-flight-field2 {
+  .mat-form-field-infix {
+    padding-top : 15px;
+    border-top  : 13px solid transparent;
+  }
+
+  .mat-form-field-label-wrapper {
+    top : -16px;
+  }
+
+  .mat-form-field-wrapper {
+    margin         : 0;
+    padding-bottom : 0;
+  }
+
+  .mat-form-field-underline {
+    bottom : 0;
+  }
+}
+
+::ng-deep .mobile-autocomplete-container {
+  display         : flex;
+  text-align      : center;
+  justify-content : center;
+  align-items     : center;
+  font-size       : 16px;
+  border-bottom   : 1px solid;
+  height          : 70px;
+
+  .texts {
+    width          : 100%;
+
+    .bottom-text {
+      white-space   : nowrap;
+      overflow      : hidden;
+      width         : calc(100% - 4px);
+      font-size     : 12px;
+      text-overflow : ellipsis;
+      padding-left  : 2px;
+    }
+
+    display        : flex;
+    flex-direction : column;
+  }
+}

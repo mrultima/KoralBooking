@@ -1,0 +1,11 @@
+<mat-form-field class="custom-intl-tel-input" [color]="color"
+  [appearance]="appearance || (appService.appearance | async)">
+  <mat-label>{{placeholder}} <i *ngIf="phoneRequired">({{(requiredLabel || '*')}})</i></mat-label>
+  <input type="tel" [attr.autocomplete]="autocomplete" (blur)="onBlur.emit()" matInput ng2TelInput
+    [formControl]="formControl"
+    [ng2TelInputOptions]="{initialCountry: defCountry | async, preferredCountries: ['us', 'gb', 'tr']}"
+    (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)" (intlTelInputObject)="telInputObject($event)"
+    (countryChange)="onCountryChange($event)" maxlength="14" />
+  <mat-hint *ngIf="!disabled">{{hint | async}}</mat-hint>
+  <mat-error *ngIf="!disabled">{{hint | async}}</mat-error>
+</mat-form-field>

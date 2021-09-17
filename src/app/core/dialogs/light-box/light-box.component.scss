@@ -1,0 +1,108 @@
+@import '../../shared/mq';
+
+.light-box-container {
+  display: flex;
+  height: 100%;
+
+  .big-image-container {
+    height: 100%;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+
+    .bg-img {
+      z-index: 1;
+      width: 100%;
+      opacity: 0.5;
+      -o-object-fit: cover;
+      object-fit: cover;
+      -webkit-filter: blur(10px);
+      filter: blur(10px);
+      height: 100%;
+      margin: 0 auto;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .top-img {
+      height: auto;
+      max-height: 100%;
+      display: -ms-flexbox;
+      display: flex;
+      width: auto;
+      max-width: 100%;
+      z-index: 2;
+    }
+
+    img {
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      @include mq(lt-md) {
+        object-fit: unset !important;
+      }
+    }
+
+    & > button {
+      color: #ddd;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 4;
+    }
+
+    //.close-button {
+    //  display         : flex;
+    //  height          : 15%;
+    //  justify-content : flex-end;
+    //  position        : absolute;
+    //  width           : 100%;
+    //  z-index         : 2;
+    //
+    //  mat-icon {
+    //    color     : #ddd;
+    //    font-size : 30px;
+    //    height    : 30px;
+    //    position  : absolute;
+    //    width     : 30px;
+    //    z-index   : 1;
+    //  }
+    //}
+  }
+
+  .navigation-arrows {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    z-index: 3;
+
+    mat-icon {
+      align-items: center;
+      color: #ddd;
+      cursor: pointer;
+      display: flex;
+      font-size: 60px;
+      height: 50%;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      width: 50%;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}

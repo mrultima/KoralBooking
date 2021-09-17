@@ -1,0 +1,7 @@
+<div style="position: relative;">
+    <h2>Barcode Reader</h2>
+    <button *ngIf="!!matDialogRef" (click)="matDialogRef.close()" color="warn" mat-raised-button class="closeBtn"><i
+            class="fas fa-times-circle"></i></button>
+
+    <div id="quaggaEl" class="barcode-reader"></div>
+</div>

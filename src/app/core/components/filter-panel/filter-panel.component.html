@@ -1,0 +1,80 @@
+<div class="app-filter-panel" *ngIf="filter; else loadingTpl">
+  <form autocomplete="off" [formGroup]="filter.form">
+
+    <ng-container *ngFor="let panel of filter.panels">
+      <mat-expansion-panel *ngIf="panel.visible" [expanded]="panel.model?.EXPANDED">
+        <mat-expansion-panel-header>
+          <mat-panel-title *ngIf="panel.model?.HEADING">
+            {{panel.model.HEADING |translate|async}}
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <ng-container *ngFor="let group of panel.groups">
+            <div class="item" *ngIf="group.visible">
+              <h3 class="title" *ngIf="group.model?.HEADING">{{group.model.HEADING |translate|async}}</h3>
+              <div class="type" *ngFor="let filterType of group.filterTypes">
+                <ng-container *ngIf="!filterType.hide && filterType.template">
+                  <ng-container *ngTemplateOutlet="filterType.template; context:filterType.context"></ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
+      </mat-expansion-panel>
+    </ng-container>
+
+    <div class="filter-apply-button" *ngIf="!autoFilter">
+      <button mat-button (click)="apply()"> {{'FILTER'|translate|async}}</button>
+    </div>
+
+    <button mat-button (click)="reset()" *ngIf="resetButton && filter.dirty"> {{'RESET'|translate|async}}</button>
+
+  </form>
+
+</div>
+
+<ng-template #loadingTpl>
+  ...
+</ng-template>
+
+<ng-template #FilterTypeOptionTpl let-filter>
+  <mat-checkbox [formControl]="option.CONTROL" *ngFor="let option of filter.optionList">
+    <div class="viewValueCon">
+      <span class="viewValue">{{option.VIEWVALUE | translate | async }}</span>
+      <ng-container *ngIf="filter?.countFn">({{ option?.DISPLAYED }}/{{ option?.COUNT }})</ng-container>
+    </div>
+  </mat-checkbox>
+  <button mat-button (click)="filter.toggleShowMoreLess()" *ngIf="filter.showmore">
+    <i [ngClass]="[filter.showmoreless ? 'fas fa-chevron-down' : 'fas fa-chevron-up']"
+       class="fas fa-chevron-down"></i>
+    {{filter.showmoreless?('BTN_SHOW_MORE'| translate | async):('BTN_LESS_MORE'| translate | async)}}
+  </button>
+</ng-template>
+
+<ng-template #FilterTypeSearchTpl let-filter>
+  <mat-form-field appearance="standard" class="hide">
+    <mat-label *ngIf="filter?.settings?.label">{{filter.settings.label|translate|async}}</mat-label>
+    <span matSuffix><i class="far fa-search"></i></span>
+    <input autocomplete="off" [formControl]="filter.control" matInput>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #FilterTypeSlideToggleTpl let-filter>
+  <!-- <mat-slide-toggle [formControl]="filter.control">
+    {{filter?.settings?.label|translate|async}}
+    <ng-container *ngIf="filter?.countFn">({{filter?.total}})</ng-container>
+  </mat-slide-toggle> -->
+  <mat-checkbox style="margin: 10px 0 0 0;" [formControl]="filter.control">
+    {{filter?.settings?.label|translate|async}}
+    <ng-container *ngIf="filter?.countFn">({{filter?.filtered}} / {{filter?.total}})</ng-container>
+  </mat-checkbox>
+</ng-template>
+
+<ng-template #FilterTypeSliderTpl let-filter>
+  {{filter?.settings?.label|translate|async}}
+  <mat-slider [displayWith]="filter?.settings?.displayWith" [formControl]="filter.control" [max]="filter?.settings?.max"
+    [min]="filter?.settings?.min" [step]="filter?.settings?.step" [thumbLabel]="filter?.settings?.thumbLabel">
+  </mat-slider>
+</ng-template>

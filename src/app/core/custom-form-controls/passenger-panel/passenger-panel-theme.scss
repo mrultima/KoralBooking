@@ -1,0 +1,32 @@
+@import "~@angular/material/theming";
+@import "../../shared/variables";
+
+@mixin passenger-panel-theme($theme) {
+
+  $foreground          : map-get($theme, foreground);
+  $is-dark-theme       : map-get($theme, is-dark);
+  $outline-color       : mat-color($foreground, divider, if($is-dark-theme, 1, 0.42));
+  $outline-color-hover : mat-color($foreground, divider, if($is-dark-theme, 1, 0.87));
+
+
+  #BODYID {
+    .passenger-panel {
+      border-color : $outline-color;
+      color        : $dark-primary-text;
+
+      //&:hover {
+      //  border-color : $outline-color-hover;
+      //}
+
+      &.white, &.white:hover {
+        border-color : white;
+        color        : white;
+      }
+
+      .flight-class-container {
+        //border-color : $outline-color;
+        border-color : white;
+      }
+    }
+  }
+}

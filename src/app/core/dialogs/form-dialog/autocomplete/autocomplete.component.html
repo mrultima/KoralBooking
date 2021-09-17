@@ -1,0 +1,75 @@
+<ng-container *ngIf="!mobile; else mobileTemplate">
+  <mat-form-field class="flight-autocomplete-origin"
+                  [appearance]="appService.appearance | async"
+                  color="accent"
+                  [ngClass]="{
+                  'small-flight-field': ltmd,
+                   'small-flight-field-outline': ltmd && (appService.appearance | async) === 'outline',
+                   'legacy': (appService.appearance | async) === 'legacy',
+                   'outline': (appService.appearance | async) === 'outline',
+                   'multi': mode === 'Flight' && multi
+                   }"
+                  [class.small-flight-field2]="smallInput">
+    <!-- TODO(badcode) - low : get icon name as a input not this-->
+    <mat-icon matPrefix *ngIf="firstAutocomplete && mode === 'Flight'">flight_takeoff</mat-icon>
+    <mat-icon matPrefix *ngIf="!firstAutocomplete && mode === 'Flight'">flight_land</mat-icon>
+    <mat-icon matPrefix *ngIf="mode === 'Transfer'">directions_car</mat-icon>
+    <mat-label>{{placeholder}}</mat-label>
+    <input matInput type="text" [placeholder]="placeholder" [formControl]="control" [matAutocomplete]="auto"
+           style="font-size:large" #autoComplete>
+    <mat-hint class="mat-hint-overflow-dots">
+      {{hint}}
+    </mat-hint>
+    <mat-autocomplete (optionSelected)="onOptionSelected($event)" #auto="matAutocomplete" [displayWith]="displayFn">
+
+      <ng-container *ngIf="mode==='Flight'">
+        <mat-option *ngFor="let option of (filteredOptions | async)?.response" [value]="option">
+          <mat-icon *ngIf="option.LOCATIONTYPE == 'A'">flight</mat-icon>
+          <mat-icon *ngIf="option.LOCATIONTYPE == 'C'">location_city</mat-icon>
+          {{option.AIRPORTNAME}} ,{{option.CITYNAME}}, {{option.COUNTRYCODE}}
+        </mat-option>
+      </ng-container>
+
+      <ng-container *ngIf="mode==='Transfer'">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          <mat-icon *ngIf="option.TYPE == 'TF'">flight</mat-icon>
+          <mat-icon *ngIf="option.TYPE == 'TL'">where_to_vote</mat-icon>
+          {{option.VALUE}}
+        </mat-option>
+      </ng-container>
+
+    </mat-autocomplete>
+    <div matSuffix [taCoreClearAndLoading]="loading | async" [fc]="control"></div>
+  </mat-form-field>
+</ng-container>
+
+<ng-template #mobileTemplate>
+  <div class="mobile-autocomplete-container"
+       [style.border-right]="firstAutocomplete ? '1px solid' : ''"
+       (click)="onAutoCompleteClicked()">
+    <div class="texts">
+      <span style="font-size: 20px; font-weight: 700;">
+        <ng-container
+          *ngIf="!mobileHint">{{ (firstAutocomplete ? 'LBL_FROM' : 'LBL_TO') | translate | async }}</ng-container>
+        <ng-container *ngIf="mobileHint && mode === 'Flight'">{{ mobileHint['AIRPORTCODE'] }}</ng-container>
+      </span>
+
+      <ng-container *ngIf="mobileHint && mode === 'Transfer'">
+        <span style="font-size: 16px; font-weight: 700;">
+          {{ mobileHint['VALUE'].length > 25 ? mobileHint['VALUE'].slice(0, 25) + '...' : mobileHint['VALUE']}}
+        </span>
+      </ng-container>
+
+      <div class="bottom-text">
+        <ng-container *ngIf="!mobileHint && mode==='Flight'">{{'LBL_AIRPORT' | translate | async}}</ng-container>
+        <ng-container *ngIf="!mobileHint && mode==='Transfer'">{{'LBL_LOCATION' | translate | async}}</ng-container>
+        <ng-container *ngIf="mobileHint &&  mode==='Flight'">
+          {{ mobileHint['LOCATIONTYPE'] === 'C' ? mobileHint['CITYNAME'] : mobileHint['AIRPORTNAME'] }}
+        </ng-container>
+        <!--        <ng-container *ngIf="mobileHint &&  mode==='Transfer'">-->
+        <!--          {{ mobileHint.VALUE }}-->
+        <!--        </ng-container>-->
+      </div>
+    </div>
+  </div>
+</ng-template>

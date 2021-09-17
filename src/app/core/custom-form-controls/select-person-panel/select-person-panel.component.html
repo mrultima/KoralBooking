@@ -1,0 +1,79 @@
+<div #mainElement="cdkOverlayOrigin" cdkOverlayOrigin [style.display]="mode !== 'overlay' ? 'none' : ''">
+
+  <button mat-raised-button color="accent" style="width: 100%;" (click)="onOpenClosePanel()">
+  <span
+    *ngIf="(priceItem.ADULTCOUNT == null || priceItem.ADULTCOUNT == 0) && (priceItem.CHILDCOUNT == null || priceItem.CHILDCOUNT==0)  && (priceItem.BABYCOUNT == null || priceItem.BABYCOUNT == 0) && (priceItem.STUDENTCOUNT == null || priceItem.STUDENTCOUNT == 0) && (priceItem.SPTOCOUNT == null || priceItem.SPTOCOUNT == 0)">
+    {{'LBL_SELECT_PERSON' | translate | async}}
+  </span>
+    <span *ngIf="priceItem.ADULTCOUNT > 0">{{priceItem.ADULTCOUNT}} {{ 'LBL_ADULT' | translate | async }}&nbsp;</span>
+    <span *ngIf="priceItem.CHILDCOUNT > 0">{{priceItem.CHILDCOUNT}} {{ 'LBL_CHILD' | translate | async }}&nbsp;</span>
+    <span *ngIf="priceItem.BABYCOUNT > 0">{{priceItem.BABYCOUNT}} {{ 'LBL_BABY' | translate | async }}&nbsp;</span>
+    <span *ngIf="priceItem.STUDENTCOUNT > 0">{{priceItem.STUDENTCOUNT}} {{ 'LBL_STUDENT' | translate | async }}&nbsp;</span>
+    <span *ngIf="priceItem.SPTOCOUNT > 0 ">{{priceItem.SPTOCOUNT}} {{ 'LBL_SPECIAL' | translate | async }}&nbsp;</span>
+  </button>
+</div>
+
+<ng-container *ngIf="mode === 'overlay'; else normalView">
+  <ng-template cdk-connected-overlay [cdkConnectedOverlayOrigin]="mainElement" [cdkConnectedOverlayOpen]="isPanelOpen"
+               (backdropClick)="onBackdropClick()" cdkConnectedOverlayBackdropClass="no-background-color"
+               [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayWidth]="mainElement['clientWidth']">
+    
+    <div [ngTemplateOutlet]="selectPersonForm"></div>
+  </ng-template>
+</ng-container>
+
+<ng-template #normalView>
+  <div [ngTemplateOutlet]="selectPersonForm"></div>
+</ng-template>
+
+<ng-template #selectPersonForm>
+  <form [formGroup]="formGroup" (submit)="onSubmit()" [style.margin-bottom]="mode !== 'overlay' ? '20px' : ''">
+    <div class="adult-children-panel-container mat-elevation-z3">
+      <div class="adult-children-panel" #panel>
+        <ng-container>
+          <div class="add-children-panel-row" *ngIf="priceItem.BASEPRICE > 0 ">
+            <label>{{'LBL_ADULT' | translate | async}}</label>
+            <button type="button" mat-mini-fab color="accent" (click)="minusPax('adultCount')" [disabled]="disableObservables.adult.min | async">-</button>
+            <input class="add-children-panel-input" formControlName="adultCount" (input)="valuechange($event)" taCoreDigitOnly/>
+            <button type="button" mat-mini-fab color="accent" (click)="plusPax('adultCount')" [disabled]="disableObservables.adult.max | async">+</button>
+          </div>
+          <div class="add-children-panel-row" *ngIf="priceItem.ADULT > 0 ">
+            <label>{{'LBL_ADULT' | translate | async}}</label>
+            <button type="button" mat-mini-fab color="accent" (click)="minusPax('adultCount')" [disabled]="disableObservables.adult.min | async">-</button>
+            <input class="add-children-panel-input" formControlName="adultCount" (input)="valuechange($event)" taCoreDigitOnly />
+            <button type="button" mat-mini-fab color="accent" (click)="plusPax('adultCount')" [disabled]="disableObservables.adult.max | async">+</button>
+          </div>
+          <div class="add-children-panel-row" *ngIf="priceItem.CHILD > 0 ">
+            <label>{{'LBL_CHILD' | translate | async}}</label>
+            <button type="button" mat-mini-fab color="accent" (click)="minusPax('childCount')" [disabled]="disableObservables.child.min | async">-</button>
+            <input class="add-children-panel-input" formControlName="childCount" (input)="valuechange($event)" taCoreDigitOnly />
+            <button type="button" mat-mini-fab color="accent" (click)="plusPax('childCount')" [disabled]="disableObservables.child.max | async">+</button>
+          </div>
+          <div class="add-children-panel-row" *ngIf="priceItem.BABY > 0 ">
+            <label>{{'LBL_BABY' | translate | async}}</label>
+            <button type="button" mat-mini-fab color="accent" (click)="minusPax('babyCount')" [disabled]="disableObservables.baby.min | async">-</button>
+            <input class="add-children-panel-input" formControlName="babyCount" (input)="valuechange($event)" taCoreDigitOnly/>
+            <button type="button" mat-mini-fab color="accent" (click)="plusPax('babyCount')" [disabled]="disableObservables.baby.max | async">+</button>
+          </div>
+          <div class="add-children-panel-row" *ngIf="priceItem.SP1 > 0 ">
+            <label>{{'LBL_STUDENT' | translate | async}}</label>
+            <button type="button" mat-mini-fab color="accent" (click)="minusPax('studentCount')" [disabled]="disableObservables.student.min | async">-</button>
+            <input class="add-children-panel-input" formControlName="studentCount" (input)="valuechange($event)" taCoreDigitOnly/>
+            <button type="button" mat-mini-fab color="accent" (click)="plusPax('studentCount')" [disabled]="disableObservables.student.max | async">+</button>
+          </div>
+          <div class="add-children-panel-row" *ngIf="priceItem.SP2 > 0 ">
+            <label>{{'LBL_PERSON' | translate | async}}</label>
+            <button type="button" mat-mini-fab color="accent" (click)="minusPax('spToCount')" [disabled]="disableObservables.spTo.min | async">-</button>
+            <input class="add-children-panel-input" formControlName="spToCount" (input)="valuechange($event)" taCoreDigitOnly/>
+            <button type="button" mat-mini-fab color="accent" (click)="plusPax('spToCount')" [disabled]="disableObservables.spTo.max | async">+</button>
+          </div>
+          <ng-container *ngIf="mode === 'overlay'">
+            <div class="add-children-panel-row">
+              <button class="apply-button" mat-raised-button color="primary">{{'BTN_APPLY' | translate | async}}</button>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+</ng-template>

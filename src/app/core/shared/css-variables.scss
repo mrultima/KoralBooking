@@ -1,0 +1,39 @@
+@mixin css-variables() {
+  :root {
+    --light-primary-text : white;
+    --dark-primary-text  : rgba(0, 0, 0, 0.87);
+
+    --p-c-1              : #b2ebf2;
+    --p-c-1-rgb          : 178, 235, 242;
+    --p-c-5              : #00bcd4;
+    --p-c-5-rgb          : 0, 188, 212;
+    --p-c-7              : #0097a7;
+    --p-c-7-rgb          : 0, 151, 167;
+
+    --p-c-1-contrast     : var(--dark-primary-text);
+    --p-c-5-contrast     : var(--light-primary-text);
+    --p-c-7-contrast     : var(--light-primary-text);
+
+    --a-c-1              : #ffe57f;
+    --a-c-1-rgb          : 255, 229, 127;
+    --a-c-5              : #ffd740;
+    --a-c-5-rgb          : 255, 215, 64;
+    --a-c-7              : #ffc400;
+    --a-c-7-rgb          : 255, 196, 0;
+
+    --a-c-1-contrast     : var(--dark-primary-text);
+    --a-c-5-contrast     : var(--dark-primary-text);
+    --a-c-7-contrast     : var(--dark-primary-text);
+
+    --w-c-1              : #ffcdd2;
+    --w-c-1-rgb          : 255, 205, 210;
+    --w-c-5              : #f44336;
+    --w-c-5-rgb          : 244, 67, 54;
+    --w-c-7              : #d32f2f;
+    --w-c-7-rgb          : 211, 47, 47;
+
+    --w-c-1-contrast     : var(--dark-primary-text);
+    --w-c-5-contrast     : var(--light-primary-text);
+    --w-c-7-contrast     : var(--light-primary-text);
+  }
+}

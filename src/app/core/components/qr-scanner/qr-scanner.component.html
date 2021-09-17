@@ -1,0 +1,10 @@
+<div style="position: relative;">
+  <h2>Scan QR Code</h2>
+  <canvas #scanCanvas></canvas>
+  <button *ngIf="!!matDialogRef" (click)="matDialogRef.close()" color="warn" mat-raised-button class="closeBtn"><i
+      class="fas fa-times-circle"></i></button>
+</div>
+<!-- <div class="output">
+  <div class="outputMessage" *ngIf="!detectedQrCode">No QR code detected.</div>
+  <div hidden=""><b>Data:</b> <span class="outputData" *ngIf="detectedQrCode">{{ detectedQrCode }}</span></div>
+</div> -->

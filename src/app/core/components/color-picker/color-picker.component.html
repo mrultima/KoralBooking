@@ -1,0 +1,25 @@
+<div class="color-picker-container">
+  <ul class="hues">
+    <li class="hue" *ngFor="let hue of hues">
+      <span *ngIf="hue.isA">
+        A
+      </span>
+      <span>
+        {{hue.val}}
+      </span>
+    </li>
+  </ul>
+  <div class="palettes">
+    <ul class="palette-labels">
+      <li class="palette-label" *ngFor="let label of labels">{{label}}</li>
+    </ul>
+    <div>
+      <ul *ngFor="let palette of palettes" class="palette-container">
+        <li *ngFor="let color of palette.values" class="palette"
+            (click)="onColorSelect(palette, color)"
+            [class.palette--state-selected]="selectedHex === color.hex"
+            [ngStyle]="{ 'background-color': color.hex, 'color': color.contrast }"></li>
+      </ul>
+    </div>
+  </div>
+</div>

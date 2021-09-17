@@ -1,0 +1,83 @@
+<div class="date-container legacy"
+     [style.grid-template-columns]="multi ? '1fr': '1fr 1fr'"
+     [ngClass]="{
+       'flight': mode === 'flight',
+       'transfer': mode === 'transfer',
+       'hotel': mode === 'hotel',
+       'multi': multi,
+       'white': isWhite
+     }" #mainElement="cdkOverlayOrigin" cdkOverlayOrigin>
+  <ng-container [ngTemplateOutlet]="oneDate" [ngTemplateOutletContext]="{val: firstDate, isFirst: true}">
+  </ng-container>
+  <ng-container [ngTemplateOutlet]="oneDate" *ngIf="showReturnDate"
+                [ngTemplateOutletContext]="{val: secondDate, isFirst: false}">
+  </ng-container>
+</div>
+
+
+<!-- one way / round trip-->
+<!--<div *ngIf="(mode === 'flight' && !multi) || (mode === 'transfer')" class="mobile-dates">-->
+<!--  <ng-container *ngIf="ltmd">-->
+<!--    <mat-radio-group [formControl]="isOneWay"-->
+<!--                     class="mobile-white-checkbox">-->
+<!--      <mat-radio-button [value]="1">{{'LBL_ONE_WAY' | translate | async}}</mat-radio-button>-->
+<!--      <mat-radio-button [value]="0">{{'LBL_ROUND_TRIP' | translate | async}}</mat-radio-button>-->
+<!--    </mat-radio-group>-->
+<!--  </ng-container>-->
+<!--</div>-->
+
+<!-- panel-->
+<ng-template cdk-connected-overlay [cdkConnectedOverlayOrigin]="mainElement"
+             [cdkConnectedOverlayOpen]="isDatePanelOpen"
+             [cdkConnectedOverlayScrollStrategy]="strategy"
+             (backdropClick)="onDateBackdropClick()" cdkConnectedOverlayBackdropClass="no-background-color"
+             [cdkConnectedOverlayHasBackdrop]="true" [cdkConnectedOverlayWidth]="panelWidth$ | async">
+
+  <ta-core-form-dialog mode="component" [dataFromAbove]="data | async" (close)="onFormDialogClose()"
+                       (fcData)="onFormDialog($event)"></ta-core-form-dialog>
+</ng-template>
+
+<!-- appearance-->
+<ng-template #oneDate let-val="val" let-isFirst="isFirst">
+  <div *ngIf="val && val.value; else notDate"
+       class="date-panel-sides"
+       [class.border]="isFirst && !multi" (click)="onDateClick(isFirst)">
+    <div class="date-header">
+      {{
+        (isFirst ? (mode === 'hotel' ? 'LBL_CHECKIN' : 'LBL_DEPARTURE') :
+            (mode === 'hotel' ? 'LBL_CHECKOUT' : 'LBL_ARRIVAL')) | translate | async
+      }}
+      <mat-icon
+        *ngIf="!isFirst && (mode === 'flight' || mode === 'transfer') && !ltmd"
+        (click)="onRemoveButtonClick($event)"
+        style="cursor: pointer;">close
+      </mat-icon>
+    </div>
+
+    <ng-container *ngIf="mode === 'transfer'">
+      <div class="date-day" style="padding: 5px 0;" [ngClass]="{'isWhite': isWhite}">
+        {{ (val.value | moment: 'D' | async).padStart(2, '0') + ' ' + (val.value | moment:'MMM' | async)}}
+      </div>
+      <div class="date-month-name">
+        {{ val.value | moment: (multi || !mobile ? 'ddd' : 'dddd') | async}}
+        / {{val.value | moment: 'HH:mm' | async}}</div>
+    </ng-container>
+    <ng-container *ngIf="mode !== 'transfer'">
+      <div class="date-day" [class.isWhite]="isWhite">{{moment(val.value).format('D').padStart(2, '0')}}</div>
+      <div class="date-month-name">{{moment(val.value).format(multi || !mobile ? 'ddd' : 'dddd')}}
+        / {{moment(val.value).format(multi || !mobile ? 'MMM' : 'MMMM')}}</div>
+    </ng-container>
+
+    <button type="button" mat-icon-button *ngIf="!isFirst && mode !== 'hotel' && ltmd" class="date-panel-remove-button"
+            (click)="onRemoveButtonClick($event)">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <ng-template #notDate>
+    <div class="date-day" [ngClass]="{'isWhite': isWhite, 'disabled': isWhite}" style="font-weight: 500;"
+         (click)="onDateClick(isFirst)">
+      {{'LBL_ROUND_TRIP' | translate | async}}
+    </div>
+  </ng-template>
+</ng-template>

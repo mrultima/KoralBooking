@@ -1,0 +1,67 @@
+.color-picker-container {
+  ul, li {
+    list-style : none none;
+  }
+
+  ul {
+    margin  : 0;
+    padding : 0;
+  }
+}
+
+.palette {
+  transition  : all .4s cubic-bezier(.25, .8, .25, 1);
+  cursor      : pointer;
+  margin      : .5px;
+  outline     : 0;
+  padding-top : 33px;
+  width       : 33px;
+
+  &:hover {
+    border-radius : 10px;
+  }
+}
+
+.palette--state-selected {
+  border-radius : 25px;
+}
+
+.palette-container {
+  display : flex;
+}
+
+.hues {
+  display         : flex;
+  justify-content : flex-end;
+  height          : 48px;
+  border-bottom   : 1px solid #EEE;
+}
+
+.hue {
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  line-height     : 16px;
+  margin          : 0 .5px;
+  padding         : 0;
+  width           : 33px;
+  flex-direction  : column;
+}
+
+.palettes {
+  display : flex;
+}
+
+.palette-labels {
+  flex         : 1;
+  padding-top  : 1px;
+  border-right : 1px solid #E0E0E0;
+}
+
+.palette-label {
+  display      : flex;
+  min-width    : 0;
+  padding-left : 8px;
+  align-items  : center;
+  height       : 34px;
+}

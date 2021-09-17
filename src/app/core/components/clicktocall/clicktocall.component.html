@@ -1,0 +1,32 @@
+<form class="clicktocall-form" [formGroup]="formGroup">
+    <h3>Call Center</h3>
+
+    <mat-form-field class="clicktocall-input" [appearance]="appService.appearance | async"
+        *ngIf="(portalService.portalConfig$ | async).CLICKTOCALL_NAME">
+        <input matInput [placeholder]="'LBL_GUEST_NAME' | translate | async" formControlName="Name" />
+    </mat-form-field>
+
+    <mat-form-field class="clicktocall-input" [appearance]="appService.appearance | async"
+        *ngIf="(portalService.portalConfig$ | async).CLICKTOCALL_SURNAME">
+        <input matInput [placeholder]="'LBL_GUEST_SURNAME' | translate | async" formControlName="Surname" />
+    </mat-form-field>
+
+    <mat-form-field class="clicktocall-input" [appearance]="appService.appearance | async"
+        *ngIf="(portalService.portalConfig$ | async).CLICKTOCALL_EMAIL">
+        <input matInput [placeholder]="'LBL_GUEST_EMAIL' | translate | async" formControlName="Email" />
+    </mat-form-field>
+
+    <ta-core-intl-phone-input [placeholder]="'LBL_GUEST_PHONE' | translate | async" formControlName="Phone"
+        class="clicktocall-input phoneInput">
+    </ta-core-intl-phone-input>
+
+    <mat-form-field class="clicktocall-input" [appearance]="appService.appearance | async">
+        <textarea matInput placeholder="Notes" formControlName="Notes"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="saveContact()">Send</button>
+</form>
+<ng-container *ngIf="saveContactMessage | async">
+    <div class="saveContactMessage" [style.color]="contactMessageError ? 'red' : 'green'">{{saveContactMessage | async}}
+    </div>
+</ng-container>

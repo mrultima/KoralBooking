@@ -1,0 +1,593 @@
+@import "../../shared/variables";
+@import "../../shared/mq";
+
+::ng-deep .completedHotelItem .mat-expansion-panel {
+  background : #00800017;
+}
+
+::ng-deep .basket-panel-container {
+  margin-bottom    : 10px;
+
+  .mat-expansion-panel-header {
+    position : relative;
+
+    .mat-content > .remove-button {
+      right : 8px;
+      top   : 26%;
+    }
+
+    .mat-expansion-indicator {
+      margin-right : 16px;
+    }
+  }
+
+  .buylater-message {
+    width      : 100%;
+    margin-top : 10px;
+  }
+
+  .OkGreen {
+    color : green;
+  }
+
+  .ErrorRed {
+    color : red;
+  }
+
+  .hotel-basket-panel-buy-later {
+    font-size             : $small-font;
+    width                 : 100%;
+    margin                : 10px 0;
+    display               : grid;
+    grid-template-columns : repeat(2, 1fr);
+    grid-gap              : 5px;
+
+    .mat-raised-button {
+      flex-grow : 2;
+    }
+
+    .hotel-basket-panel-clear-all {
+      // color     : #fff;
+      border-color : $warn-color;
+      font-size    : $x-small-font;
+    }
+
+    .complete-btn {
+      // background-color : $accent-color;// $green-ish-color;
+      // color            : #fff;
+      font-size       : $x-small-font;
+      display         : flex;
+      justify-content : center;
+    }
+  }
+
+  ::ng-deep .mat-accordion {
+    .mat-expansion-panel:not(.mat-expanded), .mat-expansion-panel:not(.mat-expansion-panel-spacing) {
+      margin-bottom : 5px;
+    }
+  }
+
+  padding          : 10px;
+  background-color : white;
+  //border: 1px solid #aaaaaa;
+  max-width        : calc(100% - 20px);
+
+  .hotel-basket-panel-header {
+    padding          : 10px;
+    display          : flex;
+    justify-content  : center;
+    background-color : #dfdfdf;
+
+  }
+
+  .hotel-basket-container {
+    .hotel-basket-panel-detail {
+      display : flex;
+      padding : 10px 0;
+
+      .hotel-basket-panel-image {
+        width  : 108px;
+        height : 72px;
+
+        @include mq(lt-md) {
+          display : none;
+        }
+
+        img {
+          width  : 108px;
+          height : 72px;
+        }
+      }
+
+      .hotel-basket-panel-info {
+        display         : flex;
+        justify-content : space-between;
+        flex-direction  : column;
+        padding         : 0 10px;
+        width           : 100%;
+
+        @include mq(lt-md) {
+          padding : 0;
+        }
+
+        .hotel-basket-panel-info-header-container {
+          display         : flex;
+          justify-content : space-between;
+          align-items     : center;
+          width           : 100%;
+          position        : relative;
+
+          .hotel-basket-panel-info-header {
+            font-weight : 500;
+          }
+        }
+
+
+        .hotel-basket-panel-info-desc {
+
+        }
+
+      }
+    }
+
+    .hotel-basket-panel-date {
+      display        : flex;
+      border-bottom  : $default-border;
+      padding-bottom : 10px;
+
+      @include mq(lt-md) {
+        flex-direction : column;
+      }
+
+      .hotel-basket-checkInOut {
+        background-color : #dfdfdf;
+        padding          : 10px;
+        width            : 100%;
+
+
+        @include mq(lt-md) {
+          width   : unset;
+          padding : 5px 10px;
+
+          &:nth-child(1) {
+            margin-right  : 0 !important;
+            margin-bottom : 10px;
+          }
+        }
+
+
+        &:nth-child(1) {
+          margin-right : 10px;
+        }
+
+        .hotel-basket-panel-up {
+          margin-bottom : 5px;
+
+          .hotel-basket-panel-up-header {
+            display         : flex;
+            justify-content : space-between;
+          }
+        }
+
+        .hotel-basket-panel-down {
+          display : flex;
+
+          .hotel-basket-panel-down-day {
+            line-height  : 31px;
+            font-size    : 40px;
+            font-weight  : 500;
+            margin-right : 5px;
+
+            @include mq(lt-md) {
+              line-height : 23px;
+              font-size   : 32px;
+            }
+          }
+
+          .hotel-basket-panel-down-month {
+            .hotel-basket-panel-down-day-str {
+              @extend %xs-small-font;
+              line-height : 8px;
+              font-size   : 11px;
+            }
+
+            .hotel-basket-panel-down-month-str {
+              @extend %big-font;
+              font-weight : 500;
+
+              @include mq(lt-md) {
+                font-size : 14px;
+              }
+            }
+          }
+        }
+
+      }
+    }
+
+    .hotel-basket-panel-item {
+
+      border-bottom : $default-border;
+      padding       : 10px 0;
+
+      .hotel-basket-panel-item-info {
+        display : flex;
+
+        .hotel-basket-panel-item-name {
+          font-size   : $small-font;
+          font-weight : 500;
+          width       : 50%;
+
+          @include mq(lt-md) {
+            font-size       : 13px;
+            justify-content : space-between;
+          }
+        }
+
+        .hotel-basket-panel-item-price-container {
+          width : 50%;
+
+          @include mq(lt-md) {
+            display         : flex;
+            flex-wrap       : wrap;
+            justify-content : flex-end;
+            align-items     : flex-end;
+            width           : auto;
+          }
+
+          .hotel-basket-panel-item-price {
+            font-size       : $medium-font;
+            font-weight     : bold;
+            display         : flex;
+            justify-content : flex-end;
+          }
+
+          .hotel-basket-panel-item-price-info {
+            display         : flex;
+            justify-content : flex-end;
+          }
+
+        }
+      }
+
+      .hotel-basket-panel-item-properties {
+        padding-top     : 10px;
+        display         : flex;
+        justify-content : space-between;
+        min-height      : 50px;
+
+        .hotel-basket-panel-item-properties-left {
+          width           : 70%;
+          display         : flex;
+          flex-direction  : column;
+          justify-content : space-around;
+          @extend %xs-small-font;
+
+          //> * {
+          //  display: flex;
+          //  align-items: center;
+          //
+          //  :not(:last-child) {
+          //    margin-bottom: 5px;
+          //  }
+          //}
+          .description-detail {
+            max-height : 50px;
+            min-height : 16px;
+            overflow   : auto;
+            //padding-top: 5px;
+            //margin-top: 5px;
+          }
+
+          .description-detail::-webkit-scrollbar {
+            width : .4em;
+          }
+
+          .description-detail::-webkit-scrollbar-thumb {
+            background-color : #d7d4d4;
+            outline          : #eee0 solid 7px;
+          }
+
+          .description-detail::-webkit-scrollbar-track {
+            -webkit-box-shadow : inset 0 0 6px rgba(0, 0, 0, .14);
+          }
+
+          .cancellationInformation {
+            font-size : 12px;
+          }
+        }
+
+        .hotel-basket-panel-item-properties-right {
+          align-self      : center;
+          width           : 30%;
+          display         : flex;
+          justify-content : flex-end;
+          align-items     : center;
+        }
+      }
+    }
+  }
+
+  .ticket-basket-container {
+
+    .ticket-basket-panel-warnings {
+      font-size : 10px;
+      color     : red;
+    }
+
+    .ticket-basket-panel-detail {
+      display : flex;
+      padding : 10px 0;
+
+      .ticket-basket-panel-image {
+        width  : 108px;
+        height : 72px;
+
+        img {
+          width  : 108px;
+          height : 72px;
+        }
+      }
+
+      .ticket-basket-panel-info {
+        display         : flex;
+        width           : 100%;
+        justify-content : space-between;
+
+        .ticket-basket-panel-info-header {
+          font-weight : 500;
+          margin-left : 5px;
+
+          .ticket-basket-panel-hall {
+            display        : flex;
+            flex-direction : column;
+          }
+        }
+
+      }
+
+    }
+
+    .ticket-basket-properties {
+      display : flex;
+
+
+      .ticket-basket-panel-date {
+        background-color : #dfdfdf;
+        padding          : 10px;
+        flex             : 50;
+        display          : flex;
+        min-width        : 135px;
+        align-items      : center;
+
+        .ticket-basket-panel-date-day {
+          line-height  : 31px;
+          font-size    : 40px;
+          font-weight  : 500;
+          margin-right : 5px;
+        }
+
+        .ticket-basket-panel-date-month {
+
+          .ticket-basket-panel-date-day-str {
+            @extend %xs-small-font;
+          }
+
+          .ticket-basket-panel-date-month-str {
+            @extend %big-font;
+            font-weight : 500;
+          }
+        }
+      }
+
+      .ticket-basket-panel-item {
+
+        margin-left     : 5px;
+        flex            : 100;
+        display         : flex;
+        flex-direction  : column;
+        justify-content : space-between;
+
+        .ticket-basket-panel-item-info {
+          display         : flex;
+          flex-direction  : column;
+          justify-content : space-between;
+
+          .ticket-basket-panel-item-name {
+            font-size   : $small-font;
+            font-weight : 500;
+            width       : 50%;
+          }
+
+          .ticket-basket-panel-item-price {
+            font-size       : $medium-font;
+            font-weight     : bold;
+            display         : flex;
+            justify-content : flex-start;
+          }
+        }
+
+        .ticket-basket-panel-item-pax {
+          display : flex;
+
+        }
+      }
+    }
+
+    .ticket-basket-panel-warnings {
+
+    }
+  }
+
+  .hotel-basket-panel-content {
+    padding : 10px 0;
+
+    .hotel-basket-panel-price-container {
+      padding-top : 10px;
+
+      > :not(:last-child) {
+        padding-bottom : 5px;
+      }
+
+      .hotel-basket-panel-price-content {
+        font-size       : $medium-font;
+        justify-content : space-between;
+        display         : flex;
+        font-weight     : 600;
+
+        .hotel-basket-panel-price-info {
+          align-self : flex-start;
+
+        }
+
+        .hotel-basket-panel-price {
+          align-self : flex-end;
+        }
+      }
+
+      .hotel-basket-panel-money-content {
+        justify-content : space-between;
+        display         : flex;
+
+        .hotel-basket-panel-money-info {
+          align-self  : flex-start;
+          line-height : 20px;
+
+        }
+
+        .hotel-basket-panel-money {
+          font-weight : 500;
+          align-self  : flex-end;
+        }
+      }
+
+      .hotel-basket-panel-promotion-content {
+        justify-content : space-between;
+        display         : flex;
+
+        .hotel-basket-panel-promotion-info {
+          align-self  : flex-start;
+          line-height : 20px;
+
+        }
+
+        .hotel-basket-panel-promotion {
+          font-weight : 500;
+          align-self  : flex-end;
+        }
+      }
+
+      .hotel-basket-panel-price-properties {
+        padding-top : 10px;
+        font-size   : $xs-small-font;
+      }
+
+      .hotel-basket-panel-kvkk-privacy {
+        a {
+          font-size       : 12px;
+          padding-left    : 5px;
+          text-decoration : none;
+          color           : black;
+        }
+      }
+
+
+    }
+  }
+
+  .continueShopping {
+    color     : $accent-color; // $green-ish-color;
+    font-size : $x-small-font;
+
+    button {
+      border-color : $accent-color; // $green-ish-color;
+
+    }
+  }
+}
+
+.basket-panel-item {
+  ::ng-deep .mat-expansion-panel-header-title {
+    flex-direction : column;
+  }
+
+  .completed-check {
+    display     : flex;
+    align-items : center;
+
+    .mat-icon {
+      background    : green;
+      border-radius : 28px;
+      color         : #fff;
+      font-size     : 20px;
+      line-height   : 20px;
+      height        : 20px;
+      width         : 20px;
+      margin-right  : 5px;
+    }
+  }
+}
+
+.hotel-basket-panel-complete-btn {
+  margin : 10px 0;
+
+  button {
+    background-color : $green-ish-color;
+    color            : #fff;
+    width            : 100%;
+    font-size        : $medium-font;
+    height           : 50px;
+  }
+}
+
+::ng-deep .remove-button {
+  width            : 24px;
+  height           : 24px;
+  min-width        : 24px;
+  padding          : 0;
+  background-color : $warn-color;
+  border           : unset;
+  border-radius    : 25px;
+  display          : flex;
+  justify-content  : center;
+  align-items      : center;
+  position         : absolute;
+
+  span.mat-button-wrapper {
+    position        : relative;
+    display         : flex;
+    height          : 24px;
+    width           : 24px;
+    justify-content : center;
+    align-items     : center;
+
+    mat-icon {
+      height      : 16px;
+      font-size   : 16px;
+      width       : 15px;
+      line-height : 16px;
+    }
+  }
+
+  //
+  //::ng-deep .mat-button-wrapper {
+  //  line-height: 24px;
+  //}
+
+  mat-icon {
+    //font-size: 16px;
+    //line-height: 24px;
+    color : white;
+    //margin-right: -1px;
+  }
+}
+
+.basket-product-panel-title {
+  font-size   : 18px;
+  font-weight : 600;
+  align-items : center;
+
+  span {
+    margin-left : 30px;
+  }
+}

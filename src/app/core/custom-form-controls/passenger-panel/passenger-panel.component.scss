@@ -1,0 +1,156 @@
+@import "../../shared/mq";
+
+.passenger-panel.white {
+  height: 60px;
+}
+
+.passenger-panel {
+  align-items: center;
+  //border          : 1px solid;
+  //border-radius   : 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+
+  //height          : 67px; //72px;
+  justify-content: center;
+  width: 100%;
+
+  &.outline {
+    height: 60px;
+  }
+
+  &:hover {
+    border-width: 2px;
+    transition: border-width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    .passenger-type-container {
+      border-left-width: 2px;
+      transition: border-left-color 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+  }
+
+  .passenger-type-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 0 2px;
+    min-width: 70px;
+    mat-icon {
+      font-size: 24px;
+    }
+  }
+
+  .passenger-type {
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .flight-class-container {
+    align-items: center;
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    //border-right    : 1px solid;
+
+    .flight-class-text {
+      font-size: 14px;
+    }
+
+    .flight-class-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin: -10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .flight-class-class {
+      font-size: 14px;
+    }
+  }
+}
+
+.flight-passenger-panel {
+  &.outline {
+    height: 61px;
+    @include mq(gt-md) {
+      margin-top: 4px;
+    }
+    @include mq(lt-md) {
+      border: none;
+    }
+  }
+
+  &.legacy.multi {
+    margin-top: 5px;
+  }
+}
+
+.flight-date-panel-popup {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  width: calc(100% - 20px);
+
+  > * {
+    min-width: 0;
+  }
+}
+
+.transfer-passenger-panel {
+  border: unset;
+  border-bottom: 1px solid;
+  border-radius: 0;
+  height: 60px;
+  margin-top: 7px;
+
+  &.outline {
+    height: 68px; // 60px;
+    @include mq(gt-xs) {
+      margin-top: 5px;
+    }
+  }
+
+  @include mq(lt-md) {
+    border: unset !important;
+  }
+
+  &.outline {
+    border: 1px solid;
+    border-radius: 5px;
+    height: 60px; // 74px;
+    box-sizing: border-box;
+  }
+}
+
+.legacy-form-field {
+  padding: 5px 0 10px 0;
+}
+
+.hotel-passenger-panel {
+  border: 1px solid;
+  height: 60px;
+
+  &.legacy {
+    border: unset;
+    border-bottom: 1px solid;
+    border-radius: 0;
+    height: 60px !important;
+  }
+}
+
+.cabin-option {
+  padding: 5px 0;
+}
+
+::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex{
+  padding-top: 0;
+}
+
+

@@ -1,0 +1,14 @@
+@import "~@angular/material/theming";
+@import "../../shared/variables";
+
+@mixin form-dialog-theme($theme) {
+
+  $primary : map-get($theme, primary);
+  $accent  : map-get($theme, accent);
+  $warn    : map-get($theme, warn);
+
+  .dialog-header-container {
+    background-color : mat-color($accent);
+    color            : mat-contrast($accent, 500);
+  }
+}

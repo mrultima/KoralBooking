@@ -36,10 +36,11 @@ import { YandexMapComponent } from './yandex-map/yandex-map.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { AngularYandexMapsModule, YaConfig, YA_CONFIG } from 'angular8-yandex-maps';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AppStarterService } from "./services/app-starter.service";
-import { TranslatePipe } from "./services/translate.pipe";
-import {MatProgressSpinnerHarness} from '@angular/material/progress-spinner/testing';
-import { SafePipe } from "./services/safe.pipe";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ExchangeRateService, SafePipe, TranslatePipe } from "./core/shared";
+import { AppStarterService } from "./core/src/app-starter.service";
+import { LightBoxModule } from "./core/dialogs/light-box";
+
 
 
 const mapConfig: YaConfig = {
@@ -62,9 +63,9 @@ const mapConfig: YaConfig = {
     HotelphotoComponent,
     FacilitysComponent,
     YandexMapComponent,
+    routingComponents,
     TranslatePipe,
     SafePipe,
-    routingComponents
   ],
   imports: [
     BrowserModule,
@@ -91,7 +92,8 @@ const mapConfig: YaConfig = {
     MatDialogModule,
     AngularYandexMapsModule.forRoot(mapConfig),
     MatTabsModule,
-    MatProgressSpinnerHarness,
+    MatProgressSpinnerModule,
+    LightBoxModule,
   ],
   entryComponents: [YandexMapComponent],
   providers: [

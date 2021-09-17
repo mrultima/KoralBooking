@@ -1,0 +1,17 @@
+<div class="newsletter-form" [formGroup]="formGroup">
+    <h4 [innerHTML]="smsActive == true ? ('LBL_NEWSLETTER_SIGNUP' | translate | async) : ('LBL_SMS_LIST' | translate | async)"></h4>
+    <mat-form-field class="newsletter-form-input">
+        <input matInput formControlName="NameSurname" [placeholder]="'LBL_NAME_SURNAME' | translate | async">
+    </mat-form-field>
+    <mat-form-field class="newsletter-form-input" *ngIf="smsActive">
+        <input matInput formControlName="EMail" [placeholder]="'LBL_GUEST_EMAIL' | translate | async">
+    </mat-form-field>
+    <mat-form-field class="newsletter-form-input" *ngIf="!smsActive">
+        <input matInput formControlName="Phone" [placeholder]="'LBL_GUEST_PHONE' | translate | async">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="smsActive == true ? saveContact('EMail') : saveContact('SMS')">{{ 'BTN_SAVE' | translate | async }}</button>
+</div>
+
+<ng-container *ngIf="saveContactMessage | async">
+    <div class="saveContactMessage" [style.color]="contactMessageError ? 'red' : 'green'">{{saveContactMessage | async}}</div>
+</ng-container>

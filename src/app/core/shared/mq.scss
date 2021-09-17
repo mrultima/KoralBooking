@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+$breakpoints: (
+  xs: (
+    begin: 0,
+    end: 599.99px
+  ),
+  sm: (
+    begin: 600px,
+    end: 959.99px
+  ),
+  md: (
+    begin: 960px,
+    end: 1279.99px
+  ),
+  lg: (
+    begin: 1280px,
+    end: 1919.99px
+  ),
+  xl: (
+    begin: 1920px,
+    end: 4999.99px
+  ),
+) !default;
+
+$overlapping-gt: (
+  gt-xs: 600px,
+  gt-sm: 960px,
+  gt-md: 1280px,
+  gt-lg: 1920px,
+) !default;
+
+$overlapping-lt: (
+  lt-sm: 599.99px,
+  lt-md: 959.99px,
+  lt-lg: 1279.99px,
+  lt-xl: 1919.99px,
+) !default;
+
+
+// @include mq(xs) {
+//   background-color: red;
+// }
+//
+// becomes
+//
+// @media (min-width: 0px) and (max-width: 599px) {
+//   background-color: red;
+// }
+@mixin mq($bp) {
+  @if map-has-key($breakpoints, $bp) {
+    $min: map-get(map-get($breakpoints, $bp), begin);
+    $max: map-get(map-get($breakpoints, $bp), end);
+    @media (min-width: $min) and (max-width: $max) { @content; }
+  }
+  @else if map-has-key($overlapping-gt, $bp) {
+    $min: map-get($overlapping-gt, $bp);
+    @media (min-width: $min) { @content; }
+  }
+  @else if map-has-key($overlapping-lt, $bp) {
+    $max: map-get($overlapping-lt, $bp);
+    @media (max-width: $max) { @content; }
+  }
+}
+
+//@mixin custom-scroll-bar() {
+//  &::-webkit-scrollbar {
+//    width: 0.8em;
+//  }
+//
+//  &::-webkit-scrollbar-thumb {
+//    background-color: #d7d4d4;
+//    outline: 7px solid #eee0;
+//  }
+//
+//  &::-webkit-scrollbar-track {
+//    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.14);
+//  }
+//}

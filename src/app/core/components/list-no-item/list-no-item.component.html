@@ -1,0 +1,11 @@
+<div class="no-item-container">
+  <div class="no-item-left-side mat-elevation-z3">
+    <div *ngIf="mode" [ngSwitch]="mode">
+      <mat-icon *ngSwitchCase="'CallList'">info</mat-icon>
+    </div>
+  </div>
+
+  <div class="no-item-right-side hotel-advisor-sublime mat-elevation-z3">
+    {{ 'LBL_NO_RESULT' | translate | async }}
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<mat-form-field [color]="color" class="app-lookup" [appearance]="appearance">
+
+  <mat-label *ngIf="label">
+    {{label}}
+    <span class="required-marker" *ngIf="dbLookupConfig.required">*</span>
+  </mat-label>
+
+  <mat-label *ngIf="!label && dbLookupConfig.label">
+    {{dbLookupConfig.label}}
+    <span class="required-marker" *ngIf="dbLookupConfig.required">*</span>
+  </mat-label>
+
+  <mat-spinner matSuffix diameter="20" class="spinner" *ngIf="getOptionsProgress || waitingForTime">
+  </mat-spinner>
+
+  <input #input #trigger="matAutocompleteTrigger" (focus)="onFocus()" (blur)="onBlur()" type="text" autocomplete="off"
+    matInput [matAutocomplete]="auto" [formControl]="formControl" />
+
+  <mat-autocomplete [autoActiveFirstOption]="true" #auto="matAutocomplete" [displayWith]="displayFormatter.bind(this)"
+    [panelWidth]="dbLookupConfig.panelWidth" (optionSelected)="optionSelected($event)">
+    <mat-option *ngFor="let option of options | async" class="app-lookup-options" [value]="option"
+      [ngStyle]="dbLookupConfig.optionStyle">
+      <div [innerHTML]="option['__display'] || option[dbLookupConfig.displayField]">
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+
+  <button type="button" [matTooltip]="dbLookupConfig.customButton?.tooltip" *ngIf="dbLookupConfig.customButton"
+    [disabled]="formControl.disabled" mat-icon-button matSuffix (click)="dbLookupConfig.customButton.callbackFn($event)"
+    tabindex="-1">
+    <mat-icon>{{dbLookupConfig.customButton.icon}}</mat-icon>
+  </button>
+  <button type="button" *ngIf="dbLookupConfig.gridFn" [disabled]="formControl.disabled" mat-icon-button matSuffix
+    (click)="openGrid($event)" tabindex="-1">
+    <mat-icon>more_horiz</mat-icon>
+  </button>
+  <button type="button" *ngIf="dbLookupConfig.recordFn" [disabled]="formControl.disabled" mat-icon-button matSuffix
+    (click)="openRecord($event)" tabindex="-1">
+    <mat-icon>{{formControl.value ? 'edit' : 'add'}}</mat-icon>
+  </button>
+
+  <!-- <span matSuffix="clear"></span> -->
+  <mat-hint taCoreError></mat-hint>
+</mat-form-field>

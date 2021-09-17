@@ -1,0 +1,33 @@
+.adult-children-panel-container{
+    width: 320px;
+    z-index: 99999;
+    background: white;
+    .adult-children-panel{
+        .add-children-panel-row {
+            display: flex;
+            justify-content: space-between;
+            padding:10px;
+            border-bottom: solid 1px #eee;
+            label{
+                width: 50%;    
+                align-self: center;
+            }
+            input.add-children-panel-input {
+                width: 60px;
+                text-align: center;    
+                border: none;
+            }
+        }
+    }
+
+    .apply-button.mat-raised-button.mat-primary {
+        width: 100%;
+    }
+}
+
+.person-item-select-count{
+    background-color: #00bcd4;
+    border-radius: 5px;
+    width: 100%;
+    color: #fff;
+}

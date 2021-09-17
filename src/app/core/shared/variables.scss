@@ -1,0 +1,99 @@
+@import '~@angular/material/theming';
+
+$primary-color          : var(--p-c-5);
+$primary-color-rgb      : var(--p-c-5-rgb);
+$dark-primary-color-rgb : var(--p-c-7-rgb);
+$accent-color           : var(--a-c-5);
+$accent-color-rgb       : var(--a-c-5-rgb);
+$warn-color             : var(--w-c-5);
+$warn-color-rgb         : var(--w-c-5-rgb);
+$primary-67-opacity     : rgba($primary-color-rgb, 0.678);
+
+
+$background-color       : #faf8f8;
+
+$green-ish-color        : #28a745;
+
+
+$ultra-big-font         : 24px;
+$big-font               : 20px;
+$medium-font            : 18px;
+$small-font             : 16px;
+$x-small-font           : 14px;
+$xs-small-font          : 12px;
+
+
+//$focused-input-color    : rgba(0, 0, 0, 0.5);
+
+$default-border         : 1px solid #eee;
+
+
+$dark-primary-text      : rgba(black, 0.87);
+$light-primary-text     : rgba(white, 0.87);
+
+$mat-custom-primary     : (
+  100: var(--p-c-1),
+  500: var(--p-c-5),
+  700: var(--p-c-7),
+  contrast: (
+    100: var(--p-c-1-contrast),
+    500: var(--p-c-5-contrast),
+    700: var(--p-c-7-contrast),
+  )
+);
+
+$mat-custom-accent      : (
+  100: var(--a-c-1),
+  500: var(--a-c-5),
+  700: var(--a-c-7),
+  contrast: (
+    100: var(--a-c-1-contrast),
+    500: var(--a-c-5-contrast),
+    700: var(--a-c-7-contrast),
+  )
+);
+
+$mat-custom-warn        : (
+  100: var(--w-c-1),
+  500: var(--w-c-5),
+  700: var(--w-c-7),
+  contrast: (
+    100: var(--w-c-1-contrast),
+    500: var(--w-c-5-contrast),
+    700: var(--w-c-7-contrast),
+  )
+);
+
+$app-primary            : mat-palette($mat-custom-primary);
+$app-accent             : mat-palette($mat-custom-accent);
+
+// The warn palette is optional (defaults to red).
+$app-warn               : mat-palette($mat-custom-warn);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme              : mat-light-theme($app-primary, $app-accent, $app-warn);
+
+%big-font {
+  line-height : $big-font;
+  font-size   : $big-font;
+}
+
+%ultra-big-font {
+  line-height : $ultra-big-font;
+  font-size   : $ultra-big-font;
+}
+
+%medium-font {
+  line-height : $medium-font;
+  font-size   : $medium-font;
+}
+
+%small-font {
+  line-height : $small-font;
+  font-size   : $small-font;
+}
+
+%xs-small-font {
+  line-height : $xs-small-font;
+  font-size   : $xs-small-font;
+}

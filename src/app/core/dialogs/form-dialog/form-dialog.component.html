@@ -1,0 +1,133 @@
+<div class="dialog-header-container">
+  <span class="dialog-header">{{data.header | translate | async}}</span>
+
+  <button type="button" mat-icon-button (click)="closeDialog()">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
+
+<div class="dialog-content">
+  <ng-container [ngSwitch]="data.mode">
+    <!--    flight-autocomplete-->
+    <ng-container *ngSwitchCase="'flight-autocomplete'">
+      <div style="padding:0 10px">
+        <ta-core-autocomplete style="margin-bottom: 15px;" (autoCompleteClosed)="closeDialog()" [mobile]="false"
+          [placeholder]="data.placeholder | translate | async" mode="Flight" [autocompleteFn]="data.autoCompleteFn"
+          [formControl]="fc"></ta-core-autocomplete>
+
+        <!--        TODO(i18n)-->
+        <div class="flight-option-header" *ngIf="latestSearches.length">Önceki Aramalarım</div>
+        <mat-list style="padding: 0;">
+          <ng-container *ngFor="let listItem of latestSearches">
+            <ng-container [ngTemplateOutlet]="option" [ngTemplateOutletContext]="{val: listItem}"></ng-container>
+          </ng-container>
+        </mat-list>
+        <!--        TODO(i18n)-->
+        <div class="flight-option-header">Popüler Aramalar</div>
+        <mat-list style="padding: 0;">
+          <ng-container *ngFor="let listItem of flightPopularList">
+            <ng-container [ngTemplateOutlet]="option" [ngTemplateOutletContext]="{val: listItem}"></ng-container>
+          </ng-container>
+        </mat-list>
+
+        <ng-template #option let-val="val">
+          <mat-list-item matRipple class="dialog-option" (click)="onFlightOptionSelected(val)">
+            <mat-icon *ngIf="val.LOCATIONTYPE !== 'C'">flight</mat-icon>
+            <mat-icon *ngIf="val.LOCATIONTYPE === 'C'">location_city</mat-icon>
+            {{val.AIRPORTNAME}} ,{{val.CITYNAME}}, {{val.COUNTRYCODE}}
+          </mat-list-item>
+        </ng-template>
+      </div>
+    </ng-container>
+    <!--transfer-autocomplete-->
+    <ng-container *ngSwitchCase="'transfer-autocomplete'">
+      <div style="padding:0 10px">
+        <ta-core-autocomplete style="margin-bottom: 15px;" (autoCompleteClosed)="closeDialog()" [mobile]="false"
+          [placeholder]="data.placeholder | translate | async" [firstAutocomplete]="data.firstAutocomplete"
+          [autocompleteFn]="data.autoCompleteFn" mode="Transfer" [formControl]="fc"></ta-core-autocomplete>
+        <div style="height: 50vh;">
+        </div>
+
+        <!--        <div class="flight-option-header">Önceki Aramalarım</div>-->
+        <!--        <mat-list style="padding: 0;">-->
+        <!--          <ng-container *ngFor="let listItem of latestSearches">-->
+        <!--            <ng-container [ngTemplateOutlet]="option" [ngTemplateOutletContext]="{val: listItem}"></ng-container>-->
+        <!--          </ng-container>-->
+        <!--        </mat-list>-->
+
+        <!--        <div class="flight-option-header">Popüler Aramalar</div>-->
+        <!--        <mat-list style="padding: 0;">-->
+        <!--          <ng-container *ngFor="let listItem of flightPopularList">-->
+        <!--            <ng-container [ngTemplateOutlet]="option" [ngTemplateOutletContext]="{val: listItem}"></ng-container>-->
+        <!--          </ng-container>-->
+        <!--        </mat-list>-->
+
+        <ng-template #option let-val="val">
+          <mat-list-item matRipple class="dialog-option" (click)="onFlightOptionSelected(val)">
+            <mat-icon *ngIf="val.TYPE === 'TF'">flight</mat-icon>
+            <mat-icon *ngIf="val.TYPE !== 'TF'">place</mat-icon>
+            {{val.VALUE}}
+          </mat-list-item>
+        </ng-template>
+      </div>
+    </ng-container>
+    <!--    date-->
+    <ng-container *ngSwitchCase="'date'">
+      <owl-date-time-inline [firstDayOfWeek]="1" (click)="onClick($event)" [formControl]="fc" [min]="minDate"
+        [max]="maxDate" pickerType="calendar" [startAt]="data.dateStartAt"></owl-date-time-inline>
+      <button mat-stroked-button type="button" color="warn" style="width: 100%;" (click)="onSelection(fc.value)"
+        *ngIf="mode === 'dialog'">
+        {{'LBL_SET_AND_CLOSE' | translate | async}}
+      </button>
+    </ng-container>
+    <!--time-->
+    <ng-container *ngSwitchCase="'time'">
+      <div class="time-container">
+        <owl-date-time-inline [firstDayOfWeek]="1" [formControl]="fc" [min]="minDate" [max]="maxDate" [stepMinute]="5"
+          [startAt]="data.dateStartAt"></owl-date-time-inline>
+        <button mat-stroked-button type="button" color="warn" style="width: 100%;" (click)="onSelection(fc.value)">
+          {{'LBL_SET_AND_CLOSE' | translate | async}}
+        </button>
+      </div>
+    </ng-container>
+    <!--passenger-->
+    <ng-container *ngSwitchCase="'passenger'">
+      <div class="passenger-container"
+        [ngClass]="{'outline': (appService.appearance | async) === 'outline', 'legacy': (appService.appearance | async) === 'legacy'}">
+        <mat-radio-group [formControl]="cabinClassFC" style="display: flex;flex-direction: column;"
+          *ngIf="data.isCabinActive" class="cabin-option-container">
+          <mat-radio-button [value]="0">{{'LBL_FLIGHT_ALL' | translate | async}}
+          </mat-radio-button>
+          <mat-radio-button [value]="1">{{'LBL_FLIGHT_ECONOMY' | translate | async}}
+          </mat-radio-button>
+          <mat-radio-button [value]="2">
+            {{'LBL_FLIGHT_BUSINESS' | translate | async}}
+          </mat-radio-button>
+        </mat-radio-group>
+
+
+        <mat-form-field class="prefix-fixer" [appearance]="appService.appearance | async" style="width: 100%;">
+          <mat-icon matPrefix style="width: 24px;height: 24px">wc</mat-icon>
+          <mat-label>
+            {{'LBL_ADULT' | translate | async}}
+          </mat-label>
+          <mat-select [formControl]="adultFC">
+            <mat-option [value]="(i + 1)" *ngFor="let asd of mockArrayCreator(maxAdultCount); index as i">{{i + 1}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="showChildren">
+          <ta-core-children-select-or-datepicker [maxChild]="maxChildCount" #childrenComponent [isPanel]="false"
+            mode="select" [maxChildAge]="data.maxChildAge || 11" [maxChild]="data.maxChild || 6" [minChildAge]="data.minChildAge || 0"
+            [formControl]="childFC">
+          </ta-core-children-select-or-datepicker>
+        </div>
+
+        <button mat-stroked-button type="button" color="warn" style="width: 100%;" (click)="closeDialog()">
+          {{'LBL_SET_AND_CLOSE' | translate | async}}
+        </button>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

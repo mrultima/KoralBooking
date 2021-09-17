@@ -1,0 +1,102 @@
+@import "~projects/travelaps/core/shared/shared-theme";
+
+.mat-expansion-panel {
+    margin-bottom: 10px;
+
+    .mat-expansion-panel-header {
+        background-color: var(--p-c-5);
+        height: 30px;
+        padding: 0 15px;
+    
+        ::ng-deep .mat-expansion-indicator {
+            &:after {
+                color: #fff;
+            }
+        }
+    }
+
+    ::ng-deep .mat-expansion-panel-content {
+        .mat-expansion-panel-body {
+            padding: 5px 10px;
+
+            .item {
+                .title {
+                    margin-bottom: 0;
+                }
+
+                .type {
+                    display: flex;
+                    flex-direction: column;
+                    text-transform: capitalize;
+
+                    .mat-checkbox {
+                        .mat-checkbox-frame {
+                            border-color: var(--p-c-5);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mat-expansion-panel-header-title {
+    color: #fff;
+    font-weight: 500;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+    height: 30px;
+    background-color: var(--p-c-5);
+
+    &:hover {
+        background-color: var(--p-c-5);
+
+        &:not([aria-disabled="true"]) {
+            background-color: var(--p-c-5);
+        }
+    }
+
+    &:focus {
+        background-color: var(--p-c-5);
+    }
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+    background: var(--p-c-5);
+}
+
+.filter-apply-button {
+    position: fixed;
+    bottom: 0;
+    background: white;
+}
+
+::ng-deep .mat-checkbox-layout {
+    width: 100%;
+  
+    .mat-checkbox-label {
+      width: 100%;
+  
+      .viewValueCon {
+        display: flex;
+  
+        .viewValue {
+          max-width: 120px;
+          overflow: hidden;
+          display: block;
+          text-overflow: ellipsis;
+          margin-right: 3px;
+          @include mq(lt-md) {
+            max-width: 100%;
+          }
+        }
+      }
+    }
+}
+
+::ng-deep app-filter-panel{
+    @include mq(lt-md) {
+      width: 100%;
+    }
+  }

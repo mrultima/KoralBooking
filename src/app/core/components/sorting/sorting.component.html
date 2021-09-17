@@ -1,0 +1,41 @@
+<div class="sorting-content  mat-elevation-z1">
+  <ng-container *ngIf="sortingConfig && !isMobile"> <!-- && !isMobile -->
+    <label *ngIf="showSortingLabel === 'show'">{{('LBL_SORTING' | translate | async) + ':'}} </label>
+    <div class="sortby-item-container">
+      <ng-container *ngFor="let sort of sortingConfig">
+        <button [disabled]="disabled" class="sortby-item" mat-button (click)="sortByList(sort)">
+          <mat-icon *ngIf="sort.sortIcon != ''">{{sort.sortIcon}}</mat-icon>
+          <span>{{sort.displayName | translate | async}}</span>
+        </button>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="sortingConfig && isMobile && sortingConfig.length > 3;else mobilNotMenu">
+    <mat-menu #appMenu="matMenu">
+      <ng-container *ngFor="let sort of sortingConfig">
+        <button [disabled]="disabled" class="sortby-item-mobile" mat-button (click)="sortByList(sort)">
+          <mat-icon *ngIf="sort.sortIcon != ''">{{sort.sortIcon}}</mat-icon>
+          <span>{{sort.displayName | translate | async}}</span>
+        </button>
+      </ng-container>
+    </mat-menu>
+  
+    <button [disabled]="disabled" mat-icon-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>more_vert</mat-icon>
+      <label *ngIf="showSortingLabel === 'show'">{{('LBL_SORTING' | translate | async) + ':'}} </label>
+    </button>
+  </ng-container>
+  <ng-template #mobilNotMenu>
+    <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;" *ngIf="isMobile">
+      <label *ngIf="showSortingLabel === 'show'">{{'LBL_SORTING' | translate | async}} </label>
+      <div class="sortby-item-container" style="display: flex;align-items: center;justify-content: center;">
+        <ng-container *ngFor="let sort of sortingConfig">
+          <button [disabled]="disabled" class="sortby-item" mat-button (click)="sortByList(sort)">
+            <mat-icon *ngIf="sort.sortIcon != ''">{{sort.sortIcon}}</mat-icon>
+            <span>{{sort.displayName | translate | async}}</span>
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+</div>

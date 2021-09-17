@@ -1,0 +1,80 @@
+@import "~@angular/material/theming";
+
+.scheme-container {
+
+  display          : flex;
+  font-size        : 13px;
+  border           : 1px solid #BDBDBD;
+  flex-direction   : column;
+  padding          : 16px;
+  background-color : #fff;
+
+  @include mat-elevation-transition();
+
+  &:hover {
+    @include mat-elevation(16);
+    z-index : 3;
+  }
+
+  &.active {
+    @include mat-elevation(8);
+    z-index : 2;
+  }
+}
+
+.scheme-container__title {
+  color          : #616161;
+  font-size      : 13px;
+  padding-bottom : 8px;
+  margin         : 0;
+}
+
+.scheme-container__content {
+  height : 100%;
+
+  ul {
+    padding    : 0;
+    margin     : 0;
+    list-style : none none;
+    display    : flex;
+    height     : 115px;
+  }
+}
+
+.scheme-container__content__large {
+  line-height : 19px;
+  padding     : 8px;
+  position    : relative;
+  height      : 24vh;
+  max-height  : 240px;
+  width       : 240px;
+
+  p {
+    margin  : 0;
+    padding : 0;
+  }
+
+  span {
+    border-radius   : 25px;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    height          : 30px;
+    left            : calc(50% - 15px);
+    position        : absolute;
+    top             : 50%;
+    width           : 30px;
+    font-size       : 16px;
+  }
+}
+
+.scheme-container__content__small {
+  line-height : 19px;
+  padding     : 8px;
+  list-style  : none none;
+  flex        : 1;
+}
+
+.strong {
+  font-weight : 700;
+}

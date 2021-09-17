@@ -1,0 +1,51 @@
+@import "projects/travelaps/core/shared/shared-theme";
+
+.newsletter-form{
+    margin-bottom: 30px;
+    h4{
+        color:#fff;
+        font-weight: normal;
+        font-size: 18px;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        @include mq(lt-md) {
+            text-align: center;
+        }
+    }
+    
+    .mat-form-field {
+        width: 90%;
+        @include mq(lt-md) {
+            width: 85%;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+    
+    .mat-raised-button.mat-primary {
+        width: 25%;
+        line-height: 33px;
+        padding: 0px;
+        @include mq(lt-md) {
+            width: 42%;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+}
+
+::ng-deep .newsletter-form{        
+    .mat-form-field-appearance-legacy {
+        .mat-form-field-underline {
+            color: white;
+            background-color: white;
+        }
+        .mat-form-field-label{
+            color:#fff;
+        }
+    }
+    .cdk-text-field-autofill-monitored:not(:-webkit-autofill){
+        color:#fff;
+    }
+}
+

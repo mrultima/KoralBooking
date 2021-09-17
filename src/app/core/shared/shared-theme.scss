@@ -1,0 +1,77 @@
+@import "css-variables";
+@import "variables";
+@import "mq";
+@import '~@angular/material/theming';
+@import "../custom-form-controls/custom-form-controls-theme";
+@import "sharedDialogs/dialogs-theme";
+
+@mixin owl-date-theme($theme) {
+  $primary : map-get($theme, primary);
+  $accent  : map-get($theme, accent);
+  $warn    : map-get($theme, warn);
+
+  .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    background-color : mat-color($accent);
+    color            : mat-contrast($accent, 500);
+  }
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+  // For Google Chrome
+  ::-webkit-scrollbar {
+    width:  $size;
+    height: $size;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // For Internet Explorer
+  body {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+}
+
+@mixin custom-scroll-bar() {
+  &::-webkit-scrollbar {
+    border-radius: 10px;
+    height: 10px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+}
+
+
+
+@mixin shared-theme($theme) {
+  #BODYID {
+    @include mat-ripple-theme(mat-light-theme(mat-palette($mat-indigo), mat-palette($mat-amber)));
+  }
+
+  @include css-variables();
+  @include custom-form-controls-theme($theme);
+  @include dialogs-theme($theme);
+  @include owl-date-theme($theme);
+}
+
+.mat-form-field-appearance-outline {
+  .mat-form-field-outline {
+    color: rgba(0,0,0,0.42);
+  }
+}
+//yenimenü
+$backColor: #263238;

@@ -1,0 +1,29 @@
+<div class="basket-buy-later-dialog-container">
+  <h4 matDialogTitle style="word-break: break-all;">{{'MSG_REQUIRED_AT_LEAST_ONE_FIELD' | translate | async}}</h4>
+  <form [formGroup]="formGroup" style="display:flex;flex-direction: column">
+    <ta-core-intl-phone-input
+      [placeholder]="'LBL_GUEST_PHONE' | translate | async"
+      formControlName="phone"
+      class="basket-form-input phoneInput"
+    ></ta-core-intl-phone-input>
+
+    <mat-form-field [appearance]="appService.appearance | async">
+      <mat-label>{{'LBL_GUEST_EMAIL' | translate | async}}</mat-label>
+      <input autocomplete="off" matInput
+             placeholder="{{'LBL_GUEST_EMAIL' | translate | async}}"
+             formControlName="email"
+      >
+    </mat-form-field>
+
+    <div style="display:grid;grid-gap: 5px" class="buy-later-actions">
+      <button mat-flat-button [matDialogClose]="false" style="grid-area: cancel">
+        {{'BTN_CANCEL' | translate | async}}
+      </button>
+      <button [disabled]="formGroup.invalid" mat-raised-button style="grid-area: submit" color="primary"
+              [matDialogClose]="formGroup.value">
+        {{'BTN_SUBMIT' | translate | async}}
+      </button>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,7 @@
+@import "date-panel/date-panel-theme";
+@import "passenger-panel/passenger-panel-theme";
+
+@mixin custom-form-controls-theme($theme) {
+  @include date-panel-theme($theme);
+  @include passenger-panel-theme($theme);
+}

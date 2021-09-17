@@ -1,0 +1,12 @@
+<!-- TODO(i18n) tc-number-dialog-->
+<h1 mat-dialog-title>Lokal indirimli fiyatlardan yararlanmak için lütfen T.C. Kimlik numaranızı giriniz.</h1>
+<div mat-dialog-content class="tc-number-dialog-content">
+  <mat-form-field>
+    <input matInput placeholder="TC Kimlik Numarası" value="" [formControl]="tcNumber" taCoreDigitOnly maxlength="11">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="tc-number-dialog-actions">
+  <button mat-raised-button color="accent" (click)="onCompleteClick()">{{'BTN_COMPLETE' | translate | async}}</button>
+  <button mat-raised-button (click)="onNoClick()">{{'BTN_NOTTCCITIZEN' | translate | async}}</button>
+  <button mat-raised-button color="warn" (click)="onNoClick()">{{'BTN_CANCEL' | translate | async}}</button>
+</div>

@@ -1,0 +1,92 @@
+::ng-deep .mat-checkbox-layout { white-space : normal !important; }
+
+::ng-deep .small-slider {
+  .noUi-horizontal {
+    height : 5px;
+  }
+
+  .noUi-connect {
+    background : orange;
+  }
+
+  .noUi-origin {
+    top : -7px;
+  }
+}
+
+::ng-deep .filter-container {
+  .search-input {
+    background : #fff;
+    padding    : 10px;
+
+    .mat-form-field-wrapper {
+      padding-bottom : 0;
+    }
+  }
+
+  .onlyProperty {
+    background     : #fff;
+    padding        : 10px;
+    padding-bottom : 0px;
+  }
+
+  .amentyButton {
+    font-size     : 30px;
+    line-height   : 30px;
+    margin-bottom : 5px;
+    max-height    : 64px;
+    max-width     : 64px;
+    padding       : 15px;
+  }
+
+
+  .mat-expansion-panel {
+    box-shadow : none;
+    border-top : 1px solid #cecece;
+  }
+
+  mat-expansion-panel-header {
+    border-bottom : 1px solid #eee;
+  }
+
+  .mat-expansion-panel-body {
+    padding : 10px 20px 10px;
+  }
+
+  .buttonSelect {
+    background-color : green;
+  }
+
+  mat-checkbox {
+    .mat-checkbox-layout {
+      .mat-checkbox-label {
+        display        : flex;
+        text-transform : capitalize;
+      }
+    }
+  }
+
+  //.noUi-horizontal .noUi-tooltip {
+  //  left : 30%;
+  //}
+}
+
+.Stars .mat-checkbox .mat-icon {
+  color : #ffd740;
+}
+
+.Rating .mat-checkbox .mat-icon {
+  color : green;
+  width : 20px;
+}
+
+.mat-badge-content {
+  height      : 18px;
+  line-height : 18px;
+  width       : 18px;
+}
+
+.mat-expansion-panel-spacing {
+  border-radius : 0;
+  margin        : 0;
+}

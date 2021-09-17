@@ -1,0 +1,34 @@
+<div fileDrop [accept]="acceptExtensions" (fileDrop)="onFileChange($event)" [ngClass]="cssClass"
+  [ngClass]="{'img-ul-file-is-over': false}" [ngStyle]="style?.layout">
+  <div class="img-ul-file-upload img-ul-hr-inline-group">
+
+    <label class="img-ul-upload img-ul-button mat-raised-button mat-primary" [ngStyle]="style?.selectButton"
+      *ngIf="!(disabled || getRemainingSlots()<1)">
+      <i class="material-icons icon">cloud_upload</i><span [innerText]="selectButtonCaption"></span>
+      <input type="file" [disabled]="disabled" [accept]="acceptExtensions" [multiple]="max > 1"
+        (change)="onFileChange(input.files)" #input>
+    </label>
+
+    <button type="button" *ngIf="!autoUpload && uploadButton && processFilesCounter==0 && waitForUploadFilesCount() > 0"
+      [disabled]="disabled" class="img-ul-up img-ul-button mat-raised-button mat-warn" (click)="upload()"
+      [ngStyle]="style?.uploadButton" [innerText]="uploadButtonCaption">
+    </button>
+
+    <button type="button" *ngIf="saveButton" [disabled]="disabled"
+      class="img-ul-up img-ul-button mat-raised-button mat-warn" (click)="saveEvent()" [ngStyle]="style?.saveButton"
+      [innerText]="saveButtonCaption">
+    </button>
+
+    <button type="button" *ngIf="deleteAllButton && pendingFilesCounter==0 && files.length>0" [disabled]="disabled"
+      class="img-ul-clear img-ul-button mat-raised-button mat-warn" (click)="deleteAll()" [ngStyle]="style?.clearButton"
+      [innerText]="deleteAllButtonCaption">
+    </button>
+
+    <button type="button" *ngIf="snapPhotoButton && !(disabled || getRemainingSlots()<1)"
+      class="img-ul-up img-ul-button img-ul-button-x mat-raised-button" (click)="snapPhoto()"
+      [ngStyle]="style?.snapPhoto">
+      <i class="material-icons">photo_camera </i>
+    </button>
+    <div *ngIf="dropBoxMessage" class="img-ul-drag-box-msg" [innerText]="dropBoxMessage"></div>
+  </div>
+</div>

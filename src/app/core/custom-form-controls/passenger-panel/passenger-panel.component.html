@@ -1,0 +1,57 @@
+<ng-container>
+  <mat-form-field style="width: 100% !important;" #mainElement="cdkOverlayOrigin" (click)="onPassengerPanel()"
+    cdkOverlayOrigin [appearance]="appService.appearance | async"><!--[appearance]="appService.appearance | async" -->
+    <mat-label></mat-label>
+    <input style="width: 0;max-width: 0;" matInput readonly>
+    <div matPrefix class="passenger-panel" [class.white]="isWhite" [class.multi]="multi"
+      [style.width]="el.nativeElement?.offsetWidth+'px'">
+      <span [style.flex-basis]="showCabinClass ? '50%' : '100%'" class="passenger-type-container">
+        <span class="passenger-type" *ngIf="adultCount > 0" style="padding-right: 5px;">
+          <span style="padding-right: 4px;">{{adultCount}}</span>
+          <!-- <i class="fas fa-male"></i> -->
+          <mat-icon>person</mat-icon>
+        </span>
+
+        <span class="passenger-type" *ngIf="childCount > 0 && !hideChildren" style="height: 100%;">
+          <span style="padding-right: 2px;">{{childCount}}</span>
+          <mat-icon>face</mat-icon>
+        </span>
+      </span>
+    </div>
+
+  </mat-form-field>
+  <!-- <div #mainElement="cdkOverlayOrigin" (click)="onPassengerPanel()"
+    [class.outline]="(appService.appearance | async) === 'outline'"
+    [class.legacy]="(appService.appearance | async) !== 'outline'" [class.multi]="multi" [class.white]="isWhite"
+    cdkOverlayOrigin class="hotel-passenger-panel passenger-panel">
+
+    <span class="flight-class-container" *ngIf="showCabinClass">
+      <span class="flight-class-text">{{'LBL_CABIN' | translate | async}}</span>
+      <span class="flight-class-name">
+        {{cabinClassFC.value == 0 ? 'ALL' : cabinClassFC.value == 1 ? 'ECO' : 'BUS' }}
+      </span>
+      <span class="flight-class-class">{{'LBL_CLASS' | translate | async}}</span>
+    </span>
+
+    <span [style.flex-basis]="showCabinClass ? '50%' : '100%'" class="passenger-type-container">
+      <span class="passenger-type" *ngIf="adultCount > 0" style="padding-right: 5px;">
+        <span style="padding-right: 4px;">{{adultCount}}</span>
+        <i class="fas fa-male"></i>
+      </span>
+
+      <span class="passenger-type" *ngIf="childCount > 0 && !hideChildren" style="height: 100%;">
+        <span style="padding-right: 2px;">{{childCount}}</span>
+        <mat-icon>face</mat-icon>
+      </span>
+    </span>
+  </div> -->
+
+  <ng-template cdk-connected-overlay [cdkConnectedOverlayOrigin]="mainElement"
+    [cdkConnectedOverlayOpen]="isPassengerPanelOpen" (backdropClick)="onFormDialogClose()"
+    cdkConnectedOverlayBackdropClass="no-background-color" [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayScrollStrategy]="strategy" [cdkConnectedOverlayWidth]="panelWidth$ | async">
+
+    <ta-core-form-dialog #dialogComponent (close)="onFormDialogClose()" (fcData)="onFormDialog($event)" mode="component"
+      [dataFromAbove]="data | async"></ta-core-form-dialog>
+  </ng-template>
+</ng-container>

@@ -1,0 +1,48 @@
+<div class="main
+" [ngSwitch]="(state$|async)">
+
+    <ng-container *ngSwitchCase="'stream'">
+        <div>
+            <video #videoElm class="videoEl"></video></div>
+        <div class="btns">
+            <button color="primary" mat-raised-button
+                (click)="submit()">Snap Photo</button>
+        </div>
+        <div class="devices" *ngIf="videoInputs">
+            <button [matMenuTriggerFor]="menu" mat-mini-fab color="">
+                <mat-icon>camera</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button [class.active]="dev===device" (click)="changeDevice(dev)"
+                    *ngFor="let dev of videoInputs; let i=index" mat-menu-item>Camera
+                    #{{i+1}}</button>
+            </mat-menu>
+        </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'confirm'">
+        <div><img class="photo" [src]="dataURI" /></div>
+        <div class="btns">
+            <button color="primary" mat-raised-button
+                (click)="confirm(true)">Submit</button>
+            <button color="warn" mat-raised-button
+                (click)="confirm(false)">Cancel</button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'error'">
+        <i class="material-icons">
+            block
+        </i>
+    </ng-container>
+
+    <!-- <ng-container *ngSwitchDefault>
+        <mat-spinner></mat-spinner>
+    </ng-container> -->
+
+    <button class="clsBtn" *ngIf="isDialog" mat-mini-fab mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<canvas #canvasElm class="canvas"></canvas>

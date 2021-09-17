@@ -1,0 +1,70 @@
+<ng-container *ngIf="ref">
+    <div [sortablejs]="ref.files" [sortablejsOptions]="{onUpdate:ref.sorting.bind(ref)}"
+        class="img-ul-container img-ul-hr-inline-group" [ngStyle]="ref.style?.previewPanel">
+
+        <div draggable="true" [class.default]="ref.max>1 && file.default"
+            [matTooltip]="ref.max>1 && file.default?ref.defaultImageTooltip:null" class="img-ul-image s"
+            *ngFor="let file of ref.files" (click)="ref.previewFileClicked(file)"
+            [style.background-image]="'url('+ (file.thumbnail && file.thumbnail.src || file.src || 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==') +')'|safe:'style'"
+            [class.wait]="!file.uploaded">
+
+            <div *ngIf="file.src==null" class="img-ul-loading-overlay">
+                <div class="img-ul-spinning-circle"></div>
+            </div>
+
+            <div *ngIf="file.pending" class="img-ul-loading-overlay">
+                <div class="img-ul-spinning-circle">%{{file.progress}}</div>
+            </div>
+
+            <div *ngIf="!file.pending && file.src!=null" [ngClass]="{'img-ul-disabled': ref.disabled}"
+                class="img-ul-x-mark s" (click)="ref.deleteFile(file)">
+                <i class="material-icons">
+                    clear
+                </i>
+            </div>
+
+            <div class="img-ul-preview s" (click)="preview($event,file)" *ngIf="file.src!=null">
+                <i class="material-icons">
+                    fullscreen
+                </i>
+            </div>
+
+            <div class="img-ul-caption s" [matTooltip]="file?.caption" (click)="caption($event,file)"
+                *ngIf="file.src!=null">
+                <i class="material-icons">
+                    edit
+                </i>
+            </div>
+
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #previewTpl>
+    <div>
+        <img class="preview" src="{{this.current.src}}" (click)="this.closePreview()">
+    </div>
+    <div *ngIf="this.ref.files.length>1">
+        <button type="button" mat-icon-button (click)="this.navigatePreview(0)">
+            <mat-icon>navigate_before</mat-icon>
+        </button>
+
+        <button type="button" mat-icon-button (click)="this.navigatePreview(1)">
+            <mat-icon>navigate_next</mat-icon>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #captionTpl let-file>
+    <div>
+        <form (submit)="this.saveCaption($event,file,input.value)">
+            <mat-form-field class="w100">
+                <input #input maxlength="50" matInput [placeholder]="'Caption'"
+                    [value]="file?.caption===undefined?null:file?.caption">
+            </mat-form-field>
+            <div class="w100 captionButton">
+                <button mat-raised-button color="primary">{{'Save'}}</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

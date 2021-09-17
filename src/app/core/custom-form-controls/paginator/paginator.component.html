@@ -1,0 +1,33 @@
+<div class="paginator-container" *ngIf="totalItems > 0">
+  <button mat-icon-button [matTooltip]="'LBL_FIRST_PAGE' | translate | async"
+          [disabled]="currentPage == (pages | async)[0]"
+          (click)="setCurrentPage(1)">
+    <mat-icon>first_page</mat-icon>
+  </button>
+
+  <button mat-icon-button [matTooltip]="'LBL_PREVIOUS_PAGE' | translate | async"
+          [disabled]="currentPage == (pages | async)[0]"
+          (click)="setCurrentPage(currentPage - 1)">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <ng-container *ngFor="let page of pages | async;index as i">
+    <button mat-mini-fab class="paginator-pages" [color]="page == currentPage ?  'primary':'accent'"
+            (click)="setCurrentPage(page)">
+      {{page}}
+    </button>
+  </ng-container>
+
+  <button mat-icon-button [matTooltip]="'LBL_NEXT_PAGE' | translate | async"
+          [disabled]="currentPage == (pages | async)[(pages | async).length - 1]"
+          (click)="setCurrentPage(currentPage + 1)">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+
+  <button mat-icon-button [matTooltip]="'LBL_LAST_PAGE' | translate | async"
+          [disabled]="currentPage == (pages | async)[(pages | async).length - 1]"
+          (click)="setCurrentPage(lastPage)">
+    <mat-icon>last_page</mat-icon>
+  </button>
+
+</div>
