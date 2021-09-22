@@ -3,7 +3,7 @@ export interface Amenitys {
     CatgoryName: string;
     Icon: string;
     NotFree: boolean
-  }
+}
 
 export interface HotelConfig {
     HOTELID: number;
@@ -75,7 +75,7 @@ export interface HotelConfig {
     MinDaysToCheckIn: null;
     MinLOS: null;
     MaxAdult: number;
-    MaxChild:number;
+    MaxChild: number;
     MaxPax: null;
     ThemeNo: null;
     UserInterfaceMaxChildAge: number;
@@ -313,7 +313,7 @@ export interface Day {
     Discount: string;
     Availability: number;
     ShowRoomCount?: number;
-  }
+}
 
 
 export interface Room {
@@ -356,7 +356,7 @@ export interface Room {
     Wifi?: boolean;
     Balcony?: boolean;
     HairDryer?: boolean;
-    PromotionCode?: string;    
+    PromotionCode?: string;
     _Days: Day[];
     Days?: string;
     PaymentInformation?: string;
@@ -367,6 +367,7 @@ export interface Room {
     RoomTypeGroupId?: string;
     PriceBlock?: string;
     Hash?: string;
+    _PriceBlock?: any;
 };
 
 export type Rooms = Room[];
@@ -374,7 +375,7 @@ export type Rooms = Room[];
 
 
 export interface BOOKINGPARAMSRESETDATE {
-        BOOKINGPARAMSRESETDATE?: Date;
+    BOOKINGPARAMSRESETDATE?: Date;
     HOTELID?: number;
     IPCOUNTRY?: string;
     IPADDRESS?: string;
@@ -594,4 +595,116 @@ export interface SearchParams {
     PORTALSELLERID: number;
     PROMOCODE: string;
     SESSION: string;
+}
+
+
+export interface RoomList {
+    _UnavailableReason?: string;
+    _PayInfo?: string;
+    RoomArea?: any;
+    BedType?: any;
+    PrivateBath?: any;
+    Safe?: any;
+    Wifi?: any;
+    Balcony?: any;
+    HairDryer?: any;
+    RoomImageURL: string;
+    RoomMaxBed: number;
+    RoomMaxAdult: number;
+    RoomMaxChild?: any;
+    RoomMaxBaby?: any;
+    RoomImages: string[];
+    RoomCount: number;
+    RoomInfo: string;
+    RoomType: string;
+    RateType: string;
+    RateCode: string;
+    StandartBoardType: string;
+    BoardType: string;
+    RoomTypeId: number;
+    RateTypeId: number;
+    RoomTypeGroupName: string;
+    RoomTypeGroupEmail: string;
+    RoomTypeGroupPhone: string;
+    BoardTypeId: number;
+    BoardTypeDescription: string;
+    Commission: number;
+    Price: number;
+    TotalDiscountApplied: number;
+    DiscountText: string;
+    Currency: string;
+    IsAvailable: 0 | 1;
+    UnavailableReason: string;
+    CancelPolicy: string;
+    _CancelPolicy: any;
+    PromotionCode?: any;
+    Days: string;
+    _Days: Day[];
+    HotelImages: string;
+    PriceBlock: string;
+    _PriceBlock: PriceBlock;
+    Hash: string;
+    BedOptions: string;
+    AddedRoom: number;
+    PaymentInformation: string;
+    RoomCode: string;
+    SearchKey: string;
+    RoomInfoSub: string;
+    IsPreReservation: boolean;
+}
+
+export interface HotelModel {
+    ID: number;
+    ErsId: number;
+    HotelId: number;
+    HotelBedsId: number;
+    Address: string;
+    BoardType: string;
+    HotelImageUrl: string;
+    CheckInTime: string;
+    CheckOutTime: string;
+    NightCount: string;
+    HotelName: string;
+    HotelStar: number;
+    LanguageCode: string;
+    Latitude: number;
+    Longitude: number;
+    RateType: string;
+    RoomType: string;
+    RoomCount: number;
+    Uid: string;
+    Person: Person[] | any;
+    PriceBlock: string;
+    _PriceBlock: PriceBlock;
+    Hash: string;
+    PayAtHotel: boolean;
+    PayAtHotelWithCCGuarantee: boolean;
+    PayAtHotelWithCCGuaranteeB2B: boolean;
+    PayByCC: boolean;
+    PayByDownPayment: boolean;
+    PayByWire: boolean;
+    PayByAgency: boolean;
+    PayByMailOrder: boolean;
+    PayByMailOrderB2B: boolean;
+    PayAtHotelB2B: boolean;
+    PayByCCB2B: boolean;
+    PayByWireB2B: boolean;
+    BankInformation: string;
+    resId?: number;
+    IsPreReservation: boolean;
+    ResStateId?: number;
+    PaymentInformation: string;
+    HotelCity: string;
+    HotelCountry: string;
+    HotelPhone: string;
+    HotelEmail: string;
+    paidPrice: number;
+    ExtraPaymentInformation: string;
+    RoomCode: string;
+    SearchKey: string;
+    RoomInfo: string;
+    RoomTypeGroupName: string;
+    RoomTypeGroupEmail: string;
+    RoomTypeGroupPhone: string;
+    RoomTypeId: number;
 }

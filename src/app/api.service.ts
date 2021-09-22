@@ -14,7 +14,12 @@ import * as _ from 'lodash';
 })
 
 export class ApiService {
-  hotelConfig$ = this.getHotelConfig().pipe(shareReplay());
+  readonly hotelConfig$ = new BehaviorSubject<HotelConfig>(null);
+
+  get hotelConfig(): HotelConfig {
+    return this.hotelConfig$.getValue();
+  }
+
   rooms$ = new BehaviorSubject<Rooms>([]);
   hotelFacilities = new BehaviorSubject<HotelConfig | null>(null);
   hotelInfo$ = new BehaviorSubject<HotelConfig | null>(null);
@@ -97,7 +102,7 @@ export class ApiService {
     if (isReturn) {
       return response;
     }
-    if (0 in response && 0 in response[0] && response[0][0].Amenitys) {     
+    if (0 in response && 0 in response[0] && response[0][0].Amenitys) {
       response[0][0]._Amenitys = null;
       let amen;
       if (response[0][0].Amenitys.startsWith('[')) {
@@ -111,16 +116,16 @@ export class ApiService {
     return response[0][0];
   }
 
-  async getConfig(name: string):Promise<{}> {
+  async getConfig(name: string): Promise<{}> {
     return new Promise(async (resolve, reject) => {
-      const resp =  await this.http.post('https://4001.hoteladvisor.net', {
+      const resp = await this.http.post('https://4001.hoteladvisor.net', {
         Action: "GetConfig",
         ConfigName: name
       }).toPromise();
-      if(resp){
+      if (resp) {
         resolve(resp);
       }
-      else{
+      else {
         reject('data çekilemedi')
       }
     })

@@ -1,43 +1,45 @@
-<div fxLayout="row wrap" class="hotelItem m10">
-<div fxFlex="100">
-    <h2>{{ 'HEADER_CONTACT_INFO' | translate | async }}</h2>
-</div>
+<form [formGroup]="formGroup">
+    <div fxLayout="row wrap" class="hotelItem m10">
+        <div fxFlex="100">
+            <h2>{{ 'HEADER_CONTACT_INFO' | translate | async }}</h2>
+        </div>
 
-    <div fxFlex="25" fxFlex.xs="100">
-        <mat-form-field class="w100">
-            <mat-label>{{ 'LBL_GUEST_NAME' | translate | async }}</mat-label>
-            <input matInput>
-          </mat-form-field>
+        <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+                <mat-label>{{ 'LBL_GUEST_NAME' | translate | async }}</mat-label>
+                <input formControlName="Name" matInput>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+                <mat-label>{{ 'LBL_GUEST_SURNAME' | translate | async }}</mat-label>
+                <input formControlName="Surname" matInput>
+            </mat-form-field>
+        </div>
+
+
+        <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+                <mat-label>{{ 'LBL_GUEST_PHONE' | translate | async }}</mat-label>
+                <input formControlName="Phone" matInput>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+                <mat-label>{{ 'LBL_GUEST_EMAIL' | translate | async }}</mat-label>
+                <input formControlName="Email" matInput>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+                <mat-label>{{ 'LBL_EXTRANOT' | translate | async }}</mat-label>
+                <textarea [formControl]="noteControl" matInput></textarea>
+            </mat-form-field>
+        </div>
+
+
     </div>
-
-    <div fxFlex="25" fxFlex.xs="100">
-        <mat-form-field class="w100">
-            <mat-label>{{ 'LBL_GUEST_SURNAME' | translate | async }}</mat-label>
-            <input matInput >
-          </mat-form-field>
-    </div>
-
-
-    <div fxFlex="25" fxFlex.xs="100">
-        <mat-form-field class="w100">
-            <mat-label>{{ 'LBL_GUEST_PHONE' | translate | async }}</mat-label>
-            <input matInput >
-          </mat-form-field>
-    </div>
-
-    <div fxFlex="25" fxFlex.xs="100">
-        <mat-form-field class="w100">
-            <mat-label>{{ 'LBL_GUEST_EMAIL' | translate | async }}</mat-label>
-            <input matInput >
-          </mat-form-field>
-    </div>
-
-    <div fxFlex="25" fxFlex.xs="100">
-        <mat-form-field class="w100">
-            <mat-label>{{ 'LBL_EXTRANOT' | translate | async }}</mat-label>
-            <textarea matInput></textarea>
-          </mat-form-field>
-    </div>
-
-
-</div>
+</form>

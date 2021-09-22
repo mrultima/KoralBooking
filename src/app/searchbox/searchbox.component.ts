@@ -7,6 +7,7 @@ import { BehaviorSubject, config, Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ApiService } from '../api.service';
 import { HotelConfig } from '../types';
+import { SearchBoxService } from './searchbox.service';
 
 
 @Component({
@@ -16,67 +17,36 @@ import { HotelConfig } from '../types';
 })
 export class SearchboxComponent implements OnInit, OnDestroy {
   mock60 = Array(60);
-  hotelConfig$ = new BehaviorSubject<HotelConfig | null>(null);
-  hotelConfig : HotelConfig
 
   isDestroyed = new Subject();
-  searchFormGroup:FormGroup;
-  
+  searchFormGroup = this.searchboxService.searchFormGroup;
+
   minDate: Date;
   maxDate: Date;
   minLos = new BehaviorSubject(2);
   minDayFilter = new BehaviorSubject(moment().format('YYYY-MM-DD'));
-  adultCount = this.hotelConfig$.getValue()?.MaxAdult;
-  childCount = this.hotelConfig$.getValue()?.MaxChild;   
+  adultCount = this.api.hotelConfig?.MaxAdult;
+  childCount = this.api.hotelConfig?.MaxChild;
 
-  constructor(public api: ApiService) {
+
+  constructor(public api: ApiService, private searchboxService: SearchBoxService) {
     // Set the minimum to January 1st 20 years in the past and December 31st a year in the future.
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
-    this.maxDate = new Date(currentYear + 1, 11, 31);    
+    this.maxDate = new Date(currentYear + 1, 11, 31);
   }
-  ngOnDestroy(): void {    
-      this.isDestroyed.next();
-      this.isDestroyed.complete();   
+  ngOnDestroy(): void {
+    this.isDestroyed.next();
+    this.isDestroyed.complete();
   }
 
-  async ngOnInit(){
-    this.api.hotelConfig$.pipe(takeUntil(this.isDestroyed)).subscribe(info=>{
-      if(info){
-        this.hotelConfig$.next(info)
-      }
-    })
-    this.hotelConfig = await this.api.hotelConfig$.toPromise()
-    this.searchFormGroup = new FormGroup(
-      {
-        ADULT: new FormControl(2),
-        CHECKIN: new FormControl(new Date()),
-        CHECKOUT: new FormControl(new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.hotelConfig?.MinLOS  || 4))),
-        DAYS: new FormControl(this.hotelConfig?.MinLOS || 4),
-        CHILDAGES: new FormControl(0),
-        COUNTRYCODE: new FormControl(''),
-        CURRENCY: new FormControl(''),
-        HOTELID: new FormControl(null),
-        IPADDRESS: new FormControl(''),
-        LANGUAGE: new FormControl(''),
-        PORTALID: new FormControl(1),
-        PORTALSELLERID: new FormControl(null),
-        PROMOCODE: new FormControl(''),
-        SESSION: new FormControl(null),
-      }
-    )
-
-    this.api.hotelConfig$.pipe(takeUntil(this.isDestroyed)).subscribe({
-      next: (config) => {
-        this.searchFormGroup.get('HOTELID')?.setValue(config.HOTELID)
-      }
-    });
+  async ngOnInit() {
 
     this.searchFormGroup.get('DAYS')?.valueChanges.pipe(
       distinctUntilChanged()
-      ).pipe(
+    ).pipe(
       takeUntil(this.isDestroyed)
-      ).subscribe(
+    ).subscribe(
       {
         next: (days) => {
           this.searchFormGroup.get('CHECKOUT')?.setValue(
@@ -90,23 +60,23 @@ export class SearchboxComponent implements OnInit, OnDestroy {
       distinctUntilChanged()
     ).pipe(
       takeUntil(this.isDestroyed)
-      ).subscribe(
+    ).subscribe(
       {
         next: () => {
 
-          const cIn = this.searchFormGroup.get('CHECKIN')?.value  
-          const cOut = this.searchFormGroup.get('CHECKOUT')?.value
-          var cInArr = parseInt(moment(cIn).format('DD')) + parseInt(moment(cIn).format('MM')) * 30 + parseInt(moment(cIn).format('YYYY')) * 365;       
-          var cOutArr = parseInt(moment(cOut).format('DD')) + parseInt(moment(cOut).format('MM')) * 30 + parseInt(moment(cOut).format('YYYY')) * 365 - this.minLos.value;            
-             
+          const cIn = this.searchFormGroup.get('CHECKIN')?.value;
+          const cOut = this.searchFormGroup.get('CHECKOUT')?.value;
+          var cInArr = parseInt(moment(cIn).format('DD')) + parseInt(moment(cIn).format('MM')) * 30 + parseInt(moment(cIn).format('YYYY')) * 365;
+          var cOutArr = parseInt(moment(cOut).format('DD')) + parseInt(moment(cOut).format('MM')) * 30 + parseInt(moment(cOut).format('YYYY')) * 365 - this.minLos.value;
+
           this.searchFormGroup.get('CHECKOUT')?.setValue(
-            moment(this.searchFormGroup.get('CHECKIN')?.value).add(this.minLos.value , "day").toDate()   // inc by days
+            moment(this.searchFormGroup.get('CHECKIN')?.value).add(this.minLos.value, "day").toDate()   // inc by days
           );
-          if(!cIn|| cOutArr < cInArr ) {
+          if (!cIn || cOutArr < cInArr) {
             this.searchFormGroup.get('CHECKOUT')?.setValue(moment(cIn).add(+this.minLos.value, 'day').toISOString());
           } else {
             this.searchFormGroup.get('CHECKOUT')?.setValue(cOut);
-          }       
+          }
         }
       }
     );
@@ -119,7 +89,7 @@ export class SearchboxComponent implements OnInit, OnDestroy {
       )
     ).pipe(
       takeUntil(this.isDestroyed)
-      ).subscribe(
+    ).subscribe(
       {
         next: (checkout) => {
           const cin = moment(this.searchFormGroup.get('CHECKIN')?.value);

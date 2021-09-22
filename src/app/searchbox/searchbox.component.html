@@ -1,21 +1,15 @@
 <div fxLayout="row wrap" fxLayoutGap="5px" *ngIf="searchFormGroup" [formGroup]="searchFormGroup">
   <div fxFlex="15" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>{{ 'LBL_CHECKIN' | translate | async }}</mat-label>  <!-- Giriş  -->
-      <input
-        formControlName="CHECKIN"
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="checkIn"        
-      />
+      <mat-label>{{ 'LBL_CHECKIN' | translate | async }}</mat-label> <!-- Giriş  -->
+      <input formControlName="CHECKIN" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="checkIn" />
       <mat-datepicker-toggle matSuffix [for]="checkIn"></mat-datepicker-toggle>
       <mat-datepicker #checkIn></mat-datepicker>
     </mat-form-field>
   </div>
   <div fxFlex="10" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field>
-      <mat-label> {{ 'LBL_NIGHT' | translate | async }}</mat-label>  <!-- Gece  -->
+      <mat-label> {{ 'LBL_NIGHT' | translate | async }}</mat-label> <!-- Gece  -->
       <i matPrefix class="far fa-moon"></i>
       <mat-select formControlName="DAYS">
         <ng-container *ngFor="let _ of mock60; index as i">
@@ -27,27 +21,21 @@
 
   <div fxFlex="15" fxFlex.xs="100" fxFlex.sm="32">
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>{{ 'LBL_CHECKOUT' | translate | async }}</mat-label>  <!-- Çıkış  -->
-      <input
-      formControlName="CHECKOUT"
-      matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="checkOut"
-      />
+      <mat-label>{{ 'LBL_CHECKOUT' | translate | async }}</mat-label> <!-- Çıkış  -->
+      <input formControlName="CHECKOUT" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="checkOut" />
       <mat-datepicker-toggle matSuffix [for]="checkOut"></mat-datepicker-toggle>
       <mat-datepicker #checkOut></mat-datepicker>
     </mat-form-field>
   </div>
 
-  <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="48">  
+  <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="48">
     <div fxLayout="row wrap">
       <div fxFlex="50" fxFlex.xs="100" fxLayoutGap="20px">
         <mat-form-field class="w100">
-          <mat-label>{{ 'LBL_ADULT' | translate | async }}</mat-label>  <!-- Yetişkin  -->
+          <mat-label>{{ 'LBL_ADULT' | translate | async }}</mat-label> <!-- Yetişkin  -->
           <mat-icon matPrefix>person</mat-icon>
           <mat-select formControlName="ADULT">
-            <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxAdult); let i = index">
+            <ng-container *ngFor="let item of [].constructor((api.hotelConfig$ | async)?.MaxAdult); let i = index">
               <mat-option [value]="i+1">{{ i+1 }}</mat-option>
             </ng-container>
           </mat-select>
@@ -56,10 +44,10 @@
 
       <div fxFlex="50" fxFlex.xs="100">
         <mat-form-field class="w100">
-          <mat-label>{{ 'LBL_CHILD_COUNT' | translate | async }}</mat-label>  <!-- Çocuk Sayısı  -->
+          <mat-label>{{ 'LBL_CHILD_COUNT' | translate | async }}</mat-label> <!-- Çocuk Sayısı  -->
           <mat-icon matPrefix>face</mat-icon>
           <mat-select formControlName="CHILDAGES">
-            <ng-container *ngFor="let item of [].constructor((hotelConfig$ | async)?.MaxChild);let i = index">
+            <ng-container *ngFor="let item of [].constructor((api.hotelConfig$ | async)?.MaxChild);let i = index">
               <mat-option [value]="i">{{ i }}</mat-option>
             </ng-container>
           </mat-select>
@@ -71,21 +59,17 @@
   <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="24">
     <mat-form-field>
       <mat-icon matPrefix>card_giftcard</mat-icon>
-      <mat-label>{{ 'LBL_PROMOTION' | translate | async }} </mat-label>  <!-- Promosyon  -->
+      <mat-label>{{ 'LBL_PROMOTION' | translate | async }} </mat-label> <!-- Promosyon  -->
       <input formControlName="PROMOCODE" matInput type="text" />
     </mat-form-field>
   </div>
 
   <div fxFlex="16" fxFlex.xs="100" fxFlex.sm="24">
     <div style="margin: auto; display: flex; align-items: center; height: 100%">
-      <button
-        (click)="onSearch()"
-        mat-raised-button
-        style="font-size: 20px; width: 100%"
-        color="accent"
-      >
+      <button (click)="onSearch()" mat-raised-button style="font-size: 20px; width: 100%" color="accent">
         <mat-icon>search</mat-icon>
-        {{ 'BTN_ROOMSEARCH' | translate | async }}  <!-- Oda Ara  -->
+        {{ 'BTN_ROOMSEARCH' | translate | async }}
+        <!-- Oda Ara  -->
       </button>
     </div>
   </div>

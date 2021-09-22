@@ -7,7 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:watch": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --prod --stats-json --watch",
+    "analyze": "webpack-bundle-analyzer dist/my-booking/stats.json",
+    "serve": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng serve --port=443 --host 0.0.0.0 --disableHostCheck --ssl --live-reload false",
+    "prod": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --prod --stats-json"
   },
   "private": true,
   "dependencies": {
@@ -27,8 +31,10 @@
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "numeral": "^2.0.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "webpack-bundle-analyzer": "^4.4.2",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

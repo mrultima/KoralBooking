@@ -2,7 +2,7 @@ import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { AppRoutingModule , routingComponents } from "./app-routing.module";
+import { AppRoutingModule, routingComponents } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { SearchboxComponent } from "./searchbox/searchbox.component";
 import { RoomsComponent } from "./rooms/rooms.component";
@@ -40,6 +40,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AppStarterService } from "./services/app-starter.service";
 import { TranslatePipe } from "./services/translate.pipe";
 import { LoginComponent } from './login/login.component';
+import { MomentPipe } from './moment.pipe';
+import { NumeralPipe } from './numeral.pipe';
 
 const mapConfig: YaConfig = {
   apikey: 'pdct.1.1.20210826T094816Z.38a0996dbc78ac17.41b3a82bfec8250e2c0a1a474905ff08070601ff',
@@ -62,8 +64,9 @@ const mapConfig: YaConfig = {
     FacilitysComponent,
     YandexMapComponent,
     TranslatePipe,
-    routingComponents
-
+    routingComponents,
+    MomentPipe,
+    NumeralPipe
   ],
   imports: [
     BrowserModule,

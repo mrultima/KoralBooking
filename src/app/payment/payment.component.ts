@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../services/app.service';
+import { BasketService } from '../services/basket.service';
 
 @Component({
   selector: 'app-payment',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentComponent implements OnInit {
   isLinear = false;
-  constructor() { }
+  constructor(
+    private basketService: BasketService,
+    private appService: AppService
+  ) { }
 
   ngOnInit(): void {
+    const basket = this.basketService.basket;
+    basket.PaymentGate = null;
+    basket.PaymentType = [
+      {
+        Currency: this.appService.currency.getValue(),
+        Id: 3,
+        Name: '',
+        PayableAmount: 0,
+        paymentId: null
+      }
+    ];
   }
 
 }

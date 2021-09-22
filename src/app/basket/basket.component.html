@@ -10,7 +10,7 @@
 </div>
 
 <div fxLayout="row wrap">
-  <ng-container *ngFor="let item of [1, 2]">
+  <!-- <ng-container *ngFor="let item of [1, 2]">
     <div fxFlex="100" class="hotelBasketItem" style="margin-top: 10px">
       <mat-accordion>
         <mat-expansion-panel [expanded]="true">
@@ -101,5 +101,167 @@
         </mat-expansion-panel>
       </mat-accordion>
     </div>
+  </ng-container> -->
+
+  <ng-container *ngIf="(basketService.basket$ | async)?.Items?.HotelItems">
+    <ng-container *ngFor="let hotel of (basketService.basket$ | async).Items.HotelItems;index as i">
+      <div class="hotelBasketItem">
+        <mat-expansion-panel [expanded]="true">
+          <!--i == 0-->
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div [style.font-weight]="'700'">{{hotel?.RoomType}}</div>
+              <div *ngIf="hotel.resId &&  hotel.resId !== -1" class="completed-check">
+                <mat-icon>check</mat-icon>
+                {{'LBL_RES_NO' | translate | async}} {{ hotel.resId }}
+              </div>
+            </mat-panel-title>
+            <button class="remove-button mat-elevation-z3" mat-button
+              (click)="basketService.removeBasketHotelItem(hotel)">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-expansion-panel-header>
+          <div class="hotel-basket-container">
+            <div class="hotel-basket-panel-detail">
+              <div class="hotel-basket-panel-image">
+                <ng-container *ngIf="hotel.HotelImageUrl else defaultImage">
+                  <img [src]="hotel.HotelImageUrl" [alt]="hotel.HotelName">
+                </ng-container>
+                <ng-template #defaultImage>
+                  <img alt="Default Image"
+                    src="https://erspublic.blob.core.windows.net/test/1721248f-f039-5867-86fc-2e5b0a257000.jpg">
+                </ng-template>
+              </div>
+              <div class="hotel-basket-panel-info">
+                <div class="hotel-basket-panel-info-desc">
+                  {{hotel.Address}}
+                </div>
+              </div>
+            </div>
+            <div class="hotel-basket-panel-date">
+              <div class="hotel-basket-checkInOut">
+                <div class="hotel-basket-panel-up">
+                  <div class="hotel-basket-panel-up-header">
+                    <div class="hotel-basket-panel-up-label">{{'LBL_CHECKIN' | translate | async}}</div>
+                    <div class="hotel-basket-panel-up-time">{{hotel.CheckInTime}}</div>
+                  </div>
+                </div>
+                <div class="hotel-basket-panel-down">
+                  <div class="hotel-basket-panel-down-day">
+                    {{moment(hotel._PriceBlock?.ResParams.Checkin).get('date')}}
+                  </div>
+                  <div class="hotel-basket-panel-down-month">
+                    <div class="hotel-basket-panel-down-day-str">
+                      {{moment(hotel._PriceBlock?.ResParams.Checkin).format('dddd')}}</div>
+                    <div class="hotel-basket-panel-down-month-str">
+                      {{moment(hotel._PriceBlock?.ResParams.Checkin).format('MMM YYYY')}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="hotel-basket-checkInOut" *ngIf="apiService.hotelConfig.PropertyType !== 3">
+                <div class="hotel-basket-panel-up">
+                  <div class="hotel-basket-panel-up-header">
+                    <div class="hotel-basket-panel-up-label">{{'LBL_CHECKOUT' | translate | async}}</div>
+                    <div class="hotel-basket-panel-up-time">{{hotel.CheckOutTime}}</div>
+                  </div>
+                </div>
+                <div class="hotel-basket-panel-down">
+                  <div class="hotel-basket-panel-down-day">
+                    {{moment(hotel._PriceBlock?.ResParams.Checkout).get('date')}}
+                  </div>
+                  <div class="hotel-basket-panel-down-month">
+                    <div class="hotel-basket-panel-down-day-str">
+                      {{hotel._PriceBlock?.ResParams.Checkout | moment: 'dddd' | async}}</div>
+                    <div class="hotel-basket-panel-down-month-str">
+                      {{moment(hotel._PriceBlock?.ResParams.Checkout).format('MMM YYYY')}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hotel-basket-panel-item">
+              <div class="hotel-basket-panel-item-info" *ngIf="apiService.hotelConfig.PropertyType !== 3">
+                <div class="hotel-basket-panel-item-name">{{hotel?.RoomType}}</div>
+                <div class="hotel-basket-panel-item-price-container">
+                  <div class="hotel-basket-panel-item-price">{{hotel.RoomCount}} x
+                    {{(hotel?._PriceBlock?.PriceParams.FinalPrice*1 / hotel.RoomCount) | numeral |async}}
+                    {{appService.currency | async}}
+                  </div>
+                  <div class="hotel-basket-panel-item-price-info">
+                    {{'LBL_room_ROOM_night_NIGHT_PRICE' | translate: [{room: hotel.RoomCount}, {night:
+                    hotel.NightCount}] | async}}
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="hotel-basket-panel-item-properties">
+                <div class="hotel-basket-panel-item-properties-left">
+                  <div style="margin-bottom: 5px;">
+                    {{hotel?.BoardType}}
+                  </div>
+                  <div class="description-detail">
+                    <ng-container *ngIf="hotel?._PriceBlock?.ResParams?.CancellationInformation; else notranslate">
+                      <div style="width: 100%">
+                        {{ hotel?.RateType.startsWith('d_2') ? (hotel?.RateType | translate | async) : hotel?.RateType
+                        }}
+                      </div>
+                      <!--  <button mat-stroked-button class="cancellationInformation"
+                        (click)="alert(hotel?._PriceBlock?.ResParams?._CancellationInformation, hotel?.PaymentInformation)">
+                        <mat-icon>info</mat-icon>
+                      </button> -->
+                    </ng-container>
+                    <ng-template #notranslate>
+                      {{hotel?.RateType}} {{hotel?._PriceBlock?.ResParams?.CancellationInformation}}
+                    </ng-template>
+                    <!--<mat-icon-->
+                    <!--matTooltip="Info about the action asd asdasdasdasda asdasdasd asdasdas asdasdas asdasdas asdasd asdasd asd asdasd asdas dasdasd a">-->
+                    <!--info-->
+                    <!--</mat-icon>-->
+                  </div>
+                </div>
+                <div class="hotel-basket-panel-item-properties-right">
+
+                  <ng-container
+                    *ngIf="hotel?._PriceBlock?.PriceParams.Adult && ngForEmptyArrayGenerator(hotel?._PriceBlock?.PriceParams.Adult).length > 3">
+                    <span style="font-size: 16px;">
+                      {{hotel?._PriceBlock?.PriceParams.Adult}}
+                    </span>
+                    <mat-icon>accessibility_new</mat-icon>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="hotel?._PriceBlock?.PriceParams.Adult && ngForEmptyArrayGenerator(hotel?._PriceBlock?.PriceParams.Adult).length <= 3">
+                    <ng-container *ngFor="let q of ngForEmptyArrayGenerator(hotel?._PriceBlock?.PriceParams.Adult)">
+                      <mat-icon>accessibility_new</mat-icon>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="hotel?._PriceBlock?.PriceParams.ChildAges != '' && hotel?._PriceBlock?.PriceParams.ChildAges.split(' ').length > 3">
+                    <!--                    <ng-container *ngFor="let q of hotel?._PriceBlock?.PriceParams.ChildAges.split(' ')">-->
+                    <span style="font-size: 16px;">
+                      {{hotel?._PriceBlock?.PriceParams.ChildAges.split(' ').length}}
+                    </span>
+                    <mat-icon>child_care</mat-icon>
+                    <!--                    </ng-container>-->
+                  </ng-container>
+                  <ng-container
+                    *ngIf="hotel?._PriceBlock?.PriceParams.ChildAges != '' && hotel?._PriceBlock?.PriceParams.ChildAges.split(' ').length <= 3">
+                    <ng-container *ngFor="let q of hotel?._PriceBlock?.PriceParams.ChildAges.split(' ')">
+                      <mat-icon>child_care</mat-icon>
+                    </ng-container>
+                  </ng-container>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+    </ng-container>
+
   </ng-container>
 </div>
+
+<ng-container *ngIf="(basketService.basket$ | async) as basket">
+  {{basket.Server.FinalPrice}} {{basket.Currency}}
+
+</ng-container>

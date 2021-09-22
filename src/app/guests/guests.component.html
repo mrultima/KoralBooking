@@ -4,37 +4,87 @@
   </div>
 
 
-  <ng-container *ngFor="let item of [1,2,3]">
-  <div fxLayout="row wrap">
-    <div fxFlex="100">{{item}}.{{'LBL_GUEST' | translate | async}}:{{'LBL_ADULT' | translate | async}}</div>
-    <div fxFlex="25" fxFlex.xs="100">
-      <mat-form-field class="w100">
-        <mat-label>{{'LBL_GUEST_NAME' | translate | async}}</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
+  <div *ngFor="let item of form.controls; let itemIndex=index">
 
-    <div fxFlex="25" fxFlex.xs="100">
-      <mat-form-field class="w100">
-        <mat-label>{{'LBL_GUEST_SURNAME' | translate | async}}</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
+    <ng-container *ngIf="(basketService.basket$|async) as basket">
+      <h3 *ngIf="form.controls.length>1">
+        {{basket.Items.HotelItems[itemIndex]?.HotelName}}
+      </h3>
 
-    <div fxFlex="25" fxFlex.xs="100">
-      <mat-form-field class="w100">
-        <mat-label>{{'LBL_GUEST_PHONE' | translate | async}}</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
+      <form [formGroup]="guest" *ngFor="let guest of $any(item).controls; let guestIndex=index">
+        <h4>{{guest.value?.RoomNo}}.oda {{basket.Items.HotelItems[itemIndex]?.RoomType}}</h4>
+        <div fxLayout="row wrap">
+          <div fxFlex="100">{{guestIndex+1}}.{{'LBL_GUEST' | translate | async}}:{{guest.value?.Type}}</div>
+          <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+              <mat-label>{{'LBL_GUEST_NAME' | translate | async}}</mat-label>
+              <input formControlName="Name" matInput />
+            </mat-form-field>
+          </div>
 
-    <div fxFlex="25" fxFlex.xs="100">
-      <mat-form-field class="w100">
-        <mat-label>{{'LBL_GUEST_EMAIL' | translate | async}}</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
+          <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+              <mat-label>{{'LBL_GUEST_SURNAME' | translate | async}}</mat-label>
+              <input formControlName="Surname" matInput />
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field class="w100">
+              <mat-label>{{'LBL_GUEST_PHONE' | translate | async}}</mat-label>
+              <input formControlName="Phone" matInput />
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="25" fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>Cinsiyet</mat-label>
+              <mat-select formControlName="Gender">
+                <mat-option *ngFor="let g of {M:'Erkek',F:'Kadın'}|keyvalue" [value]="g.key">
+                  {{g.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </div>
+      </form>
+    </ng-container>
+
   </div>
-</ng-container>
+
+
+  <!-- <ng-container *ngFor=" let item of [1,2,3]">
+    <div fxLayout="row wrap">
+      <div fxFlex="100">{{item}}.{{'LBL_GUEST' | translate | async}}:{{'LBL_ADULT' | translate | async}}</div>
+      <div fxFlex="25" fxFlex.xs="100">
+        <mat-form-field class="w100">
+          <mat-label>{{'LBL_GUEST_NAME' | translate | async}}</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="25" fxFlex.xs="100">
+        <mat-form-field class="w100">
+          <mat-label>{{'LBL_GUEST_SURNAME' | translate | async}}</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="25" fxFlex.xs="100">
+        <mat-form-field class="w100">
+          <mat-label>{{'LBL_GUEST_PHONE' | translate | async}}</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="25" fxFlex.xs="100">
+        <mat-form-field class="w100">
+          <mat-label>{{'LBL_GUEST_EMAIL' | translate | async}}</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container> -->
 
 </div>

@@ -15,11 +15,10 @@
   <ng-container *ngFor="let rooms of [].constructor(room.length);index as i">
     <div fxLayout="row wrap" class="hotelItem m10">
       <div fxFlex="25" fxFlex.xs="100" fxFlex.md="100" style="position: relative" class="hotel-image">
-        <img class="w100 hotelphoto" [src]="room[1][i]?.image"/>
+        <img class="w100 hotelphoto" [src]="room[1][i]?.image" />
         <div class="room-type-info-image-bottom-cont">
           <div>
-            Max <i *ngFor="let adult of [].constructor(room[1][i]?.maxAdult); index as i"
-              class="fas fa-male"></i>
+            Max <i *ngFor="let adult of [].constructor(room[1][i]?.maxAdult); index as i" class="fas fa-male"></i>
           </div>
         </div>
       </div>
@@ -42,7 +41,8 @@
               font-size: 14px;
               cursor: pointer;
             ">
-              <i class="fas fa-search-plus"></i><span style="text-decoration: underline; padding-left: 5px">{{'LBL_CONTINUESHOW' | translate | async}}</span>
+              <i class="fas fa-search-plus"></i><span
+                style="text-decoration: underline; padding-left: 5px">{{'LBL_CONTINUESHOW' | translate | async}}</span>
             </div>
           </div>
         </div>
@@ -60,35 +60,38 @@
                         <mat-icon>info</mat-icon>
                       </button>
                     </div>
-                    <div class="infoItem">{{room[1][i]?.boardTypes[k].name}} {{room[1][i]?.boardTypes[k].rateTypes[j].name}} {{room[1][i]?.name}}</div>
+                    <div class="infoItem">{{room[1][i]?.boardTypes[k].name}}
+                      {{room[1][i]?.boardTypes[k].rateTypes[j].name}} {{room[1][i]?.name}}</div>
                   </div>
                 </div>
-                
+
                 <div class="roomItem" fxFlex="18 " fxFlex.xs="50" fxFlex.md="38">
                   <div class="room-price">
                     <div class="default-price">
                       <span class="price"
                         style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].netPrice}}</span>
                       <div class="price-inline">
-                        <span style="text-decoration: line-through">.00</span><span *ngIf="room[1][i]?.boardTypes[k].rateTypes[j].currency;else default"
+                        <span style="text-decoration: line-through">.00</span><span
+                          *ngIf="room[1][i]?.boardTypes[k].rateTypes[j].currency;else default"
                           style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].currency}}</span>
-                          <ng-template #default
-                          style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template>                          
+                        <ng-template #default style="text-decoration: line-through">{{(this.apiService.hotelConfig$ |
+                          async)?.DEFAULTCURRENCY}}</ng-template>
                       </div>
                     </div>
 
                     <div class="default-price finalPrice">
                       <span class="price">{{room[1][i]?.boardTypes[k].rateTypes[j].netPrice}}</span>
                       <div class="price-inline">
-                        <span>.00</span><span style="text-decoration: line-through">.00</span><span *ngIf="room[1][i]?.boardTypes[k].rateTypes[j].currency;else default"
-                        style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].currency}}</span>
-                        <ng-template #default
-                        style="text-decoration: line-through">{{(this.apiService.hotelConfig$ | async)?.DEFAULTCURRENCY}}</ng-template> 
+                        <span>.00</span><span style="text-decoration: line-through">.00</span><span
+                          *ngIf="room[1][i]?.boardTypes[k].rateTypes[j].currency;else default"
+                          style="text-decoration: line-through">{{room[1][i]?.boardTypes[k].rateTypes[j].currency}}</span>
+                        <ng-template #default style="text-decoration: line-through">{{(this.apiService.hotelConfig$ |
+                          async)?.DEFAULTCURRENCY}}</ng-template>
                       </div>
                     </div>
                   </div>
                 </div>
-              
+
 
                 <div class="roomItem" fxFlex="10" fxFlex.xs="100" fxFlex.md="9">
                   <div class="price-percent">%10</div>
@@ -97,8 +100,8 @@
                 <div class="roomItem" fxFlex="14" fxFlex.xs="50" fxFlex.md="48">
                   <mat-form-field appearance="outline" class="w100 roomCount">
                     <mat-label>{{'LBL_ROOMCOUNT' | translate | async}}</mat-label>
-                    <mat-select [value]="0">
-                      <mat-option [value]="i" *ngFor="let count of [1, 2, 3, 4, 5, 6]; index as i">
+                    <mat-select #roomCount [value]="1">
+                      <mat-option [value]="count" *ngFor="let count of [1, 2, 3, 4, 5, 6]; index as i">
                         {{ i + 1 }}
                       </mat-option>
                     </mat-select>
@@ -107,7 +110,7 @@
 
                 <div class="roomItem" fxFlex="12" fxFlex.xs="50" fxFlex.md="48"
                   style="margin: auto; text-align: center">
-                  <button mat-raised-button color="accent" (click)="onSelectRoom()">
+                  <button mat-raised-button color="accent" (click)="onSelectRoom(room[1][i]?.boardTypes[k].rateTypes[j],roomCount.value)">
                     {{'BTN_BUY' | translate | async}}
                     <mat-icon>keyboard_arrow_right</mat-icon>
                   </button>

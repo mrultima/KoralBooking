@@ -1,4 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
+import { ApiService } from '../api.service';
 import { Language } from '../models/langauge';
 import { AppService } from './app.service';
 import { InjectionService } from './injection.service';
@@ -18,6 +19,9 @@ export class AppStarterService {
         return new Promise<void>(async (resolve, reject) => {
             this.injService.appService = this.inj.get(AppService);
             await this.setLanguage();
+            this.inj.get(ApiService).hotelConfig$.next(
+                await this.inj.get(ApiService).getHotelConfig().toPromise()
+            );
             try {
                 resolve();
             } catch (err) {
