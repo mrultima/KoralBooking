@@ -17,12 +17,12 @@ export class AppStarterService {
     async init(): Promise<void> {
 
         return new Promise<void>(async (resolve, reject) => {
-            this.injService.appService = this.inj.get(AppService);
-            await this.setLanguage();
-            this.inj.get(ApiService).hotelConfig$.next(
-                await this.inj.get(ApiService).getHotelConfig().toPromise()
-            );
             try {
+                this.injService.appService = this.inj.get(AppService);
+                await this.setLanguage();
+                this.inj.get(ApiService).hotelConfig$.next(
+                    await this.inj.get(ApiService).getHotelConfig().toPromise()
+                );
                 resolve();
             } catch (err) {
                 reject(err);

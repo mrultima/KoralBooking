@@ -104,7 +104,10 @@ export class SearchboxComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    this.api.onSearch(this.searchFormGroup.value);
+    const formValue = this.searchFormGroup.value;
+    formValue.CHECKIN = moment(formValue.CHECKIN).format('YYYY-MM-DD') + ' 00:00';
+    formValue.CHECKOUT = moment(formValue.CHECKOUT).format('YYYY-MM-DD' + ' 00:00');
+    this.api.onSearch(formValue);
   }
 
   myFilter = (d: Date): boolean => {

@@ -9,18 +9,13 @@ import { HotelConfig, HotelPhoto } from '../types';
 })
 export class HotelphotoComponent implements OnInit {
 
-  photos: HotelPhoto[] = [];
-  selectedPhoto: string = "";
+
+  selectedPhoto = this.apiService.hotelConfig.photos?.[0].URL;
 
   constructor(public apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.hotelConfig$.subscribe((val) => {this.photos = val.photos});
-    this.apiService.hotelConfig$.subscribe((val) => {this.selectedPhoto = val.photos[0].URL});
-  }
 
-  selectPhoto(p: HotelPhoto){
-    this.selectedPhoto = p.URL;
   }
 
 }
