@@ -1,7 +1,7 @@
-import { Pipe, PipeTransform } from "@angular/core";
-import { map } from "rxjs/operators";
-import { AppService } from "./app.service";
-import { TranslateService } from "./translate.service";
+import { Pipe, PipeTransform } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { AppService } from './app.service';
+import { TranslateService } from './translate.service';
 
 @Pipe({
     name: 'translate',
