@@ -43,6 +43,7 @@ import { NumeralPipe } from './numeral.pipe';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { CommonModule } from '@angular/common';
+// import { GlobalService } from './global.service';
 
 const mapConfig: YaConfig = {
   apikey: 'pdct.1.1.20210826T094816Z.38a0996dbc78ac17.41b3a82bfec8250e2c0a1a474905ff08070601ff',
@@ -72,7 +73,7 @@ const mapConfig: YaConfig = {
   ],
   imports: [
     CommonModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -95,7 +96,7 @@ const mapConfig: YaConfig = {
     HttpClientModule,
     MatDialogModule,
     AngularYandexMapsModule.forRoot(mapConfig),
-    MatTabsModule
+    MatTabsModule,
   ],
   entryComponents: [YandexMapComponent],
   providers: [
@@ -112,7 +113,8 @@ const mapConfig: YaConfig = {
         apikey: 'pdct.1.1.20210826T094816Z.38a0996dbc78ac17.41b3a82bfec8250e2c0a1a474905ff08070601ff',
         lang: 'en_US',
       },
-    }
+    },
+    // GlobalService
   ],
   bootstrap: [AppComponent],
 })

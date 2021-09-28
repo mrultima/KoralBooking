@@ -5,8 +5,10 @@ import * as moment from 'moment';
 import { Currency, Language } from '../models/langauge';
 import { ApiService } from '../api.service';
 import { HttpClient } from '@angular/common/http';
+// import { GlobalService } from '../global.service';
 
-
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 
 export interface AppConfig {
@@ -27,11 +29,12 @@ export class AppService {
 
     appConfig = {};
 
+    isBrowser: boolean;
+
     homePageRoute: BehaviorSubject<string> = new BehaviorSubject('/');
     hotelID = 0;
     subDomain = null;
     openBasketAuto = false;
-
 
 
 
@@ -63,13 +66,16 @@ export class AppService {
         SUBDOMAINURL: (subdomainName?: string) => string;
     } = null;
 
+
     constructor(
+        // private globalService: GlobalService,
+        @Inject(PLATFORM_ID) private platformId: Object,
         private translate: TranslateService,
         private api: ApiService,
         private http: HttpClient,
     ) {
+        this.isBrowser = isPlatformBrowser(platformId);
     }
-
 
     getDate(date: any, format = 'YYYY-MM-DD HH:mm') {
         if (date) {
@@ -206,17 +212,19 @@ export class AppService {
     // it's finished scrolls by given number
     // can accept - or + num. - for top , + for bottom.
     scrollWhenScrollFinished(num: number) {
-        let subRef: Subscription;
-        const ste = fromEvent(document, 'scroll').subscribe(value => {
-            if (subRef) {
-                subRef.unsubscribe();
-            }
-            subRef = timer(100).subscribe(value1 => {
-                window.scrollBy({ top: num, behavior: 'smooth' });
-                ste.unsubscribe();
-                subRef.unsubscribe();
+        if (isPlatformBrowser(this.platformId)) {
+            let subRef: Subscription;
+            const ste = fromEvent(document, 'scroll').subscribe(value => {
+                if (subRef) {
+                    subRef.unsubscribe();
+                }
+                subRef = timer(100).subscribe(value1 => {
+                    window.scrollBy({ top: num, behavior: 'smooth' });
+                    ste.unsubscribe();
+                    subRef.unsubscribe();
+                });
             });
-        });
+        }
     }
 
     async checkIsThereAnyExtraService(useDate, mode: 'HOTEL' | 'TOUR' | 'TRANSFER' | 'FLIGHT' | 'TICKET', hotelId = 0, relatedUid?, marketId?: number, nightCount?) {
