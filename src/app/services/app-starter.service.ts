@@ -5,14 +5,23 @@ import { AppService } from './app.service';
 import { InjectionService } from './injection.service';
 import { TranslateService } from './translate.service';
 
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { GlobalService } from '../global.service';
 
 @Injectable()
 export class AppStarterService {
 
+    isBrowser: boolean;
+
     constructor(
+        private globalService : GlobalService,
+        @Inject(PLATFORM_ID) private platformId: Object,
         public inj: Injector,
         public injService: InjectionService
-    ) { }
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
+    }
 
     async init(): Promise<void> {
 
@@ -32,29 +41,56 @@ export class AppStarterService {
 
     private async setLanguage(): Promise<void | never> {
 
-        let activeLang: Language = this.injService.appService.supportedLanguages.getValue()[0];
+        ///////////// BURADA HATA ALIYORUM /////////////////
 
-        const userLangs = [
-            new URLSearchParams(window.location.search).get('language'),
-            this.injService.appService.getCookie('language')
-        ].filter(x => !!x);
+        if (isPlatformBrowser(this.platformId)) {
+            let activeLang: Language = this.injService.appService.supportedLanguages.getValue()[0];
 
-        for (const lang of userLangs) {
-            const f = this.injService.appService.getCookie(lang);
-            if (f) {
-                activeLang.langKey = f;
-                break;
+            const userLangs = [
+                new URLSearchParams(window.location.search).get('language'),
+                this.injService.appService.getCookie('language')
+            ].filter(x => !!x);
+
+            for (const lang of userLangs) {
+                const f = this.injService.appService.getCookie(lang);
+                if (f) {
+                    activeLang.langKey = f;
+                    break;
+                }
             }
+
+            this.injService.appService.setCookie('language', activeLang.langKey, {
+                expires: 7,
+                path: '/',
+                secure: true
+            });
+
+            this.inj.get(TranslateService).use(activeLang.langKey);
+            this.injService.appService.language.next(activeLang.langKey);
         }
+        // let activeLang: Language = this.injService.appService.supportedLanguages.getValue()[0];
 
-        this.injService.appService.setCookie('language', activeLang.langKey, {
-            expires: 7,
-            path: '/',
-            secure: true
-        });
+        // const userLangs = [
+        //     new URLSearchParams(this.globalService.getLocation().search).get('language'),
+        //     this.injService.appService.getCookie('language')
+        // ].filter(x => !!x);
 
-        this.inj.get(TranslateService).use(activeLang.langKey);
-        this.injService.appService.language.next(activeLang.langKey);
+        // for (const lang of userLangs) {
+        //     const f = this.injService.appService.getCookie(lang);
+        //     if (f) {
+        //         activeLang.langKey = f;
+        //         break;
+        //     }
+        // }
+
+        // this.injService.appService.setCookie('language', activeLang.langKey, {
+        //     expires: 7,
+        //     path: '/',
+        //     secure: true
+        // });
+
+        // this.inj.get(TranslateService).use(activeLang.langKey);
+        // this.injService.appService.language.next(activeLang.langKey);
     }
 
     async getConfig() {
